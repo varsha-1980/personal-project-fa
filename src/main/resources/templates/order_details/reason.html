@@ -1,0 +1,126 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="reason" class="mt-3 mb-3">
+		<form id="reasonform" th:action="@{/orderdetails/update}" th:object="${orderDetails}"
+			method="post">
+<!--			<input type="hidden" id="ln" name="ln"-->
+<!--								th:value="__${#locale}__"></input> -->
+			<div class="row">
+				<div class="col-md-12">
+					<div th:insert="admin/operations :: operations"></div>
+					<div class="row m-3">
+						<b><span class="underline"
+							th:text="#{label.editpage.tab3.heading}">If known, please
+								name the Electrical Failure / Failure Mode:</span></b>
+					</div>
+					<div class="ml-md-3">
+						<div class="form-row">
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab3.electrical_error}">Electrical
+											Failure</span><a href="#"
+										data-toggle="tooltip" data-placement="top"
+										th:title="#{label.tooltip.electrical_error}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+										th:field="*{dbs_elee}" list="e_error"
+										placeholder="Select Electrical Failure" ></input>
+									<datalist id="e_error">
+										<option th:each="_err: ${electricErrorList}"
+											th:value="__${#locale}__ == 'de' ? ${_err.nameDe} : ${_err.name}"
+											th:text="__${#locale}__ == 'de' ? ${_err.nameDe} : ${_err.name}"></option>
+									</datalist>
+								</div>
+
+							</div>
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab3.error_mode}">Failure
+											Mode</span><a href="#"
+										data-toggle="tooltip" data-placement="top"
+										th:title="#{label.tooltip.error_mode}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+										th:field="*{dbs_famo}" list="e_mode"
+										placeholder="Select E.Mode" ></input>
+									<datalist id="e_mode">
+										<option th:each="_errorMode: ${failureModeList}"
+											th:value="__${#locale}__ == 'de' ? ${_errorMode.nameDe} : ${_errorMode.name}"
+											th:text="__${#locale}__ == 'de' ? ${_errorMode.nameDe} : ${_errorMode.name}"></option>
+									</datalist>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab3.analysis_basic}">Analysis
+											Reason</span><a href="#"
+										data-toggle="tooltip" data-placement="top"
+										th:title="#{label.tooltip.analysis_basic}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<textarea rows="3" cols="34" name="comment" 
+										th:field="*{dbs_fa_reason}"
+										th:attr="placeholder=#{label.enter_text_here}"></textarea>
+								</div>
+
+							</div>
+
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputPassword4"><span
+										th:text="#{label.editpage.tab3.order_description}">Order
+											Description</span><a href="#" data-toggle="tooltip"
+										data-placement="top" th:title="#{label.tooltip.order_descr}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<textarea rows="3" cols="34" name="comment"
+										th:field="*{dbs_fa_descr}"
+										th:attr="placeholder=#{label.enter_text_here}"></textarea>
+								</div>
+
+							</div>
+						</div>
+						<div th:insert="order_details/order_buttons :: order_buttons"></div>
+					</div>
+				</div>
+			</div>
+<script type="text/javascript">
+			
+			window.onbeforeunload = closingCode;
+				
+				function closingCode(){
+									
+					console.log('closing code...');
+					var form = $(document.getElementById('reasonform'));
+								    
+								    
+								    $.ajax({
+								        type: "POST",
+								        url: 'orderdetails/autosave',
+								        data: form.serialize(), // serializes the form's elements.
+								        success: function(data)
+								        {
+								          alert(data); // show response from the php script.
+								        }
+								    });
+					
+				}
+	
+			</script>
+		</form>
+	</div>
+</body>
+</html>

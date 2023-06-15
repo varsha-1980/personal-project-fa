@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="_ctx" th:content="${#httpServletRequest.getContextPath()}" />
+<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Failure
+	Analysis</title>
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+<link type="text/css" rel="stylesheet"
+	th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" />
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/css/bootstrap-grid.min.css}" />
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.min.css}" />
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/datatables-buttons/1.6.1/css/buttons.dataTables.min.css}" />
+
+<link type="text/css" rel="stylesheet"
+	th:href="@{/webjars/bootstrap-datepicker/css/bootstrap-datepicker.min.css}"></link>
+
+<link type="text/css" rel="stylesheet"
+	th:href="@{/webjars/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}"></link>
+
+<link type="text/css" rel="stylesheet"
+	th:href="@{/webjars/select2/4.0.13/css/select2.min.css}"></link>
+	
+<!--<link type="text/css" rel="stylesheet"
+	th:href="@{/webjars/datatables-plugins/1.10.19/integration/font-awesome/dataTables.fontAwesome.css}"></link>-->
+
+<link type="text/css" rel="stylesheet"
+	th:href="@{/static/css/style.css}" />
+<link type="text/css" rel="stylesheet"
+	th:href="@{/static/css/print.css}" />
+
+</head>
+<script>
+var form = document.getElementById("orderForm");
+
+form.addEventListener("input", function () {
+    console.log("Form has changed!");
+});
+
+</script>
+
+</html>

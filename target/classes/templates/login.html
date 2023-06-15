@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Failure
+	Analysis</title>
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport" />
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="row mt-1 h-100">
+			<div class="col-md-12 h-100">
+				<div class="card h-100">
+					<div class="card-body">
+						<div class="row justify-content-center my-5">
+							<div class=" card p-md-5 col-md-4 text-center">
+								<h4 class="mt-2 mb-3">
+									<!-- <span th:text="#{label.login}">Login</span> -->
+									<img th:src="@{/static/images/logo.png}"></img>
+								</h4>
+								<form th:action="@{/login}" method="post">
+
+									<div class="form-group has-feedback">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><i class="fa fa-user"></i></span>
+											</div>
+											<input type="email" class="form-control" name="username"
+												th:attr="placeholder=#{label.email}" required="required"/>
+										</div>
+									</div>
+									<div class="form-group has-feedback">
+										<div class="input-group ">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><i class="fa fa-lock"></i></span>
+											</div>
+											<input type="password" class="form-control" name="password"
+												th:attr="placeholder=#{label.password}" required="required"/>
+										</div>
+									</div>
+									<div class="form-group float-left">
+										<label> <input type="checkbox" name="remember-me">
+											<span th:text="#{label.rememberme}">Remember Me</span>
+
+										</label>
+									</div>
+									<div class="form-group">
+										<div class="form-group col-xs-offset-8 col-xs-4">
+											<button type="submit"
+												class="btn btn-primary btn-block btn-flat btnbgcolor">
+												<span th:text="#{label.login}">Login</span>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div th:if="${param.error} or ${param.logout}  "
+						class="toast text-white w-25" role="alert" aria-atomic="true"
+						data-delay="3000" style="position: absolute; right: 1rem;">
+						<div th:if="${param.error}" class="toast-header">
+							<strong class="mr-auto">Invalid</strong>
+							<button type="button" class="ml-2 mb-1 close"
+								data-dismiss="toast" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div th:if="${param.logout}" class="toast-header">
+							<strong th:if="${param.logout}" class="mr-auto">Logout</strong>
+							<button type="button" class="ml-2 mb-1 close"
+								data-dismiss="toast" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div th:if="${param.error}" class="toast-body bg-danger">
+							<span th:text="#{error.login_failed}">Invalid Email and
+								Password.</span>
+						</div>
+						<div th:if="${param.logout}" class="toast-body bg-success">
+							<span th:text="#{info.logout_success}">You have been
+								logged out.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

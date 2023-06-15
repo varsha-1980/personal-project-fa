@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+
+</head>
+<body>
+	<div th:fragment="operations">
+		<div class="row ml-md-3 mr-md-2" th:if="${orderDetails.id !=null}"
+			style="border-bottom: 1px solid #005f0f;">
+
+			<div class="col-sm-12 col-md-2">
+				<label for="orederNumber"><span class="font-weight-bold"
+					th:text="#{label.editpage.tab1.order_number}">Order#</span> :</label> <span
+					th:text="${orderDetails.id}"></span>
+			</div>
+			<div class="col-sm-12 col-md-3">
+				<label for="client_telephone"><span class="font-weight-bold"
+					th:text="#{label.editpage.tab1.client_telephone}">Client /
+						phone</span>:</label> <span id="client_telephone"
+					th:if="${orderDetails.dbs_ag_name !=null}"
+					th:text="${orderDetails.dbs_ag_name + ' / ' + ''}"></span>
+					
+					 <span th:text="${personal_phone}"></span>
+					
+					<!-- commenting the above span tag to get confirmation for the personal_phone logic is correct, 
+					if you un comment it works but no phone number will come, because the logic and data are like that -->
+					
+					
+			</div>
+
+			<div class="col-sm-12 col-md-5" >
+				<label for="inputPassword4" ><span class="font-weight-bold"
+												  th:text="#{label.editpage.tab1.link_zd_results}">Link z.d.
+						Ergebnissen</span> :</label>
+			<span>	<span id="link">
+					\\wsiz03\iz_rem\Auftraege_nach_Nummern\<span th:text="${orderDetails.id}"></span>
+				</span>
+<!--				<input type="button" th:value = "#{label.copyLink}" name = "Clicked" style="margin-left :20px;margin-bottom:7px;"
+id="copy-button"  data-clipboard-target="#link" class="btn btnbgcolor"/>-->
+
+           </span>
+
+
+			</div>
+			<div class="col-sm-12 col-md-2">
+			<span class="btn btnbgcolor" th:value = "#{label.copyLink}" style="margin-top: -7px;margin-bottom: 6px;"
+				  id="copy-button"  data-clipboard-target="#link">Copy Link</span>
+			</div>
+
+
+			<!-- <div class="col-md-2">
+				<a th:href="@{#}" onclick="window.print();"><i
+					class="fa fa-print float-right"><label class="ml-1"><span
+							th:text="#{label.editpage.tab1.print_report}">Print report</span>
+					</label></i></a> <a th:href="@{#}" th:if="${currentTab.value == 'processing'}"><i
+					data-toggle="modal" data-target="#myModal"
+					class="fa fa-envelope float-right"><label class="mr-2"><span
+							th:text="#{label.editpage.tab7.mail_to_client}">Mail to
+								client</span></label></i></a>
+			</div> -->
+		</div>
+	</div>
+
+</body>
+</html>

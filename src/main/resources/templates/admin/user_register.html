@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<title>Registration</title>
+<body>
+	<div layout:fragment="content">
+		<div class="card mt-3 h-100">
+			<div class="card-body col-md-6 container">
+				<div class="container mb-3">
+					<div
+						class="col-sm-10 justify-content-center align-items-center container ">
+						<div th:if="${param.success}">
+							<div class="alert alert-info">
+								<span th:text="#{label.successful_register}">You've
+									successfully registered to our awesome app!</span>
+							</div>
+						</div>
+						<div class="text-center">
+							<h4 th:if="${mode == 'save'}">
+								<span th:text="#{label.create_user}">Create New User</span>
+							</h4>
+							<h4 th:if="${mode == 'edit'}">
+								<span th:text="#{label.edit_user}">Edit User</span>
+							</h4>
+						</div>
+						<p class="alert alert-danger alert-dismissible"
+							th:if="${#fields.hasGlobalErrors()}"
+							th:each="error : ${#fields.errors('global')}" th:text="${error}">
+						</p>
+
+						<form th:action="@{/registration}" th:object="${user}"
+							method="post">
+							<div class="form-group">
+								<label for="firstName" class="control-label"><span
+									th:text="#{label.first_name}">First name</span></label> <input
+									id="firstName" class="form-control form-control-sm"
+									th:field="*{firstName}" placeholder="Enter First Name" required="required"/>
+							</div>
+							<div class="form-group">
+								<label for="lastName" class="control-label"><span
+									th:text="#{label.last_name}">Last name</span></label> <input
+									id="lastName" class="form-control form-control-sm"
+									th:field="*{lastName}" placeholder="Enter Last Name" required="required"/>
+							</div>
+							<div class="form-group">
+								<label for="email" class="control-label"><span
+									th:text="#{label.email}">E-mail</span></label> <input id="email" type="email"
+									class="form-control form-control-sm" th:field="*{email}"
+									placeholder="Enter E-mail" required="required"/>
+							</div>
+							<div th:if="${mode == 'save'}" class="form-group">
+								<label for="password" class="control-label"><span
+									th:text="#{label.password}">Password</span></label> <input
+									id="password" class="form-control form-control-sm"
+									type="password" th:field="*{password}"
+									placeholder="Enter Password" required="required"/>
+							</div>
+
+							<div class="form-group">
+								<label for="role" class="control-label"><span
+									th:text="#{label.role}">Role</span></label> <select
+									class="form-control form-control-sm" th:field="*{role}"
+									id="role" required="required">
+									<option value="">Select Role</option>
+									<option th:each="_role: ${rolesList}" th:value="${_role.id}"
+										th:text="${_role.name}"></option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="company" class="control-label"><span
+									th:text="#{label.company}">Company</span></label> <select
+									class="form-control form-control-sm" th:field="*{company}"
+									id="company" required="required">
+									<option value="">Select Company</option>
+									<option th:each="_com: ${companyList}" th:value="${_com.id}"
+										th:text="${_com.name}"></option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="company" class="control-label"><span
+									th:text="#{lable.language}">Language</span></label> <select
+									class="form-control form-control-sm" th:field="*{language}"
+									id="language" required="required">
+									<option value="">Select Language</option>
+									<option value="en" th:text="#{lang.eng}">English</option>
+									<option value="de" th:text="#{lang.de}">German</option>
+								</select>
+							</div>
+							<div class="alert alert-danger pull-right"
+								th:if="${flash_usercreat}" th:text="${flash_usercreat}"></div>
+
+							<button th:if="${mode == 'save'}" type="submit"
+								class="btn btnbgcolor">
+								<span th:text="#{label.save}">Save</span>
+							</button>
+							<button th:if="${mode == 'edit' }" type="submit"
+								class="btn btnbgcolor">
+								<span th:text="#{label.update}">Update</span>
+							</button>
+							<a th:href="@{/registration/userManagement}"><button
+									type="button" class="btn btnbgcolor">
+									<span th:text="#{label.cancel}">Cancel</span>
+								</button></a> <input type="hidden" id="id" th:field="*{id}">
+						</form>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

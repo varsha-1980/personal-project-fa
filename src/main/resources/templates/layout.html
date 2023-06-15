@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: head">
+</head>
+
+<body>
+	<div class="container-fluid h-100">
+		<div class="row mt-1">
+			<div
+				class="col-md-2 pl-sm-3 pr-md-1  pr-sm-3 justify-content-center text-center align-middle">
+				<div class="card">
+					<div class="card-body">
+						<div>
+							<a th:href="@{#}" th:if="${orderDetails!=null}"> <i
+								data-toggle="modal" data-target="#dataLossWarningModal"> <img
+									th:src="@{/static/images/logo.png}"></img></i>
+							</a> <a th:href="@{/home}" th:if="${orderDetails==null}"> <img
+								th:src="@{/static/images/logo.png}"></img>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div
+				class="col-md-10 pl-sm-0 pl-md-0 h-100 justify-content-center text-center align-middle">
+				<div class="card">
+					<div class="card-body ">
+
+						<div class="row justify-content-center text-center align-middle"
+							style="height: 64px;">
+							<!-- <div class="col-sm-12 col-md-3"></div> -->
+							<div class="col-sm-12 col-md-9 text-md-center align-middle">
+								<h2>
+									<span th:text="#{label.menupage.header}"> VSIG Failure
+										Analysis Database</span>
+								</h2>
+							</div>
+
+							<div class="col-sm-12 col-md-3 text-md-right">
+								<div class="row justify-content-center p-1">
+									<div class="col-xs-6 mr-1">
+										<div class="dropdown">
+											<button class="btn btn-sm dropdown-toggle btnbgcolor p-1"
+												type="button" id="dropdownMenuButton" data-toggle="dropdown"
+												sec:authorize="hasAuthority('SUPER-ADMIN')"
+												aria-haspopup="true" aria-expanded="false">
+												<span th:text="#{lable.administrative}">Administrative</span>
+											</button>
+											<div class="dropdown-menu"
+												aria-labelledby="dropdownMenuButton">
+												<a class="dropdown-item"
+													th:href="@{/registration/userManagement}"><span
+													th:text="#{label.user_management}">User Management</span></a>
+												<!--  <a
+												class="dropdown-item" th:href="@{/registration/settings}"><span
+												th:text="#{label.settings}">Settings</span></a> -->
+												<a class="dropdown-item"
+													th:href="@{/registration/changePassword}"><span
+													th:text="#{label.change_password}">Change Password</span></a>
+
+											</div>
+											<!-- <span sec:authorize="hasAuthority('SUPER-ADMIN')"><a
+										href="/" th:href="@{/registration}">Create User</a> </span> -->
+										</div>
+									</div>
+									<div class="col-xs-6 ml-1">
+										<div class="dropdown">
+											<button class="btn btn-sm dropdown-toggle btnbgcolor p-1"
+												type="button" id="dropdownMenuButton" data-toggle="dropdown"
+													sec:authorize="hasAuthority('SUPER-ADMIN')"
+												aria-haspopup="true" aria-expanded="false">
+												<span th:text="#{lable.language}">Language</span>
+											</button>
+											<div class="dropdown-menu"
+												aria-labelledby="dropdownMenuButton">
+												<button class=" btn btn-fefault dropdown-item"
+													onclick="onLanguageChange('en')">
+													<span th:text="#{lang.eng}">English</span>
+												</button>
+												<button class="btn btn-fefault dropdown-item"
+													onclick="onLanguageChange('de')">
+													<span th:text="#{lang.de}">German</span>
+												</button>
+												<!-- <button class="btn btn-fefault dropdown-item"
+													onclick="onLanguageClick('fr')">
+													<span th:text="#{lang.fr}">French</span>
+												</button> -->
+											</div>
+										</div>
+									</div>
+
+<!--									<div class="col-xs-6 ml-1">-->
+
+<!--										<button  sec:authorize="isAuthenticated()" class="btn btn-sm  btnbgcolor p-1">-->
+<!--											<a data-toggle="modal"-->
+<!--											   data-target="#exitModal" >-->
+<!--												<span >Logout</span></a>-->
+<!--										</button>-->
+
+<!--									</div>-->
+
+<!--									<div th:insert="modal :: modal"></div>-->
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:insert="fragments/webjars :: webjars"></div>
+
+		<div layout:fragment="content">
+			<!-- Your Page Content Here -->
+		</div>
+
+		<!-- footer page -->
+		<div th:insert="fragments/footer :: footer"></div>
+
+		<div th:insert="modal :: dataLossWarningModal"></div>
+	</div>
+
+
+	<script>
+
+function onLanguageChange(selectedOption){
+
+var path = window.location.pathname
+
+ if(path === '/FailureAnalysis/login'){
+
+window.location.replace('?ln=' + selectedOption);
+
+ }
+
+else{
+     console.log(selectedOption)
+                    $.ajax({
+						 type: "GET",
+						 url: 'orderdetails/change/language/'+selectedOption,
+
+						 success: function(data)
+
+						 {
+								        window.location.reload();
+								        }
+					  });
+
+          }
+}
+
+
+
+</script>
+
+</body>
+
+</html>

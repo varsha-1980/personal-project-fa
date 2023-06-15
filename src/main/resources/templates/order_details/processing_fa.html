@@ -1,0 +1,329 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="processing" class="mt-3 mb-3">
+
+		<script type="text/javascript">
+		
+			function validateProcessStartDate1(val) {
+				
+			}
+			function validateProcessStopDate1(val) {
+				
+			}
+			
+			function validateProcessStartDate(val) {
+				if (validateDate(val,
+						document.getElementById('dbs_fa_date_id').value)) {
+					val.value = '';
+					alert(document.getElementById('process_start_date_in_span').innerHTML
+							+ ' Value should be after the \'Order date\'');
+				}
+			}
+
+			function validateProcessStopDate(val) {
+				if (!document.getElementById('process_start_date_in')
+						|| !document.getElementById('process_start_date_in').value
+						|| document.getElementById('process_start_date_in').value === ""
+						|| document.getElementById('process_start_date_in').value.length == 0) {
+					val.value = '';
+					alert(document.getElementById('process_start_date_in_span').innerHTML
+							+ " value required.");
+					return;
+				}
+
+				if (validateDate(val,
+						document.getElementById('dbs_fa_date_id').value)) {
+					val.value = '';
+					alert(document.getElementById('process_stop_date_in_span').innerHTML
+							+ ' Date Value should be after the \'Order date\'');
+					return;
+				}
+
+				if (document.getElementById('process_start_date_in')
+						&& document.getElementById('process_start_date_in').value
+						&& validateDate(val, document
+								.getElementById('process_start_date_in').value)) {
+					val.value = '';
+					alert(document.getElementById('process_stop_date_in_span').innerHTML
+							+ ' Date Value should be after '
+							+ document
+									.getElementById('process_start_date_in_span').innerHTML
+							+ ' Date.');
+					return;
+				}
+			}
+		</script>
+		<form id="procform" th:action="@{/orderdetails/update}" th:object="${orderDetails}"
+			method="post">
+<!--			<input type="hidden" id="ln" name="ln"-->
+<!--								th:value="__${#locale}__"></input> -->
+			<input id="dbs_fa_date_id" type="text" th:field="*{dbs_fa_date}"
+				style="display: none;"></input>
+			<div class="row">
+				<div class="col-md-12">
+					<div th:insert="admin/operations :: operations"></div>
+					<div class="row m-3">
+						<b><span class="underline"
+							th:text="#{label.editpage.tab7.heading}">Input by the FA
+								team:</span></b>
+					</div>
+					<div class="ml-md-3">
+						<div class="form-row ">
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="process_start_date_in"
+										id="process_start_date_in_label"><span
+										id="process_start_date_in_span"
+										th:text="#{label.editpage.tab7.processing_start}">Processing
+											start</span><a href="#" data-toggle="tooltip" data-placement="top"
+										th:title="#{label.tooltip.processing_start}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a><a
+										th:href="@{#}"
+										onclick="document.getElementById('process_start_date_in').value =  new Date().getDate()+'/'+(new Date().getMonth()<9 ? '0':'')+(new Date().getMonth()+1)+'/'+new Date().getFullYear();"
+										style="border: 0.5px solid gray; padding: 2px 3px 2px 3px; margin-left: 5px">
+											<i class="fa fa-play" aria-hidden="true"></i>
+									</a></label>
+								</div>
+								<div class="col-md-8">
+									<div class="input-group date datepicker"
+										id="process_start_date_in_pick">
+										<input type="text" class="form-control form-control-sm"
+											id="process_start_date_in" autocomplete="off"
+											th:field="*{dbs_fa_start}"
+											th:attr="placeholder=#{label.tab1.place.select_date}"
+											onchange="validateProcessStartDate(this);"></input>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="fa fa-calendar"></i></span>
+										</div>
+									</div>
+									<!-- 
+								
+									<input type="text" class="form-control form-control-sm"
+										id="start" th:field="*{processingStart}"></input> -->
+
+								</div>
+							</div>
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="process_stop_date_in"
+										id="process_stop_date_in_label"><span
+										id="process_stop_date_in_span"
+										th:text="#{label.editpage.tab7.processing_stop}">Processing
+											stop</span><a href="#" data-toggle="tooltip" data-placement="top"
+										th:title="#{label.tooltip.processing_stop}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a><a
+										th:href="@{#}"
+										onclick="document.getElementById('process_stop_date_in').value =  new Date().getDate()+'/'+(new Date().getMonth()<9 ? '0':'')+(new Date().getMonth()+1)+'/'+new Date().getFullYear();"
+										style="border: 0.5px solid gray; padding: 2px 3px 2px 3px; margin-left: 5px">
+											<i class="fa fa-times btn-danger" aria-hidden="true"></i>
+									</a></label>
+								</div>
+								<div class="col-md-8">
+									<div class="input-group date datepicker"
+										id="process_stop_date_in_pick">
+										<input type="text" class="form-control form-control-sm"
+											id="process_stop_date_in" autocomplete="off"
+											th:field="*{dbs_fa_stop}"
+											th:attr="placeholder=#{label.tab1.place.select_date}"
+											onchange="validateProcessStopDate(this);"></input>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="fa fa-calendar"></i></span>
+										</div>
+									</div>
+									<!-- 
+									<input type="text" class="form-control form-control-sm"
+										id="stop" th:field="*{processingStop}"></input> -->
+
+								</div>
+							</div>
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab7.archive_wafer_box}">Archive
+											wafer box</span><a href="#" data-toggle="tooltip"
+										data-placement="top"
+										th:title="#{label.tooltip.archive_wafer_box}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+										th:field="*{dbs_fa_archiv_wf}" list="archive_wf"
+										placeholder="Select Archive Wf.box"></input>
+									<datalist id="archive_wf">
+										<option th:each="_arch: ${archiveList}"
+											th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
+											th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>
+									</datalist>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab7.editor}">Editor</span><a href="#" data-toggle="tooltip"
+										data-placement="top" th:title="#{label.tooltip.editor}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input class="form-control form-control-sm  custom-select custom-select-sm" type="text"
+										th:field="*{dbs_fa_name}" list="fa_editor" 
+										placeholder="Select FA Editor" ></input>
+									<datalist id="fa_editor">
+										<option th:each="_p: ${processorList}"
+											th:value="${_p.pers_short}" th:text="${_p.pers_short}"></option>
+									</datalist>
+								</div>
+							</div>
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab7.processing_status}">Processing
+											Status</span><a href="#" data-toggle="tooltip" data-placement="top"
+										th:title="#{label.tooltip.processing_status}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+										th:field="*{dbs_status}" list="p_status"
+										placeholder="Select Status"></input>
+									<datalist id="p_status">
+										<option th:each="_st: ${processStatusList}"
+											th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
+											th:text="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"></option>
+									</datalist>
+								</div>
+
+							</div>
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab7.archive_polystyrene_box}">Archive
+											polystyrene box</span><a href="#" data-toggle="tooltip"
+										data-placement="top"
+										th:title="#{label.tooltip.archive_poly_box}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+										th:field="*{dbs_fa_archiv_ps}" list="archive_poly"
+										placeholder="Select Archive P.box"></input>
+									<datalist id="archive_poly">
+										<option th:each="_arch: ${archiveList}"
+											th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
+											th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>
+									</datalist>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab7.machining_comment}">Machining
+											Comment</span><a href="#" data-toggle="tooltip" data-placement="top"
+										th:title="#{label.tooltip.machine_comment}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+							</div>
+							<div class="form-group col-md-8">
+								<div class="col-md-10">
+									<textarea rows="5" name="comment" th:field="*{dbs_fa_text}"
+										th:attr="placeholder=#{label.enter_text_here}"></textarea>
+								</div>
+							</div>
+						</div>
+						<div th:insert="order_details/order_buttons :: order_buttons"></div>
+					</div>
+				</div>
+				<div th:insert="modal :: modal"></div>
+			</div>
+			<script type="text/javascript">
+			
+			
+		
+	
+			
+			
+			
+				$(document)
+						.ready(
+								function() {
+									var currentYear = new Date().getFullYear();
+									var currentMonth = new Date().getMonth();
+									var currentDay = new Date().getDate();
+									$('#process_start_date_in_pick')
+											.datepicker(
+													{
+														format : 'dd/mm/yyyy',
+														autoclose : true,
+														todayHighlight : true,
+														endDate : "today",
+														startDate : document
+																.getElementById('dbs_fa_date_id').value ? document
+																.getElementById('dbs_fa_date_id').value
+																: (new Date(
+																		currentYear,
+																		currentMonth - 1,
+																		currentDay))
+													//minDate: new Date((currentYear - 1), 12, 1),
+													//maxDate: new Date(currentYear, currentMonth, currentDay)
+													});
+
+									$('#process_stop_date_in_pick').datepicker(
+											{
+												format : 'dd/mm/yyyy',
+												//minDate: new Date((currentYear - 1), 12, 1),
+												// maxDate: new Date(currentYear, currentMonth, currentDay)
+												autoclose : true,
+												todayHighlight : true,
+												startDate : "today",
+												endDate : new Date(currentYear,
+														currentMonth + 1,
+														currentDay)
+											});
+								});
+
+
+				window.onbeforeunload = closingCode;
+
+				function closingCode(){
+
+					console.log('closing code...');
+					var form = $(document.getElementById('procform'));
+
+
+								    $.ajax({
+								        type: "POST",
+								        url: 'orderdetails/autosave',
+								        data: form.serialize(), // serializes the form's elements.
+								        success: function(data)
+								        {
+								          alert(data); // show response from the php script.
+								        }
+								    });
+
+				}
+
+
+				$(document).ready(function() {
+					$('#order_date_id').datepicker({
+						format : 'dd/mm/yyyy',
+						autoclose : true,
+						todayHighlight : true,
+						endDate : "today"
+					});
+					//$.datepicker.parseDate('dd/mm/yyyy')
+				});
+
+
+				
+		
+			</script>
+		</form>
+	</div>
+</body>
+</html>

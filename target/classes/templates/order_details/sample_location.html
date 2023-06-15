@@ -1,0 +1,99 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="location" class="mt-3 mb-3">
+		<form id="sampleform" th:action="@{/orderdetails/update}" th:object="${orderDetails}"
+			method="post">
+<!--			<input type="hidden" id="ln" name="ln"-->
+<!--								th:value="__${#locale}__"></input> -->
+			<div class="row">
+				<div class="col-md-12">
+					<div th:insert="admin/operations :: operations"></div>
+					<div class="row m-3">
+						<b><span class="underline"
+							th:text="#{label.editpage.tab6.heading}">What should
+								happen to the sample material after the analysis?</span></b>
+					</div>
+					<div class="ml-md-3">
+						<div class="form-row">
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab6.rehearse_remaining}">Rehearse
+											remaining</span><a href="#" data-toggle="tooltip"
+										data-placement="top"
+										th:title="#{label.tooltip.rehearse_remaining}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-12">
+									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+										th:field="*{dbs_remain}">
+										<option value="" label="Select Rehearse Remaining"></option>
+										<option th:each="_arch: ${samplesRemainList}"
+											th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
+											th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>
+									</select>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-row m-2">
+							<div class="form-group form-inline col-md-10">
+								<div class="col-md-1 text-center"
+									style="border: 0.5px solid gray; height: 89px;">
+									<img th:src="@{/static/images/men_stand_icon.png}"
+										style="height: 80px"></img>
+								</div>
+								<div class="col-md-11"
+									style="border: 0.5px solid gray; background-color: rgb(232, 240, 254) !important;">
+									<p th:text="#{label.editpage.tab6.remaining_characters}"></p>
+								</div>
+							</div>
+
+						</div>
+						<div th:insert="order_details/order_buttons :: order_buttons"></div>
+					</div>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+				window.onbeforeunload = closingCode;
+
+				function closingCode(){
+
+					console.log('closing code...');
+					var form = $(document.getElementById('sampleform'));
+
+
+								    $.ajax({
+								        type: "POST",
+								        url: 'orderdetails/autosave',
+								        data: form.serialize(), // serializes the form's elements.
+								        success: function(data)
+								        {
+								          alert(data); // show response from the php script.
+								        }
+								    });
+
+				}
+
+
+				$(document).ready(function() {
+					$('#order_date_id').datepicker({
+						format : 'dd/mm/yyyy',
+						autoclose : true,
+						todayHighlight : true,
+						endDate : "today"
+					});
+					//$.datepicker.parseDate('dd/mm/yyyy')
+				});
+
+			</script>
+
+
+		</form>
+	</div>
+	
+</body>
+</html>

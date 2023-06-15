@@ -1,0 +1,324 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="order_information" class="mt-3 mb-3">
+
+		<form id="orderform" name="orderform"
+			th:action="@{/orderdetails/update}" th:object="${orderDetails}"
+			method="post">
+<!--			<input type="hidden" id="ln" name="ln" th:value="__${#locale}__"></input>-->
+			<div class="row">
+				<div class="col-md-12">
+					<div th:insert="admin/operations :: operations"></div>
+					<div class="row m-3">
+						<b><span th:text="#{label.editpage.tab1.heading}">Please
+								enter all information about the order:</span></b>
+					</div>
+					<div class="ml-md-3">
+						<div class="form-row">
+							<div class=" form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab1.order_information}">Order
+											information</span></label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" class="form-control form-control-sm"
+										disabled="disabled" id="input1" th:field="*{id}"
+										placeholder="Enter Order Info"></input>
+
+								</div>
+
+							</div>
+
+
+
+
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+											th:text="#{label.editpage.tab1.type_of_sample_material}">Material
+											Type</span><a href="#" data-toggle="tooltip" data-placement="top"
+														  th:title="#{label.tooltip.material_type}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input
+											class="form-control form-control-sm custom-select custom-select-sm"
+											type="text" th:field="*{dbs_material}" list="material"
+											placeholder="Select Material Type"></input>
+									<datalist id="material">
+										<option th:each="_material: ${materialsList}"
+												th:value="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"
+												th:text="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"></option>
+									</datalist>
+								</div>
+							</div>
+
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+											th:text="#{label.editpage.tab1.car_nov.no}">CAR / NOV /
+											MRB No.</span><a href="#" data-toggle="tooltip" data-placement="top"
+															 th:title="#{label.tooltip.car_nov_mrb_no}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" class="form-control form-control-sm"
+										   th:field="*{dbs_car}" id="inputEmail4"
+										   th:attr="placeholder=#{label.tab1.place.car_nov}"></input>
+								</div>
+
+							</div>
+
+						</div>
+						<div class="form-row">
+
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label><span
+											th:text="#{label.editpage.tab1.order_date}">Order date</span><a
+											href="#" data-toggle="tooltip" data-placement="top"
+											th:title="#{label.tooltip.order_date}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<!-- autocomplete="off" th:field="*{dbs_fa_date}" -->
+								<!-- th:value="${#dates.format(orderDetails.dbs_fa_date, 'dd/MM/yyyy')}" -->
+								<div class="col-md-8">
+									<div class="input-group date datepicker" id="order_date_id">
+										<input type="text" class="form-control form-control-sm"
+											   autocomplete="off" th:field="*{dbs_fa_date}"
+											   th:attr="placeholder=#{label.tab1.place.select_date}"></input>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+													class="fa fa-calendar"></i></span>
+										</div>
+									</div>
+									<!-- <div class="input-group"
+										sec:authorize="!hasAuthority('SUPER-ADMIN')">
+										<input type="text" class="form-control form-control-sm"
+											disabled="disabled" autocomplete="off"
+											th:field="*{dbs_fa_date}"
+											th:attr="placeholder=#{label.tab1.place.select_date}"></input>
+									</div> -->
+									<!-- <div sec:authorize="!hasAuthority('SUPER-ADMIN')"
+										th:text="${#dates.format(_order.dbs_fa_date, 'dd-MM-yyyy')}"></div> -->
+								</div>
+
+							</div>
+
+
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+											th:text="#{label.editpage.tab1.lot_id}">LOT ID</span><a
+											href="#" data-toggle="tooltip" data-placement="top"
+											th:title="#{label.tooltip.lot_id}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" class="form-control form-control-sm"
+										   th:field="*{dbs_lotid}" id="inputEmail4"
+										   th:attr="placeholder=#{label.tab1.place.lot_id}"></input>
+								</div>
+
+							</div>
+
+
+
+
+
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputPassword4"><span
+											th:text="#{label.editpage.tab1.sample_location}">Sample
+											Location</span><a href="#" data-toggle="tooltip"
+															  data-placement="top" th:title="#{label.tooltip.location}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input
+											class="form-control form-control-sm custom-select custom-select-sm"
+											type="text" th:field="*{dbs_location}" list="locations"
+											placeholder="Select Location"></input>
+									<datalist id="locations">
+										<option th:each="_loc: ${locationsList}"
+												th:value="__${#locale}__ == 'de' ? ${_loc.nameDe} : ${_loc.name}"
+												th:text="__${#locale}__ == 'de' ? ${_loc.nameDe} : ${_loc.name}"></option>
+									</datalist>
+								</div>
+							</div>
+
+
+						</div>
+						<div class="form-row">
+
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputPassword4"><span
+											th:text="#{label.editpage.tab1.customer}">Client</span><a
+											href="#" data-toggle="tooltip" data-placement="top"
+											th:title="#{label.tooltip.client}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input id="client_input"
+										   class="form-control form-control-sm custom-select custom-select-sm"
+										   type="text" th:field="*{dbs_ag_name}" list="client"
+										   th:placeholder="${clientName}"></input>
+
+									<div id="helper"
+										 style="display: none; position: absolute; z-index: 200; border: 1pt solid #ccc;"></div>
+									<datalist id="client">
+										<option th:each="_customer: ${customersList}"
+												th:value="${_customer.pers_short}"
+												th:text="${_customer.pers_short}"></option>
+									</datalist>
+								</div>
+							</div>
+
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+											th:text="#{label.editpage.tab1.wafer_no}">Wafer NO.</span><a
+											href="#" data-toggle="tooltip" data-placement="top"
+											th:title="#{label.tooltip.wafer_no}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" class="form-control form-control-sm"
+										   th:field="*{dbs_wfr}" id="inputEmail4"
+										   th:attr="placeholder=#{label.tab1.place.wafer_no}"></input>
+								</div>
+
+							</div>
+
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+											th:text="#{label.editpage.tab9.processing_status}">Processing
+											Status</span><a href="#" data-toggle="tooltip" data-placement="top"
+															th:title="#{label.tooltip.processing_status}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input
+											class="form-control form-control-sm custom-select custom-select-sm"
+											type="text" th:field="*{dbs_status}" list="p_status"
+											placeholder="Select Status"></input>
+									<datalist id="p_status">
+										<option th:each="_st: ${processStatusList}"
+												th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
+												th:text="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"></option>
+									</datalist>
+								</div>
+							</div>
+
+
+
+
+
+
+
+						</div>
+						<div class="form-row">
+
+
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputPassword4"><span
+											th:text="#{label.editpage.tab1.Priority}">Priority</span><a
+											href="#" data-toggle="tooltip" data-placement="top"
+											th:title="#{label.tooltip.priority}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a> </label>
+								</div>
+								<div class="col-md-8">
+									<input
+											class="form-control form-control-sm custom-select custom-select-sm"
+											type="text" th:field="*{dbs_prio}" list="priority"
+											placeholder="Select Priority"></input>
+									<datalist id="priority">
+										<option th:each="_prio: ${priorityList}"
+												th:value="${_prio.id}"
+												th:text="__${#locale}__ == 'de'? ${_prio.nameDe} : ${_prio.name}"></option>
+									</datalist>
+								</div>
+							</div>
+
+
+
+
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab1.current_processing_step}">Current
+											processing</span><a href="#" data-toggle="tooltip"
+										data-placement="top"
+										th:title="#{label.tooltip.current_processing}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<textarea rows="3" cols="34" name="comment"
+										th:attr="placeholder=#{label.enter_text_here}"
+										th:field="*{dbs_step}"></textarea>
+								</div>
+
+							</div>
+
+						</div>
+
+						<div th:insert="order_details/order_buttons :: order_buttons"></div>
+
+						<input type="hidden" id="id" th:field="*{id}"></input> <input
+							type="hidden" id="nexttabid" value="geometry" name="nexttabid"></input>
+					</div>
+				</div>
+			</div>
+			<button id="formsubmit" type="submit" name="action"
+								value="tabclick" style="display: none"></button>
+			<script type="text/javascript">
+
+    if(window.location.pathname === "/FailureAnalysis/orderdetails/edit"){
+
+			window.onbeforeunload = closingCode;
+
+        }
+
+				function closingCode(){
+
+					console.log('closing code...');
+					var form = $(document.getElementById('orderform'));
+
+
+								    $.ajax({
+								        type: "POST",
+								        url: 'orderdetails/autosave',
+								        data: form.serialize(), // serializes the form's elements.
+								        success: function(data)
+								        {
+
+								        // window.location.replace('http://localhost:8080/FailureAnalysis/orderdetails/edit?ln=de');
+								         // show response from the php script.
+								        }
+								    });
+
+				}
+
+
+
+				$(document).ready(function() {
+					$('#order_date_id').datepicker({
+						format : 'dd/mm/yyyy',
+						autoclose : true,
+						todayHighlight : true,
+						endDate : "today"
+					});
+					//$.datepicker.parseDate('dd/mm/yyyy')
+				});
+
+			</script>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	layout:decorate="~{layout}">
+<head>
+<title>Home</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row mt-1 h-100">
+			<div class="col-md-12 h-100">
+				<div class="card h-100">
+					<div class="card-body">
+
+						<ul class="list-group">
+							<li
+								class="list-group-item border-left-0  border-right-0 align-middle">
+								<!-- <span
+								th:text="#{label.menupage.greeting(${principal.username})}">Material</span> -->
+								<span th:text="#{label.menupage.greeting_part1}">Hello</span> <span
+								sec:authentication="principal.username"></span> <span
+								th:text="#{label.menupage.greeting_part2}">! What can I
+									do for you ?</span>
+							</li>
+							<li
+								class="list-group-item border-left-0  border-right-0 justify-content-center text-center align-middle">
+								<b> <span th:text="#{label.menupage.summary}">Plot
+										summary</span></b>
+							</li>
+							<li class="list-group-item border-left-0  border-right-0">
+
+								<div class="row">
+									<div class="col-md-4 d-flex">
+										<ul
+											class="list-group blockquote list-inline mx-md-auto justify-content-center">
+											<li class="list-group-item border-0 row"><a
+												th:href="@{/orderdetails/create}"> <i class="fa fa-file"><span
+														class="ml-1" th:text="#{label.menupage.create_new_order}">Create
+															a new order</span></i></a></li>
+
+											<!-- <li class="list-group-item border-0 row"><a th:href="@{#}"> <i
+													class="fa fa-list-alt"><span class="ml-1"
+														th:text="#{label.menupage.my_orders_form}">my_orders_form</span></i></a></li> -->
+											<li class="list-group-item border-0 row"><a
+												th:href="@{/orderdetails}"> <i class="fa fa-table"><span
+														class="ml-1" th:text="#{label.menupage.my_orders_table}">My
+															orders (table)</span></i></a></li>
+										</ul>
+									</div>
+									<div class="col-md-4 d-flex">
+										<ul
+											class="list-group blockquote list-inline mx-md-auto justify-content-center">
+											<li class="list-group-item border-0 row "><a
+												th:href="@{/orderdetails(fromLink=${'All Open Orders'})}">
+													<i class="fa fa-table"><span class="ml-1"
+														th:text="#{label.menupage.all_open_oders}">All open
+															orders</span></i>
+											</a></li>
+											<li class="list-group-item border-0 row"><a
+												th:href="@{/orderdetails(fromLink=${'search'})}"> <i
+													class="fa fa-search"><span class="ml-1"
+														th:text="#{label.menupage.search_for_orders}">Search
+															for an order</span></i></a></li>
+
+											<!-- <li class="list-group-item border-0 row"><a th:href="@{/orderdetails(fromLink=${'search'})}"> <i
+													class="fa fa-table"><span class="ml-1"
+														th:text="#{label.menupage.open_orders_ex_service}">Open orders ext. service</span></i></a></li> -->
+
+										</ul>
+									</div>
+									<div class="col-md-4 d-flex">
+										<ul
+											class="list-group blockquote list-inline mx-md-auto justify-content-center">
+											<li class="list-group-item border-0 row"><a
+												th:href="@{/orderdetails(fromLink=${'Open FA Orders'})}">
+													<i class="fa fa-table"><span class="ml-1"
+														th:text="#{label.menupage.open_orders_dept_fa}">Open
+															orders Dept. FA</span></i>
+											</a></li>
+											<li class="list-group-item border-0 row"><a
+												th:href="@{/orderdetails(fromLink=${'Evaluation Orders'})}">
+													<i class="fa fa-table"><span class="ml-1"
+														th:text="#{label.menupage.orders_for_evaluation}">Orders
+															for evaluation</span></i>
+											</a></li>
+										</ul>
+									</div>
+									<!-- <div class="col-md-4 d-flex">
+										<ul
+											class="list-group blockquote list-inline mx-md-auto justify-content-center">
+											<li class="list-group-item border-0 row"><a th:href="@{#}"> <i
+													class="fa fa-question-circle"><span class="ml-1"
+														th:text="#{label.menupage.oeperational_manual}">Operation manual</span></i></a></li>
+											<li class="list-group-item border-0 row"><a th:href="@{#}"> <i
+													class="fa fa-file-excel-o"><span class="ml-1"
+														th:text="#{label.menupage.statistics_fa_labor}">Statistics FA laboratory</span></i></a></li>
+											<li class="list-group-item border-0 row"><a th:href="@{#}"> <i
+													class="fa fa-table"><span class="ml-1"
+														th:text="#{label.menupage.call_up_fa_team_database}">Call up the FA team database</span></i></a></li>
+											<li class="list-group-item border-0 row"><a th:href="@{#}"><span
+													class="ml-1"></span></a></li>
+										</ul>
+									</div> -->
+
+								</div>
+							</li>
+							<li
+								class="list-group-item border-left-0  border-right-0 justify-content-center text-center align-middle">
+								<!-- <a class="btn btnbgcolor" th:href="@{#}"><span
+									th:text="#{label.menupage.news_center}">News-Center</span></a> -->
+								<a class="btn btnbgcolor" th:href="@{#}"
+								sec:authorize="isAuthenticated()"> <i data-toggle="modal"
+									data-target="#exitModal" class="fa fa-arrow-up ml-2"><span style="margin-left:5px"
+										th:text="#{label.menupage.exit_program}">Exit Program</span></i></a>
+							</li>
+						</ul>
+
+					</div>
+				</div>
+				<div th:insert="modal :: modal"></div>
+			</div>
+		</div>
+
+
+		<script type="text/javascript" th:src="@{/static/js/lib.js}"></script>
+	</div>
+</body>
+</html>
