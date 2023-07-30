@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+
+	layout:decorate="~{layout}">
+<title>FA Edit</title>
+<body>
+	<div layout:fragment="content">
+		<div class="row mt-1 h-100">
+			<div class="col-md-12 h-100">
+				<div class="card h-100">
+					<div class="card-body p-2 mt-3 ml-1">
+						<form id="tabform" th:action="@{/orderdetails/edit}" method="post">
+							<div th:insert="order_details/order_buttons :: flash_message"></div>
+							<nav>
+								<div class="nav nav-tabs" role="tablist">
+
+
+
+									<a class="nav-item nav-link" id="nav-information-tab"
+										th:href="@{#}" onclick="ontabclick('TAB1'); "
+										aria-controls="nav-information"
+										sec:authorize="!hasAuthority('FA')"
+										aria-selected="${currentTab.value == 'order'}? 'true'"
+										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB1.ordinal() == currentTab.ordinal()? 'active' : '') }">
+										<span th:text="#{label.editpage.tab1}">Order
+											information</span>
+																						
+					
+									</a> 
+									
+									<a  class="nav-item nav-link" id="nav-geometry-tab"
+										th:href="@{#}" onclick="ontabclick('TAB2'); "
+										aria-controls="nav-geometry"
+										sec:authorize="!hasAuthority('FA')"
+										aria-selected="${currentTab.value == 'geometry'}? 'true'"
+										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB2.ordinal() == currentTab.ordinal()? 'active' : '') }"><span
+										th:text="#{label.editpage.tab2}">Geometry</span>											
+										
+									</a> 
+										
+										
+										<a
+										th:href="@{#}" onclick="return ontabclick('TAB3')"
+										class="nav-item nav-link" id="nav-reason-tab"
+										aria-controls="nav-reason" sec:authorize="!hasAuthority('FA')"
+										aria-selected="${currentTab.value == 'reason'}? 'true'"
+										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB3.ordinal() == currentTab.ordinal()? 'active' : '')}"><span
+										th:text="#{label.editpage.tab3}">Reason/description</span></a> 
+										
+										<a
+										th:href="@{#}" onclick="return ontabclick('TAB4')"
+										class="nav-item nav-link" id="nav-analysis-tab"
+										aria-controls="nav-analysis"
+										sec:authorize="!hasAuthority('FA')"
+										aria-selected="${currentTab.value == 'analysis'}? 'true'"
+										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB4.ordinal() == currentTab.ordinal()? 'active' : '')}"><span
+										th:text="#{label.editpage.tab4}">Analysis methods</span></a> 
+										
+										<a
+										class="nav-item nav-link" id="nav-description-tab"
+										th:href="@{#}" onclick="return ontabclick('TAB5')"
+										aria-controls="nav-description"
+										sec:authorize="!hasAuthority('FA')"
+										aria-selected="${currentTab.value == 'position'}? 'true'"
+										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB5.ordinal() == currentTab.ordinal()? 'active' : '')}"><span
+										th:text="#{label.editpage.tab5}">Position description</span></a> 
+										
+										<a
+										class="nav-item nav-link" id="nav-location-tab" th:href="@{#}"
+										onclick="return ontabclick('TAB6')"
+										aria-controls="nav-location"
+										sec:authorize="!hasAuthority('FA')"
+										aria-selected="${currentTab.value == 'location'}? 'true'"
+										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB6.ordinal() == currentTab.ordinal()? 'active' : '')}"><span
+										th:text="#{label.editpage.tab6}">Sample location</span></a> 
+										
+										<a
+										class="nav-item nav-link" id="nav-processing-tab"
+										th:href="@{#}" onclick="return ontabclick('TAB7')"
+										aria-controls="nav-processing"
+										sec:authorize="!hasAuthority('FA-REQUESTOR')"
+										aria-selected="${currentTab.value == 'processing'}? 'true'"
+										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB7.ordinal() == currentTab.ordinal()? 'active' : '')}"><span
+												th:if="${#httpServletRequest.requestURI != '/FailureAnalysis/orderdetails/create'}"
+										th:text="#{label.editpage.tab7}">Processing FA</span></a> 
+										
+										<a
+										class="nav-item nav-link" id="nav-costs-tab"
+										aria-controls="nav-costs"
+										sec:authorize="!hasAuthority('FA-REQUESTOR')" th:href="@{#}"
+										onclick="return ontabclick('TAB8')"
+										aria-selected="${currentTab.value == 'costs'}? 'true'"
+										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB8.ordinal() == currentTab.ordinal()? 'active' : '')}"><span
+												th:if="${#httpServletRequest.requestURI != '/FailureAnalysis/orderdetails/create'}"
+										th:text="#{label.editpage.tab8}">Costs</span></a> 
+										
+										<a
+										class="nav-item nav-link" id="nav-result-tab"
+										aria-controls="nav-result" th:href="@{#}"
+										sec:authorize="!hasAuthority('FA-REQUESTOR')"
+										onclick="return ontabclick('TAB9')"
+										aria-selected="${currentTab.value == 'result'}? 'true'"
+										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB9.ordinal() == currentTab.ordinal()? 'active' : '')}"><span
+												th:if="${#httpServletRequest.requestURI != '/FailureAnalysis/orderdetails/create'}"
+										th:text="#{label.editpage.tab9}">Result</span></a>
+
+										<a
+										class="nav-item nav-link" id="nav-statistics-tab"
+
+										th:inline="javascript"
+										th:href="@{#}" onclick="return ontabclick('TAB10')"
+										aria-controls="nav-statistics"
+										sec:authorize="!hasAuthority('FA-REQUESTOR')"
+										aria-selected="${currentTab.value == 'statistics'}? 'true'"
+										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB10.ordinal() == currentTab.ordinal()? 'active' : '')}">
+
+											<span th:if="${#httpServletRequest.requestURI != '/FailureAnalysis/orderdetails/create'}"
+													th:text="#{label.editpage.tab10}">Statistics</span>
+
+										</a>
+
+
+								</div>
+							</nav>
+							<input type="hidden" id="id" th:field="*{orderDetails.id}"></input>
+							<input type="hidden" id="tab" value="" name="tab"></input>
+							<button id="tabclicksubmit" type="submit" name="action"
+								value="tabclick" style="display: none"></button>
+
+							<!-- Include the clipboard.js library -->
+							<script  type="text/javascript">
+					
+							function ontabclick(tab) {
+			
+									console.log(tab);								
+									document.getElementById('tab')
+											.setAttribute("value", tab);
+					
+					
+							document.getElementById('tabclicksubmit').click();
+
+                             if(window.location.pathname === '/FailureAnalysis/orderdetails/create') {
+									document.getElementById('continue').click();
+									}
+
+
+							}
+
+						 var clipboard = new ClipboardJS('#copy-button');
+
+						  clipboard.on('success', function(e) {
+						   alert('Link copied to clipboard!');
+							console.log('Link copied to clipboard!');
+							// You can also show a success message to the user here
+						  });
+
+						  clipboard.on('error', function(e) {
+						  alert('Failed to copy link to clipboard.')
+							console.log('Failed to copy link to clipboard.');
+							// You can also show an error message to the user here
+						  });
+
+					function openFileExplorer() {
+					  const fileInput = document.getElementById("fileInput");
+					  const fileName = fileInput.files[0].name;
+					  const fileExplorerUrl = `file://192.168.100.12/data`; // Assuming you're using a file:// protocol
+					  window.open(fileExplorerUrl);
+					}
+
+
+					</script>
+
+
+
+							<script>
+						var clipboard = new ClipboardJS('.btn');
+						clipboard.on('success', function(e) {
+							console.log("Link copied to clipboard");
+						});
+						clipboard.on('error', function(e) {
+							console.error("Failed to copy link to clipboard");
+						});
+					</script>
+
+
+
+						</form>
+						<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+							<div class="tab-pane"
+								th:classappend="${currentTab.value == 'order'}? 'show active'"
+								id="nav-information" role="tabpanel"
+								sec:authorize="!hasAuthority('FA')"
+								aria-labelledby="nav-information-tab">
+								<div th:if="${currentTab.value == 'order'}"
+									th:insert="order_details/order_information :: order_information"></div>
+							</div>
+							<div class="tab-pane"
+								th:classappend="${currentTab.value == 'geometry'}? 'show active'"
+								id="nav-geometry" role="tabpanel"
+								sec:authorize="!hasAuthority('FA')"
+								aria-labelledby="nav-geometry-tab">
+								<div th:if="${currentTab.value == 'geometry'}"
+									th:insert="order_details/geometry :: geometry"></div>
+							</div>
+							<div class="tab-pane"
+								th:classappend="${currentTab.value == 'reason'}? 'show active'"
+								id="nav-reason" sec:authorize="!hasAuthority('FA')"
+								role="tabpanel" aria-labelledby="nav-reason-tab">
+								<div th:if="${currentTab.value == 'reason'}"
+									th:insert="order_details/reason :: reason"></div>
+							</div>
+							<div class="tab-pane"
+								th:classappend="${currentTab.value == 'analysis'}? 'show active'"
+								id="nav-analysis" sec:authorize="!hasAuthority('FA')"
+								role="tabpanel" aria-labelledby="nav-analysis-tab">
+								<div th:if="${currentTab.value == 'analysis'}"
+									th:insert="order_details/analysis_methods :: analysis"></div>
+							</div>
+							<div class="tab-pane"
+								th:classappend="${currentTab.value == 'position'}? 'show active'"
+								id="nav-description" sec:authorize="!hasAuthority('FA')"
+								role="tabpanel" aria-labelledby="nav-description-tab">
+								<div  th:if="${currentTab.value == 'position'}"
+										th:insert="order_details/position_description :: position"></div>
+							</div>
+							<div class="tab-pane"
+								th:classappend="${currentTab.value == 'location'}? 'show active'"
+								id="nav-location" sec:authorize="!hasAuthority('FA')"
+								role="tabpanel" aria-labelledby="nav-location-tab">
+								<div th:if="${currentTab.value == 'location'}"
+
+										th:insert="order_details/sample_location :: location"></div>
+							</div>
+							<div class="tab-pane"
+								th:classappend="${currentTab.value == 'processing'}? 'show active'"
+								id="nav-processing" role="tabpanel"
+								sec:authorize="!hasAuthority('FA-REQUESTOR')"
+								aria-labelledby="nav-processing-tab">
+								<div th:if="${currentTab.value == 'processing'}"
+										th:insert="order_details/processing_fa :: processing"></div>
+							</div>
+							<div class="tab-pane"
+								th:classappend="${currentTab.value == 'costs'}? 'show active'"
+								sec:authorize="!hasAuthority('FA-REQUESTOR')" id="nav-costs"
+								role="tabpanel" aria-labelledby="nav-costs-tab">
+								<div th:if="${currentTab.value == 'costs'}"
+										th:insert="order_details/costs :: costs"></div>
+							</div>
+							<div class="tab-pane"
+								th:classappend="${currentTab.value == 'result'}? 'show active'"
+								sec:authorize="!hasAuthority('FA-REQUESTOR')" id="nav-result"
+								role="tabpanel" aria-labelledby="nav-result-tab">
+								<div th:if="${currentTab.value == 'result'}"
+										th:insert="order_details/result :: result"></div>
+							</div>
+							<div class="tab-pane"
+								th:classappend="${currentTab.value == 'statistics'}? 'show active'"
+								id="nav-statistics" role="tabpanel"
+								sec:authorize="!hasAuthority('FA-REQUESTOR')"
+								aria-labelledby="nav-statistics-tab">
+								<div th:if="${currentTab.value == 'statistics'}"
+										th:insert="order_details/statistics :: statistics"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

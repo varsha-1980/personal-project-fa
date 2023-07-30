@@ -1,0 +1,72 @@
+spring:
+   application:
+        name: FailureAnalysis
+   thymeleaf:
+       cache: false
+   jackson:
+      deserialization:
+        ADJUST_DATES_TO_CONTEXT_TIME_ZONE : false
+app:
+   message: This is the primary Application Property for ${spring.application.name}
+server:
+  servlet:
+    context-path: /FailureAnalysis
+
+
+serverLocation : "ftp://122.175.56.254:2486/"
+ftpUserName : "gopi"
+ftpUserPassword : "Gopi@SIL-0699"
+serverPortNumber : "2486"
+serverAddress : "122.175.56.254"
+sharedFolderPath : '\\wsiz03\iz_rem\Auftraege_nach_Nummern\'
+sharedFolderPathURL : '\\192.168.100.12\data\Freshers\SQLEXPRESSEDITION'
+
+
+---
+spring:
+    profiles: dev
+    datasource:
+          url: jdbc:h2:mem:fapocdevdb
+          username: sa
+          password:
+          driverClassName: org.h2.Driver
+    h2:
+      console:
+           enabled: true
+    jpa:
+      properties:
+             hibernate:
+                 dialect: org.hibernate.dialect.H2Dialect
+                 format_sql: true
+                 show-sql: true
+                 enable_lazy_load_no_trans: true
+      hibernate:
+              ddl-auto: create
+      show-sql: true
+    jackson:
+        serialization:
+              fail-on-empty-beans: false
+---
+spring:
+  profiles: prod
+  datasource:
+      driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      url: jdbc:sqlserver://172.31.35.22:1433;databaseName=failure_analysis_new
+      username: fa_app
+      password: ycfJSV28pRaWbyqC
+
+  ## Hibernate Properties
+  # The SQL dialect makes Hibernate generate better SQL for the chosen database
+  jpa:
+     properties:
+          hibernate:
+             dialect: org.hibernate.dialect.SQLServer2012Dialect
+  # Hibernate ddl auto (create, create-drop, validate, update)
+             ddl-auto: none
+             format_sql: true
+             show-sql: true
+             enable_lazy_load_no_trans: true
+     show-sql: true
+  jackson:
+       serialization:
+              fail-on-empty-beans: false

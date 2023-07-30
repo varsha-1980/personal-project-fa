@@ -1,0 +1,275 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="result" class="mt-3 mb-3">
+		<script type="text/javascript">
+			function validateEvaluationStartDate(val) {
+				if (validateDate(val,
+						document.getElementById('dbs_fa_date_id').value)) {
+					val.value = '';
+					alert(document.getElementById('date_evaluation_span').innerHTML
+							+ ' Value should be after the \'Order date\'');
+				}
+			}
+
+			function validateEvaluationStopDate(val) {
+				if (!document.getElementById('date_evaluation')
+						|| !document.getElementById('date_evaluation').value
+						|| document.getElementById('date_evaluation').value === ""
+						|| document.getElementById('date_evaluation').value.length == 0) {
+					val.value = '';
+					alert(document.getElementById('date_evaluation_span').innerHTML
+							+ " value required.");
+					return;
+				}
+
+				if (validateDate(val,
+						document.getElementById('dbs_fa_date_id').value)) {
+					val.value = '';
+					alert(document
+							.getElementById('date_analysis_finished_span').innerHTML
+							+ ' Date Value should be after the \'Order date\'');
+					return;
+				}
+
+				if (document.getElementById('date_evaluation')
+						&& document.getElementById('date_evaluation').value
+						&& validateDate(val, document
+								.getElementById('date_evaluation').value)) {
+					val.value = '';
+					alert(document
+							.getElementById('date_analysis_finished_span').innerHTML
+							+ ' Date Value should be after '
+							+ document.getElementById('date_evaluation_span').innerHTML
+							+ ' Date.');
+					return;
+				}
+			}
+		</script>
+		<form id="resultform" th:action="@{/orderdetails/update}" th:object="${orderDetails}"
+			method="post">
+<!--			<input type="hidden" id="ln" name="ln"-->
+<!--								th:value="__${#locale}__"></input> -->
+								<!-- th:field="*{dbs_fa_date}" -->
+			<input id="dbs_fa_date_id" type="text" 
+				th:field="*{dbs_fa_date}"
+				style="display: none;"></input>
+			<div class="row">
+				<div class="col-md-12">
+					<div th:insert="admin/operations :: operations"></div>
+					<div class="row m-3">
+						<b><span class="underline"
+							th:text="#{label.editpage.tab9.heading}">Entry by the
+								person responsible for the order:</span></b>
+					</div>
+					<div class="ml-md-3">
+						<div class="form-row ">
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="date_evaluation" id="date_evaluation_label"><span
+										id="date_evaluation_span"
+										th:text="#{label.editpage.tab9.date_evalution}">Date
+											evaluation</span><a href="#" data-toggle="tooltip"
+										data-placement="top"
+										th:title="#{label.tooltip.date_evalation}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a><a
+										th:href="@{#}"
+										onclick="document.getElementById('date_evaluation').value =  new Date().getDate()+'/'+(new Date().getMonth()<9 ? '0':'')+(new Date().getMonth()+1)+'/'+new Date().getFullYear();"
+										style="border: 0.5px solid gray; padding: 2px 5px 2px 5px; margin-left: 5px"><i
+											class="fa fa-play" aria-hidden="true"></i></a></label>
+								</div>
+								<div class="col-md-8">
+									<div class="input-group date datepicker"
+										id="date_evaluation_pick">
+										<input type="text" id="date_evaluation"
+											class="form-control form-control-sm" autocomplete="off"
+											th:field="*{dbs_res_start}"
+											onchange="validateEvaluationStartDate(this);"
+											th:attr="placeholder=#{label.tab1.place.select_date}"></input>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="fa fa-calendar"></i></span>
+										</div>
+									</div>
+									<!-- <input type="text" th:field="*{dateEvaluation}"
+										class="form-control form-control-sm input-sm" id="input1"></input> -->
+
+								</div>
+							</div>
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="date_analysis_finished"
+										id="date_analysis_finished_label"><span
+										id="date_analysis_finished_span"
+										th:text="#{label.editpage.tab9.date_analysis}">Date
+											analysis finished</span><a href="#" data-toggle="tooltip"
+										data-placement="top"
+										th:title="#{label.tooltip.date_anal_finish}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a><a
+										th:href="@{#}"
+										onclick="document.getElementById('date_analysis_finished').value =  new Date().getDate()+'/'+(new Date().getMonth()<9 ? '0':'')+(new Date().getMonth()+1)+'/'+new Date().getFullYear();"
+										style="border: 0.5px solid gray; padding: 2px 5px 2px 5px; margin-left: 5px"><i
+											class="fa fa-check " aria-hidden="true"></i></a></label>
+								</div>
+								<div class="col-md-8">
+									<div class="input-group date datepicker"
+										id="date_analysis_finished_pick">
+										<input type="text" id="date_analysis_finished"
+											class="form-control form-control-sm" autocomplete="off"
+											th:field="*{dbs_res_stop}"
+											th:attr="placeholder=#{label.tab1.place.select_date}"
+											onchange="validateEvaluationStopDate(this);"></input>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="fa fa-calendar"></i></span>
+										</div>
+									</div>
+									<!-- <input type="text" th:field="*{dateAnalysisFinished}"
+										class="form-control form-control-sm input-sm" id="input1"></input> -->
+
+								</div>
+							</div>
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab9.evalutor}">Evaluator</span><a
+										href="#" data-toggle="tooltip" data-placement="top"
+										th:title="#{label.tooltip.evaluator}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+										th:field="*{dbs_res_name}" list="evaluator"
+										placeholder="Select Evaluator"></input>
+									<datalist id="evaluator">
+										<option th:each="_p: ${evaluatorList}"
+											th:value="${_p.pers_short}" th:text="${_p.pers_short}"></option>
+									</datalist>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-4">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab7.processing_status}">Processing
+											Status</span><a href="#" data-toggle="tooltip" data-placement="top"
+										th:title="#{label.tooltip.processing_status}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-8">
+									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+										th:field="*{dbs_status}" list="p_status"
+										placeholder="Select Status"></input>
+									<datalist id="p_status">
+										<option th:each="_st: ${processStatusList}"
+											th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
+											th:text="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"></option>
+									</datalist>
+								</div>
+
+							</div>
+							<div class="form-group col-md-8">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+										th:text="#{label.editpage.tab9.result_analysis}">Result
+											of the analysis</span><a href="#" data-toggle="tooltip"
+										data-placement="top"
+										th:title="#{label.tooltip.result_analysis}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-10">
+									<textarea rows="5" name="comment" th:field="*{dbs_res_text}"
+										th:attr="placeholder=#{label.enter_text_here}"></textarea>
+								</div>
+							</div>
+						</div>
+						<div th:insert="order_details/order_buttons :: order_buttons"></div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+
+
+
+				window.onbeforeunload = closingCode;
+
+				function closingCode(){
+
+					console.log('closing code...');
+					var form = $(document.getElementById('resultform'));
+
+
+								    $.ajax({
+								        type: "POST",
+								        url: 'orderdetails/autosave',
+								        data: form.serialize(), // serializes the form's elements.
+								        success: function(data)
+								        {
+								          alert(data); // show response from the php script.
+								        }
+								    });
+
+				}
+
+
+				$(document).ready(function() {
+					$('#order_date_id').datepicker({
+						format : 'dd/mm/yyyy',
+						autoclose : true,
+						todayHighlight : true,
+						endDate : "today"
+					});
+					//$.datepicker.parseDate('dd/mm/yyyy')
+				});
+
+			
+	
+			
+			
+			
+				$(document)
+						.ready(
+								function() {
+									var currentYear = new Date().getFullYear();
+									var currentMonth = new Date().getMonth();
+									var currentDay = new Date().getDate();
+									$('#date_evaluation_pick')
+											.datepicker(
+													{
+														format : 'dd/mm/yyyy',
+														autoclose : true,
+														todayHighlight : true,
+														endDate : "today",
+														startDate : document
+																.getElementById('dbs_fa_date_id').value ? document
+																.getElementById('dbs_fa_date_id').value
+																: (new Date(
+																		currentYear,
+																		currentMonth - 1,
+																		currentDay))
+													//minDate: new Date((currentYear - 1), 12, 1),
+													//maxDate: new Date(currentYear, currentMonth, currentDay)
+													});
+
+									$('#date_analysis_finished_pick')
+											.datepicker(
+													{
+														format : 'dd/mm/yyyy',
+														//minDate: new Date((currentYear - 1), 12, 1),
+														// maxDate: new Date(currentYear, currentMonth, currentDay)
+														autoclose : true,
+														todayHighlight : true,
+														startDate : "today",
+														endDate : new Date(
+																currentYear,
+																currentMonth + 1,
+																currentDay)
+													});
+								});
+			</script>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="order_buttons">
+
+		<div class="form-row">
+			<div class="form-group col-md-4"></div>
+			<div class="form-group col-md-4"></div>
+			<div class="form-group col-md-4 text-center">
+				<button type="submit" name="action" value="previous"
+					th:if="${previousTab!=null}" class="btn btnbgcolor">
+					<span th:text="#{label.previous}">Previous</span>
+				</button>
+				<button type="submit" name="action" value="save" id="savee"
+					class="btn btnbgcolor">
+					<span th:text="#{label.save}">Save</span>
+				</button>
+				<a th:href="@{#}"> <i data-toggle="modal"
+					data-target="#dataLossWarningModalAtCancel"><button
+							type="button" class="btn btnbgcolor">
+							<span th:text="#{label.cancel}">Cancel</span>
+						</button></i></a>
+				<button type="submit" name="action" value="continue" id="continue"
+					th:if="${nextTab!=null}" class="btn btnbgcolor">
+					<span th:text="#{label.continue}">Continue</span>
+				</button>
+			</div>
+		</div>
+		<input type="hidden" id="id" th:field="*{id}"></input> <input
+			type="hidden" id="previousTab" th:field="*{previousTab}"
+			name="previousTab"></input> <input type="hidden" id="currentTab"
+			th:field="*{currentTab}" name="currentTab"></input> <input
+			type="hidden" id="nextTab" th:field="*{nextTab}" name="nextTab"></input>
+	</div>
+
+	<div th:fragment="flash_message">
+		<div th:if="${flash}" class="toast text-white bg-success w-25"
+			role="alert" aria-atomic="true" data-delay="3000"
+			style="position: absolute; right: 1rem;">
+			<div class="toast-header">
+				<strong class="mr-auto">Order</strong>
+				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body">
+				<span th:if="${flash}" th:text="${flash}"></span>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
