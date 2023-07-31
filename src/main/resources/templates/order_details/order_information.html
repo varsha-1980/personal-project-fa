@@ -190,7 +190,7 @@
 								<div class="col-md-8">
 									<input type="text" class="form-control form-control-sm"
 										   th:field="*{dbs_wfr}" id="inputEmail4"
-										   th:attr="placeholder=#{label.tab1.place.wafer_no}"></input>
+										   th:attr="placeholder=#{label.search.placeholder.select.wafer.box.number}"></input>
 								</div>
 
 							</div>
@@ -207,7 +207,8 @@
 									<input
 											class="form-control form-control-sm custom-select custom-select-sm"
 											type="text" th:field="*{dbs_status}" list="p_status"
-											placeholder="Select Status"></input>
+											placeholder="Select Status"
+											th:attr="placeholder=#{label.search.placeholder.select.status}"></input>
 									<datalist id="p_status">
 										<option th:each="_st: ${processStatusList}"
 												th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"

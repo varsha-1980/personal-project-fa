@@ -126,7 +126,7 @@
 										<input type="text" class="form-control form-control-sm"
 											id="process_stop_date_in" autocomplete="off"
 											th:field="*{dbs_fa_stop}"
-											th:attr="placeholder=#{label.tab1.place.select_date}"
+											th:attr="placeholder=#{label.tab1.place.select_stop_date}"
 											onchange="validateProcessStopDate(this);"></input>
 										<div class="input-group-append">
 											<span class="input-group-text"><i
@@ -151,7 +151,8 @@
 								<div class="col-md-8">
 									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
 										th:field="*{dbs_fa_archiv_wf}" list="archive_wf"
-										placeholder="Select Archive Wf.box"></input>
+										placeholder="Select Archive Wf.box"
+										   th:attr="placeholder=#{label.tab1.place.select_stop_date}"></input>
 									<datalist id="archive_wf">
 										<option th:each="_arch: ${archiveList}"
 											th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
@@ -171,7 +172,8 @@
 								<div class="col-md-8">
 									<input class="form-control form-control-sm  custom-select custom-select-sm" type="text"
 										th:field="*{dbs_fa_name}" list="fa_editor" 
-										placeholder="Select FA Editor" ></input>
+										placeholder="Select FA Editor"
+										   th:attr="placeholder=#{label.search.placeholder.select_FA_Editor}"></input>
 									<datalist id="fa_editor">
 										<option th:each="_p: ${processorList}"
 											th:value="${_p.pers_short}" th:text="${_p.pers_short}"></option>
@@ -189,7 +191,8 @@
 								<div class="col-md-8">
 									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
 										th:field="*{dbs_status}" list="p_status"
-										placeholder="Select Status"></input>
+										placeholder="Select Status"
+										   th:attr="placeholder=#{label.search.placeholder.select.status}"></input>
 									<datalist id="p_status">
 										<option th:each="_st: ${processStatusList}"
 											th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
@@ -210,7 +213,8 @@
 								<div class="col-md-8">
 									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
 										th:field="*{dbs_fa_archiv_ps}" list="archive_poly"
-										placeholder="Select Archive P.box"></input>
+										placeholder="Select Archive P.box"
+									th:attr="placeholder=#{label.search.placeholder.select.polysterene.box.number}"></input>
 									<datalist id="archive_poly">
 										<option th:each="_arch: ${archiveList}"
 											th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
@@ -232,7 +236,7 @@
 							<div class="form-group col-md-8">
 								<div class="col-md-10">
 									<textarea rows="5" name="comment" th:field="*{dbs_fa_text}"
-										th:attr="placeholder=#{label.enter_text_here}"></textarea>
+										th:attr="placeholder=#{label.placeholder.machining_comment}"></textarea>
 								</div>
 							</div>
 						</div>
