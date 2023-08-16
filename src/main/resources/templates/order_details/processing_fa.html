@@ -224,21 +224,34 @@
 							</div>
 						</div>
 						<div class="form-row">
+							<div class="form-group col-md-8">
+								<div class="col-md-12">
+									<label for="inputEmail4"><span
+											th:text="#{label.editpage.tab7.machining_comment}">Machining
+											Comment</span><a href="#" data-toggle="tooltip" data-placement="top"
+															 th:title="#{label.tooltip.machine_comment}"><i
+											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+								</div>
+								<div class="col-md-10">
+									<textarea rows="5" name="comment" th:field="*{dbs_fa_text}"
+											  th:attr="placeholder=#{label.enter_text_here}"></textarea>
+								</div>
+							</div>
+
 							<div class="form-group col-md-4">
 								<div class="col-md-12">
 									<label for="inputEmail4"><span
-										th:text="#{label.editpage.tab7.machining_comment}">Machining
-											Comment</span><a href="#" data-toggle="tooltip" data-placement="top"
-										th:title="#{label.tooltip.machine_comment}"><i
+											th:text="#{label.editpage.tab7.mail_to_client}">Mail to
+											Client</span><a href="#" data-toggle="tooltip" data-placement="top"
+															th:title="#{label.tooltip.machine_comment}"><i
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
-							</div>
-							<div class="form-group col-md-8">
 								<div class="col-md-10">
-									<textarea rows="5" name="comment" th:field="*{dbs_fa_text}"
-										th:attr="placeholder=#{label.placeholder.machining_comment}"></textarea>
+									<img onclick="sendEmail();"
+										 th:src="@{/static/images/outlook-icon.png}"></img>
 								</div>
 							</div>
+
 						</div>
 						<div th:insert="order_details/order_buttons :: order_buttons"></div>
 					</div>
@@ -247,7 +260,23 @@
 			</div>
 			<script type="text/javascript">
 			
-			
+
+		       function sendEmail(){
+		       alert("Send email");
+
+		       var form = $(document.getElementById('procform'));
+
+
+								    $.ajax({
+								        type: "POST",
+								        url: 'orderdetails/sendEmail',
+								        data: form.serialize(), // serializes the form's elements.
+								        success: function(data)
+								        {
+								          alert(data); // show response from the php script.
+								        }
+								    });
+		       }
 		
 	
 			

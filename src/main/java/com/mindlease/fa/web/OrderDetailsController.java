@@ -4,17 +4,22 @@ import java.io.*;
 import java.security.Principal;
 import java.util.*;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.mindlease.fa.config.LocaleConfig;
+import com.mindlease.fa.repository.OrderDetailsRepository;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,13 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -74,6 +73,13 @@ public class OrderDetailsController {
 
 	@Value("${sharedFolderPathURL}")
 	private String sharedFolderPathURl;
+
+	@Autowired
+	JavaMailSender mailSender;
+
+
+	@Autowired
+	OrderDetailsRepository orderDetailsRepository;
 
 	SearchParameters searchParameters = new SearchParameters();
 
@@ -676,5 +682,73 @@ public class OrderDetailsController {
 	public String openSharedFolderLink(){
 
 		return "order_details/SharedFolderStructure.html";
+	}
+	@RequestMapping(path = "/printOrder/{id}",method = RequestMethod.GET)
+	public String printOrder(){
+		return  "OrderPrint.html";
+	}
+
+	@PostMapping(path = "/orderdetails/sendEmail")
+	public void sendEmail(Model model,@ModelAttribute OrderDetails orderDetailsDto, Principal principal){
+		System.out.println(orderDetailsDto);
+		System.out.println(model);
+		OrderDetails orderDetails = orderDetailsRepository.findById(orderDetailsDto.getId()).get();
+		System.out.println(orderDetails);
+
+		//String lotId = orderDetailsDto.getDbs_lotid();
+		//String geometry = orderDetailsDto.get;
+		MimeMessage message = mailSender.createMimeMessage();
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+			String htmlMsg = "<!DOCTYPE html>\n" +
+					"<html>\n" +
+					"<head>\n" +
+					"<title>Page Title</title>\n" +
+					"</head>\n" +
+					"<body>\n" +
+					"\n" +
+					"<p style=\"font-size:20px;\">Hello Nick,</p>\n" +
+					"\n" +
+					"<p style=\"font-size:20px;\">Die gewunschten Untersuchungen zu folgendem Auftrag sind erfolgt. </p>\n" +
+					"\n" +
+					"\n" +
+					"<p style=\"font-size:20px;\"> Auftrags ID:   &nbsp;&nbsp;8882</p>\n" +
+					"<p style=\"font-size:20px;\">Lot ID:          &nbsp;&nbsp;ET05Y01.1</p>\n" +
+					"<p style=\"font-size:20px;\">Geometrie:  &nbsp;&nbsp;NRMD150AUSV8PTS</p>\n" +
+					"\n" +
+					"<p style=\"font-size:20px;\">\n" +
+					"Uber folgenden Link gelangst Du zu den Analysenergebnissen. \n" +
+					"</p>\n" +
+					"<p style=\"font-size:20px;\"><a href=\"#\">\\\\wsiz03\\iz_rem\\Auftraege_nach_Nummern\\8882</a></p>\n" +
+					"\n" +
+					"<p style=\"font-size:20px;\">Uber folgenden Link gelangst Du zur Analysendatenbank.</p>\n" +
+					"\n" +
+					"\n" +
+					"<p style=\"font-size:20px;\"><a href=\"#\">\\\\wsiz03\\shares\\IZ_REM\\Datenbank\\Analysendatenbank.accdb</a></p>\n" +
+					"\n" +
+					"\n" +
+					"<p style=\"font-size:20px;\">Bitte das Bildmaterial/ die Messungen zeitnah beurteilen und das Ergebnis der </p>" +
+					"<p style=\"font-size:20px;\"> Analyse in der Datenbank dokumentieren.Sollten noch Nacharbeiten erforderlich sein, bitte ich um kurze Mitteilung. </p>\n" +
+					"<p style=\"font-size:20px;\">Ist das nicht der Fall, bitte den Beardeitungsstatus auf 'Auftrag geschlossen' setzen.</p>\n" +
+					"\n" +
+					"\n" +
+					"<p style=\"font-size:20px;\">Viele GruBe,</p>\n" +
+					"<p style=\"font-size:20px;\">Daniela</p>\n" +
+					"</body>\n" +
+					"</html>\n" +
+					"\n" +
+					"\n";
+			helper.setTo(principal.getName());
+			helper.setText(htmlMsg, true);
+
+			mailSender.send(message);
+			System.out.println("Email Send");
+		} catch (MessagingException m) {
+			System.out.println("Exception occurred");
+		}
+
+
+
+
 	}
 }
