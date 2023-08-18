@@ -690,10 +690,12 @@ public class OrderDetailsController {
 
 	@PostMapping(path = "/orderdetails/sendEmail")
 	public void sendEmail(Model model,@ModelAttribute OrderDetails orderDetailsDto, Principal principal){
+		System.out.println(orderDetailsDto.getUser());
 		System.out.println(orderDetailsDto);
 		System.out.println(model);
 		OrderDetails orderDetails = orderDetailsRepository.findById(orderDetailsDto.getId()).get();
 		System.out.println(orderDetails);
+		User user = orderDetails.getUser();
 
 		//String lotId = orderDetailsDto.getDbs_lotid();
 		//String geometry = orderDetailsDto.get;
@@ -707,19 +709,19 @@ public class OrderDetailsController {
 					"</head>\n" +
 					"<body>\n" +
 					"\n" +
-					"<p style=\"font-size:20px;\">Hello Nick,</p>\n" +
+					"<p style=\"font-size:20px;\">Hello "+user.getFirstName()+",</p>\n" +
 					"\n" +
 					"<p style=\"font-size:20px;\">Die gewunschten Untersuchungen zu folgendem Auftrag sind erfolgt. </p>\n" +
 					"\n" +
 					"\n" +
-					"<p style=\"font-size:20px;\"> Auftrags ID:   &nbsp;&nbsp;8882</p>\n" +
-					"<p style=\"font-size:20px;\">Lot ID:          &nbsp;&nbsp;ET05Y01.1</p>\n" +
-					"<p style=\"font-size:20px;\">Geometrie:  &nbsp;&nbsp;NRMD150AUSV8PTS</p>\n" +
+					"<p style=\"font-size:20px;\"> Auftrags ID:   &nbsp;&nbsp;"+orderDetails.getId()+"</p>\n" +
+					"<p style=\"font-size:20px;\">Lot ID:          &nbsp;&nbsp;"+orderDetails.getDbs_lotid()+"</p>\n" +
+					"<p style=\"font-size:20px;\">Geometrie:  &nbsp;&nbsp;"+orderDetails.getDbs_part()+"</p>\n" +
 					"\n" +
 					"<p style=\"font-size:20px;\">\n" +
 					"Uber folgenden Link gelangst Du zu den Analysenergebnissen. \n" +
 					"</p>\n" +
-					"<p style=\"font-size:20px;\"><a href=\"#\">\\\\wsiz03\\iz_rem\\Auftraege_nach_Nummern\\8882</a></p>\n" +
+					"<p style=\"font-size:20px;\"><a href=\"#\">\\\\wsiz03\\iz_rem\\Auftraege_nach_Nummern\\"+orderDetails.getId()+"</a></p>\n" +
 					"\n" +
 					"<p style=\"font-size:20px;\">Uber folgenden Link gelangst Du zur Analysendatenbank.</p>\n" +
 					"\n" +

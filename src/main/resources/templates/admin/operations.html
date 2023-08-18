@@ -12,7 +12,7 @@
 
 			<div class="col-sm-12 col-md-2">
 				<label for="orederNumber"><span class="font-weight-bold"
-					th:text="#{label.editpage.tab1.order_number}">Order#</span> :</label> <span
+					th:text="#{label.editpage.tab1.order_number}">Order No.</span> </label> <span
 					th:text="${orderDetails.id}"></span>
 			</div>
 			<div class="col-sm-12 col-md-3">
@@ -45,7 +45,7 @@ id="copy-button"  data-clipboard-target="#link" class="btn btnbgcolor"/>-->
 
 			</div>
 			<div class="col-sm-12 col-md-2">
-			<span class="btn btnbgcolor" th:value = "#{label.copyLink}" style="margin-top: -7px;margin-bottom: 6px;"
+			<span class="btn btnbgcolor" th:text = "#{label.copyLink}" style="margin-top: -7px;margin-bottom: 6px;"
 				  id="copy-button"  data-clipboard-target="#link">Copy Link</span>
 			</div>
 
