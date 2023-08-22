@@ -23,15 +23,15 @@
 										th:text="#{label.editpage.tab6.rehearse_remaining}">Rehearse
 											remaining</span><a href="#" data-toggle="tooltip"
 										data-placement="top"
-															   placeholder="Select E.Mode"
+
 															   th:attr="placeholder=#{label.tab1.place.select_rehearse_remaining}"
 										th:title="#{label.tooltip.rehearse_remaining}"><i
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-12">
 									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
-										th:field="*{dbs_remain}">
-										<option value="" label="#{label.tab1.place.select_rehearse_remaining}"></option>
+										th:field="*{dbs_remain}" th:label="#{label.tab1.place.select_rehearse_remaining}">
+										<option value="" th:label="#{label.tab1.place.select_rehearse_remaining}"    ></option>
 										<option th:each="_arch: ${samplesRemainList}"
 											th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
 											th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>

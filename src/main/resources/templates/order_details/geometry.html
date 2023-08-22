@@ -28,11 +28,12 @@
 									th:field="*{dbs_part}" list="parts"
 									onchange="onPartChangePost(this);" placeholder="Select Part"
 									></input>
+
 								<datalist id="parts">
 									<option th:each="_part: ${partList}" th:value="${_part.name}"
 										th:text="${_part.name}"></option>
 								</datalist>
-								<!-- <select class="form-control select1"
+								 <!--<select class="form-control select1"
 									th:field="*{dbs_part}" onchange="onPartChangePost(this);" required="required">
 									<option value="">Select Part</option>
 									<option th:each="_part: ${partList}" th:value="${_part.name}"

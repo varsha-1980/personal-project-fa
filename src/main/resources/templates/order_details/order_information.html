@@ -44,7 +44,7 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<input
+								<!--	<input
 											class="form-control form-control-sm custom-select custom-select-sm"
 											type="text" th:field="*{dbs_material}" list="material"
 											th:attr="placeholder=#{label.search.placeholder.select.material.type}"></input>
@@ -52,7 +52,15 @@
 										<option th:each="_material: ${materialsList}"
 												th:value="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"
 												th:text="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"></option>
-									</datalist>
+									</datalist>-->
+
+									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+											th:field="*{dbs_material}" th:label="#{label.search.placeholder.select.material.type}">
+										<option value="" th:label="#{label.search.placeholder.select.material.type}"    ></option>
+										<option th:each="_material: ${materialsList}"
+												th:value="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"
+												th:text="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"></option>
+									</select>
 								</div>
 							</div>
 
@@ -138,7 +146,7 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<input
+									<!--<input
 											class="form-control form-control-sm custom-select custom-select-sm"
 											type="text" th:field="*{dbs_location}" list="locations"
 											placeholder="Select Location"
@@ -147,7 +155,16 @@
 										<option th:each="_loc: ${locationsList}"
 												th:value="__${#locale}__ == 'de' ? ${_loc.nameDe} : ${_loc.name}"
 												th:text="__${#locale}__ == 'de' ? ${_loc.nameDe} : ${_loc.name}"></option>
-									</datalist>
+									</datalist>-->
+
+
+									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+											th:field="*{dbs_location}" th:label="#{label.tab1.place.select_location}">
+										<option value="" th:label="#{label.tab1.place.select_location}"    ></option>
+										<option th:each="_loc: ${locationsList}"
+												th:value="__${#locale}__ == 'de' ? ${_loc.nameDe} : ${_loc.name}"
+												th:text="__${#locale}__ == 'de' ? ${_loc.nameDe} : ${_loc.name}"></option>
+									</select>
 								</div>
 							</div>
 
@@ -164,7 +181,7 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<input id="client_input"
+									<!--<input id="client_input"
 										   class="form-control form-control-sm custom-select custom-select-sm"
 										   type="text" th:field="*{dbs_ag_name}" list="client"
 										   th:placeholder="${clientName}"></input>
@@ -175,7 +192,16 @@
 										<option th:each="_customer: ${customersList}"
 												th:value="${_customer.pers_short}"
 												th:text="${_customer.pers_short}"></option>
-									</datalist>
+									</datalist>-->
+
+									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+											th:field="*{dbs_ag_name}" list="client"
+											th:placeholder="${clientName}">
+										<option value="" th:value="${clientName}" th:text="${clientName}" ></option>
+										<option th:each="_customer: ${customersList}"
+												th:value="${_customer.pers_short}"
+												th:text="${_customer.pers_short}"></option>
+									</select>
 								</div>
 							</div>
 
@@ -204,7 +230,7 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<input
+									<!--<input
 											class="form-control form-control-sm custom-select custom-select-sm"
 											type="text" th:field="*{dbs_status}" list="p_status"
 											placeholder="Select Status"
@@ -213,7 +239,15 @@
 										<option th:each="_st: ${processStatusList}"
 												th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
 												th:text="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"></option>
-									</datalist>
+									</datalist>-->
+
+									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+											th:field="*{dbs_status}" th:label="#{label.search.placeholder.select.status}">
+										<option value="" th:label="#{label.search.placeholder.select.status}" ></option>
+										<option th:each="_st: ${processStatusList}"
+												th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
+												th:text="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"></option>
+									</select>
 								</div>
 							</div>
 
@@ -236,7 +270,7 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a> </label>
 								</div>
 								<div class="col-md-8">
-									<input
+									<!--<input
 											class="form-control form-control-sm custom-select custom-select-sm"
 											type="text" th:field="*{dbs_prio}" list="priority"
 											th:attr="placeholder=#{label.search.placeholder.select.priority}"></input>
@@ -244,7 +278,16 @@
 										<option th:each="_prio: ${priorityList}"
 												th:value="${_prio.id}"
 												th:text="__${#locale}__ == 'de'? ${_prio.nameDe} : ${_prio.name}"></option>
-									</datalist>
+									</datalist>-->
+
+									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+											th:field="*{dbs_prio}" th:label="#{label.search.placeholder.select.priority}">
+										<option value="" th:label="#{label.search.placeholder.select.priority}" ></option>
+										<option th:each="_prio: ${priorityList}"
+												th:value="${_prio.id}"
+												th:text="__${#locale}__ == 'de'? ${_prio.nameDe} : ${_prio.name}"></option>
+									</select>
+
 								</div>
 							</div>
 
