@@ -27,14 +27,23 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+									<!--<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
 										th:field="*{dbs_elee}" list="e_error"
 										   th:attr="placeholder=#{label.search.placeholder.select.electric_error}"></input>
 									<datalist id="e_error">
 										<option th:each="_err: ${electricErrorList}"
 											th:value="__${#locale}__ == 'de' ? ${_err.nameDe} : ${_err.name}"
 											th:text="__${#locale}__ == 'de' ? ${_err.nameDe} : ${_err.name}"></option>
-									</datalist>
+									</datalist>-->
+
+									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+											th:field="*{dbs_elee}" th:label="#{label.search.placeholder.select.electric_error}">
+										<option value="" th:label="#{label.search.placeholder.select.electric_error}" ></option>
+										<option th:each="_err: ${electricErrorList}"
+												th:value="__${#locale}__ == 'de' ? ${_err.nameDe} : ${_err.name}"
+												th:text="__${#locale}__ == 'de' ? ${_err.nameDe} : ${_err.name}"></option>
+									</select>
+
 								</div>
 
 							</div>
@@ -48,7 +57,7 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+									<!--<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
 										th:field="*{dbs_famo}" list="e_mode"
 										placeholder="Select E.Mode"
 										   th:attr="placeholder=#{label.search.placeholder.select.e.mode}"></input>
@@ -56,7 +65,17 @@
 										<option th:each="_errorMode: ${failureModeList}"
 											th:value="__${#locale}__ == 'de' ? ${_errorMode.nameDe} : ${_errorMode.name}"
 											th:text="__${#locale}__ == 'de' ? ${_errorMode.nameDe} : ${_errorMode.name}"></option>
-									</datalist>
+									</datalist>-->
+									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+											th:field="*{dbs_famo}" th:label="#{label.search.placeholder.select.e.mode}">
+										<option value="" th:label="#{label.search.placeholder.select.e.mode}" ></option>
+										<option th:each="_errorMode: ${failureModeList}
+"
+												th:value="__${#locale}__ == 'de' ? ${_errorMode.nameDe} : ${_errorMode.name}"
+												th:text="__${#locale}__ == 'de' ? ${_errorMode.nameDe} : ${_errorMode.name}"></option>
+									</select>
+
+
 								</div>
 							</div>
 						</div>
@@ -71,7 +90,7 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<textarea rows="3" cols="34" name="comment" 
+									<textarea rows="6" cols="38" name="comment"
 										th:field="*{dbs_fa_reason}"
 										th:attr="placeholder=#{label.enter_analysis_reason}"></textarea>
 								</div>
@@ -87,7 +106,7 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<textarea rows="3" cols="34" name="comment"
+									<textarea rows="6" cols="38" name="comment"
 										th:field="*{dbs_fa_descr}"
 										th:attr="placeholder=#{label.enter_order_description}"></textarea>
 								</div>

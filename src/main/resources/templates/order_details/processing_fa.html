@@ -149,15 +149,25 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+									<!--<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
 										th:field="*{dbs_fa_archiv_wf}" list="archive_wf"
 										placeholder="Select Archive Wf.box"
-										   th:attr="placeholder=#{label.tab1.place.select_stop_date}"></input>
+										   th:attr="placeholder=#{label.search.placeholder.select.wafer.box.number}"></input>
 									<datalist id="archive_wf">
 										<option th:each="_arch: ${archiveList}"
 											th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
 											th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>
-									</datalist>
+									</datalist>-->
+
+									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+											th:field="*{dbs_fa_archiv_wf}" th:label="#{label.search.placeholder.select.wafer.box.number}">
+										<option value="" th:label="#{label.search.placeholder.select.wafer.box.number}" ></option>
+										<option th:each="_arch: ${archiveList}"
+												th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
+												th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>
+									</select>
+
+
 								</div>
 							</div>
 						</div>
@@ -170,14 +180,21 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<input class="form-control form-control-sm  custom-select custom-select-sm" type="text"
+									<!--<input class="form-control form-control-sm  custom-select custom-select-sm" type="text"
 										th:field="*{dbs_fa_name}" list="fa_editor" 
 										placeholder="Select FA Editor"
 										   th:attr="placeholder=#{label.search.placeholder.select_FA_Editor}"></input>
 									<datalist id="fa_editor">
 										<option th:each="_p: ${processorList}"
 											th:value="${_p.pers_short}" th:text="${_p.pers_short}"></option>
-									</datalist>
+									</datalist>-->
+
+
+									<select th:field="*{dbs_fa_name}" class="select2"
+											th:data-placeholder="#{label.search.placeholder.select_FA_Editor}">
+										<option value="" text=""></option>
+										<option th:each="_p: ${processorList}"
+												th:value="${_p.pers_short}" th:text="${_p.pers_short}"></option></select>
 								</div>
 							</div>
 							<div class="form-group col-md-4">
@@ -189,7 +206,7 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+									<!--<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
 										th:field="*{dbs_status}" list="p_status"
 										placeholder="Select Status"
 										   th:attr="placeholder=#{label.search.placeholder.select.status}"></input>
@@ -197,7 +214,20 @@
 										<option th:each="_st: ${processStatusList}"
 											th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
 											th:text="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"></option>
-									</datalist>
+									</datalist>-->
+
+
+									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+											th:field="*{dbs_status}" th:label="#{label.search.placeholder.select.status}">
+										<option value="" th:label="#{label.search.placeholder.select.status}" ></option>
+										<option th:each="_st: ${processStatusList}"
+												th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
+												th:text="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"></option>
+									</select>
+
+
+
+
 								</div>
 
 							</div>
@@ -211,7 +241,7 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+									<!--<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
 										th:field="*{dbs_fa_archiv_ps}" list="archive_poly"
 										placeholder="Select Archive P.box"
 									th:attr="placeholder=#{label.search.placeholder.select.polysterene.box.number}"></input>
@@ -219,7 +249,19 @@
 										<option th:each="_arch: ${archiveList}"
 											th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
 											th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>
-									</datalist>
+									</datalist>-->
+
+									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+											th:field="*{dbs_fa_archiv_ps}" th:label="#{label.search.placeholder.select.polysterene.box.number}">
+										<option value="" th:label="#{label.search.placeholder.select.polysterene.box.number}" ></option>
+										<option th:each="_arch: ${archiveList}"
+												th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
+												th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>
+									</select>
+
+
+
+
 								</div>
 							</div>
 						</div>
@@ -259,7 +301,7 @@
 				<div th:insert="modal :: modal"></div>
 			</div>
 			<script type="text/javascript">
-			
+				$(document).ready(function () {   $('.select2').select2({   allowClear: true, width: '100%'});});
 
 		       function sendEmail(){
 		       alert("Send email");
