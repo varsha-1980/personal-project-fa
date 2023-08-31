@@ -6,7 +6,7 @@
 
 		<form id="orderform" name="orderform"
 			th:action="@{/orderdetails/update}" th:object="${orderDetails}"
-			method="post">
+			method="post" style="margin-top : 43px;">
 <!--			<input type="hidden" id="ln" name="ln" th:value="__${#locale}__"></input>-->
 			<div class="row">
 				<div class="col-md-12">
@@ -313,15 +313,19 @@
 
 						</div>
 
-						<div th:insert="order_details/order_buttons :: order_buttons"></div>
+						<div>
+							<button></button>
+						</div>
+
+<!--						<div th:insert="order_details/order_buttons :: order_buttons"></div>-->
 
 						<input type="hidden" id="id" th:field="*{id}"></input> <input
 							type="hidden" id="nexttabid" value="geometry" name="nexttabid"></input>
 					</div>
 				</div>
 			</div>
-			<button id="formsubmit" type="submit" name="action"
-								value="tabclick" style="display: none"></button>
+<!--			<button id="formsubmit" type="submit" name="action"-->
+<!--								value="tabclick" style="display: none"></button>-->
 			<script type="text/javascript">
 
     if(window.location.pathname === "/FailureAnalysis/orderdetails/edit"){
