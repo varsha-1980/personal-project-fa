@@ -821,10 +821,14 @@ INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (3, 'IR i
 INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (4, 'X-Ray in Bearbeitung','X-Ray in progress', ' ');
 INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (5, 'FA in Bearbeitung','FA in progress', ' ');
 INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (6, 'FA erledigt - Bitte Ergebnis bewerte','FA done - please rate the result', ' ');
-INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (7, 'Auftrag abgeschlosse','Order completed', ' ');
+INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (7, 'Alle offenen Aufträge','all open orders', ' ');
 INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (8, 'Wartet auf Ätzung','Waiting for Etching', ' ');
-INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (9, 'Wartet auf elektr. Messung/LC/IR','Waiting for electr. Measurement / LC / IR ', ' ');
+INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (9, 'Wartet auf elektr. Messung','Waiting for electr. Measurement', ' ');
 INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (10, 'Wartet auf Weiterbearbeitung', 'Waiting for further processing',' ');
+INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (11, 'Wartet auf Hotspot IR/LC', 'Waiting for Hotspot IR/LC',' ');
+INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (12, 'Wartet auf REM/FIB/EDX', 'Waiting for REM/FIB/EDX',' ');
+INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (13, 'Wartet auf Schliff', 'Waiting for cuts',' ');
+
 
 
 
