@@ -63,19 +63,19 @@ delete from  b cw`~
 delete from  users;
 delete from  tbl_company;
 
-INSERT INTO  tbl_company 
+INSERT INTO  tbl_company
 
 (ID ,  NAME , F_ACTIVE , F_CANCEL , CREATED_BY , CREATED_DATE , MODIFIED_BY , MODIFIED_DATE , VERSION);
 
  VALUES
 
-(1 ,  'Company_1' , 'Y' , 'N' , 1 , '2019-07-26 11:20:42' , 1 , '2019-07-26 11:20:42' , 0) , 
-(2 ,  'Company_2' , 'Y' , 'N' , 1 , '2019-07-26 11:20:42' , 1 , '2019-07-26 11:20:42' , 1) , 
-(3 ,  'Company_3' , 'Y' , 'N' , 1 , '2019-07-26 11:20:42' , 1 , '2019-07-26 11:20:42' , 2) , 
+(1 ,  'Company_1' , 'Y' , 'N' , 1 , '2019-07-26 11:20:42' , 1 , '2019-07-26 11:20:42' , 0) ,
+(2 ,  'Company_2' , 'Y' , 'N' , 1 , '2019-07-26 11:20:42' , 1 , '2019-07-26 11:20:42' , 1) ,
+(3 ,  'Company_3' , 'Y' , 'N' , 1 , '2019-07-26 11:20:42' , 1 , '2019-07-26 11:20:42' , 2) ,
 (4 ,  'Company_4' , 'Y' , 'N' , 1 , '2019-07-26 11:20:42' , 1 , '2019-07-26 11:20:42' , 4);
 
 
-INSERT INTO  roles (id, name) VALUES 
+INSERT INTO  roles (id, name) VALUES
 (1, 'ADMIN'),
 (2, 'SUPER-ADMIN'),
 (3, 'USER'),
@@ -83,7 +83,7 @@ INSERT INTO  roles (id, name) VALUES
 (5, 'FA');
 
 
-INSERT INTO  users (id, email, password, first_name, last_name, COMPANY_ID) VALUES 
+INSERT INTO  users (id, email, password, first_name, last_name, COMPANY_ID) VALUES
 (1, 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 1),
 (3, 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 1),
 (5, 'admin1@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 2),
@@ -182,14 +182,16 @@ INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date
 INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date, modified_by, modified_date, name, name_de, version) VALUES (4, 'N', 'Y', 'Company_4',1, '2019-07-26 11:20:42',1, '2019-07-26 11:20:42', 'Company_4', 'Company_4', 4);
 
 
-INSERT INTO users (id, email, password, first_name, last_name, COMPANY_ID) VALUES 
-(1, 'admin@gmail.com', '$2a$12$sBF9REXVyADAIPq0tjX/je5So4BazV/tDCwomtVziPbi1IFKg60da', 'Ajay' ,'Devagan' , 1),
+INSERT INTO users (id, email, password, first_name, last_name, COMPANY_ID) VALUES
+(1, 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 1),
 (3, 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 1),
-(5, 'farequestor@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Ajay' ,'Devagan' , 2),
-(6, 'varshadevgankar@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2),
-(7, 'varsha', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Varsha', 'Devgankar' , 2);
+(5, 'admin1@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 2),
+(6, 'user1@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2),
+(7, 'majaffar87656@gmail.com', '$2a$12$ZRyY9yV9tY.B55Wn4IfS/OTRAxFzwDoyHz975r16hwuGHubthYj0i', 'Mohd Abdul', 'Jaffar' , 1),
+(8, 'varshadevgankar@gmail.com', '$2a$12$ZRyY9yV9tY.B55Wn4IfS/OTRAxFzwDoyHz975r16hwuGHubthYj0i', 'Varsha', 'Devgankar' , 1);
 
-INSERT INTO  roles (id, name) VALUES 
+
+INSERT INTO  roles (id, name) VALUES
 (1, 'ADMIN'),
 (2, 'SUPER-ADMIN'),
 (3, 'USER'),
@@ -201,8 +203,9 @@ INSERT INTO  roles (id, name) VALUES
 INSERT INTO  user_role (user_id, role_id) VALUES (1, 2);
 INSERT INTO  user_role (user_id, role_id) VALUES (3, 3);
 INSERT INTO  user_role (user_id, role_id) VALUES (5, 4);
-INSERT INTO  user_role (user_id, role_id) VALUES (6, 4);
-INSERT INTO  user_role (user_id, role_id) VALUES (7, 5);
+INSERT INTO  user_role (user_id, role_id) VALUES (6, 3);
+INSERT INTO  user_role (user_id, role_id) VALUES (7, 3);
+INSERT INTO  user_role (user_id, role_id) VALUES (8, 4);
 
 /*
 INSERT INTO  overview_entries (id, argument, comm_option, command, pers_company, description, heading, icon, item_number, switch_board_id, exam) VALUES (1, 'Standard', '-', '0', 'ALL', 1, '2020-03-12 13:03:37', 'Hauptübersicht', 'Hauptübersicht', '', '0', 1, '2020-03-12 13:03:37', '1', 1);
@@ -821,14 +824,11 @@ INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (3, 'IR i
 INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (4, 'X-Ray in Bearbeitung','X-Ray in progress', ' ');
 INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (5, 'FA in Bearbeitung','FA in progress', ' ');
 INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (6, 'FA erledigt - Bitte Ergebnis bewerte','FA done - please rate the result', ' ');
-INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (7, 'Alle offenen Aufträge','all open orders', ' ');
+INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (7, 'Auftrag abgeschlosse','Order completed', ' ');
 INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (8, 'Wartet auf Ätzung','Waiting for Etching', ' ');
 INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (9, 'Wartet auf elektr. Messung','Waiting for electr. Measurement', ' ');
-INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (10, 'Wartet auf Weiterbearbeitung', 'Waiting for further processing',' ');
-INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (11, 'Wartet auf Hotspot IR/LC', 'Waiting for Hotspot IR/LC',' ');
-INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (12, 'Wartet auf REM/FIB/EDX', 'Waiting for REM/FIB/EDX',' ');
-INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (13, 'Wartet auf Schliff', 'Waiting for cuts',' ');
-
+INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (10, 'Hotspot / IR / LC','Waiting for Hotspot IR/LC', ' ');
+INSERT INTO  tbl_status (STAT_ID, STAT_TEXT_DE, STAT_TEXT,exam) VALUES (11, 'Wartet auf Weiterbearbeitung', 'Waiting for further processing',' ');
 
 
 
@@ -2947,13 +2947,13 @@ INSERT INTO tbl_order_details (dbs_id, dbs_ag_name, dbs_car, dbs_cost, dbs_cpl_t
 
 /*
 
-INSERT INTO tbl_order_details (dbs_id, dbs_pos_01, dbs_pos_02, dbs_pos_03, dbs_pos_04, dbs_pos_05, dbs_pos_06, dbs_pos_07, dbs_pos_08, dbs_pos_09, dbs_pos_10, dbs_pos_11, dbs_pos_12, dbs_pos_13, dbs_pos_14, dbs_pos_15, dbs_pos_16, dbs_pos_17, dbs_pos_18, dbs_pos_19, dbs_pos_20, dbs_pos_21, dbs_pos_text, 
+INSERT INTO tbl_order_details (dbs_id, dbs_pos_01, dbs_pos_02, dbs_pos_03, dbs_pos_04, dbs_pos_05, dbs_pos_06, dbs_pos_07, dbs_pos_08, dbs_pos_09, dbs_pos_10, dbs_pos_11, dbs_pos_12, dbs_pos_13, dbs_pos_14, dbs_pos_15, dbs_pos_16, dbs_pos_17, dbs_pos_18, dbs_pos_19, dbs_pos_20, dbs_pos_21, dbs_pos_text,
 
-dbs_fa_reason, dbs_car, dbs_cost, dbs_step, dbs_res_stop, dbs_fa_text, dbs_res_start, dbs_fa_descr, dbs_lotid, 
+dbs_fa_reason, dbs_car, dbs_cost, dbs_step, dbs_res_stop, dbs_fa_text, dbs_res_start, dbs_fa_descr, dbs_lotid,
 
-dbs_fa_date, id, dbs_fa_name, dbs_fa_start, dbs_fa_stop, dbs_res_text, dbs_pos_xcmap, dbs_res_time, dbs_wfr, dbs_wait_time1, dbs_wait_time2, dbs_remain, dbs_fa_archiv_ps, company_id, dbs_cost, dbs_ag_name, dbs_elee, dbs_famo, dbs_location, dbs_material, dbs_part, dbs_prio, dbs_fa_textr, dbs_status, dbs_res_name, dbs_fa_archiv_wf, dbs_link) VALUES (1, 'N', 'Y', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 
+dbs_fa_date, id, dbs_fa_name, dbs_fa_start, dbs_fa_stop, dbs_res_text, dbs_pos_xcmap, dbs_res_time, dbs_wfr, dbs_wait_time1, dbs_wait_time2, dbs_remain, dbs_fa_archiv_ps, company_id, dbs_cost, dbs_ag_name, dbs_elee, dbs_famo, dbs_location, dbs_material, dbs_part, dbs_prio, dbs_fa_textr, dbs_status, dbs_res_name, dbs_fa_archiv_wf, dbs_link) VALUES (1, 'N', 'Y', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '',
 
-'Abort bei PolyDeposition, nach deponiert', '', 0.00, 1, '2020-03-12 17:43:34', 'PolyDeposition', '2004-07-20', NULL, 'Ist in der Polyschicht eine Grenzschicht zu sehen?War mit U26D91.1, U26D87.1, U26D86.1 im Ofen', 0, 'Polyschicht im Trenchgraben und am Rand des Dies', 'U26D92.1', 1, 
+'Abort bei PolyDeposition, nach deponiert', '', 0.00, 1, '2020-03-12 17:43:34', 'PolyDeposition', '2004-07-20', NULL, 'Ist in der Polyschicht eine Grenzschicht zu sehen?War mit U26D91.1, U26D87.1, U26D86.1 im Ofen', 0, 'Polyschicht im Trenchgraben und am Rand des Dies', 'U26D92.1', 1,
 
 '2020-03-12 17:43:34', '2004-07-20', NULL, 0, NULL, NULL, '', 0, 0, 0, '24', 0, 0, NULL, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, 7, NULL, 1, '\\wsiz03\iz_rem\probleme\2xpoly');
 INSERT INTO tbl_order_details (dbs_id, dbs_pos_01, dbs_pos_02, dbs_pos_03, dbs_pos_04, dbs_pos_05, dbs_pos_06, dbs_pos_07, dbs_pos_08, dbs_pos_09, dbs_pos_10, dbs_pos_11, dbs_pos_12, dbs_pos_13, dbs_pos_14, dbs_pos_15, dbs_pos_16, dbs_pos_17, dbs_pos_18, dbs_pos_19, dbs_pos_20, dbs_pos_21, dbs_pos_text, dbs_fa_reason, dbs_car, dbs_cost, dbs_step, dbs_res_stop, dbs_fa_text, dbs_res_start, dbs_fa_descr, dbs_lotid, dbs_fa_date, id, dbs_fa_name, dbs_fa_start, dbs_fa_stop, dbs_res_text, dbs_pos_xcmap, dbs_res_time, dbs_wfr, dbs_wait_time1, dbs_wait_time2, dbs_remain, dbs_fa_archiv_ps, company_id, dbs_cost, dbs_ag_name, dbs_elee, dbs_famo, dbs_location, dbs_material, dbs_part, dbs_prio, dbs_fa_textr, dbs_status, dbs_res_name, dbs_fa_archiv_wf, dbs_link) VALUES (2, 'N', 'Y', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 'Pad Etch, Pad-Dicke ueber Alu', '', 0.00, 1, '2020-03-12 17:43:34', 'Pad Ebene - Etch', '2004-07-22', NULL, 'Backend REM, Wafer von Uli', 0, 'Gate-Finger-Bereich / Rand des Dies: Pad-Dicke (Nitrid)', 'EU24D05.1', 1, '2020-03-12 17:43:34', '2004-07-21', NULL, 0, NULL, NULL, '', TRUE, 0, '04', 0, 0, NULL, 1, 1, NULL, 29, NULL, NULL, NULL, NULL, NULL, 3, NULL, 7, NULL, 1, '\\wsiz03\iz_rem\defekte\padetch');

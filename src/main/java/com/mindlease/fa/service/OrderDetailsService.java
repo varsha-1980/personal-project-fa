@@ -80,7 +80,7 @@ public class OrderDetailsService {
 
 	@Autowired
 	LocationRepository locationRepository;
-	
+
 	@Autowired
 	SamplesRemainRepository samplesRemainRepository;
 
@@ -113,12 +113,12 @@ public class OrderDetailsService {
 
 	@Autowired
 	UserRepository userRepository;
-	  
+
 	@PersistenceContext
 	private EntityManager entityManager;
-	
+
 	@Autowired
-    private org.springframework.core.env.Environment environment;
+	private org.springframework.core.env.Environment environment;
 
 
 	@Value("${serverAddress}")
@@ -135,7 +135,7 @@ public class OrderDetailsService {
 
 	@Value("${ftpUserPassword}")
 	private String userPassword;
-	  
+
 	private Map<String, Priority> priorityMap = new HashMap<>();
 	private Map<String, Location> locationMap = new HashMap<>();
 	private Map<String, SamplesRemain> samplesRemainMap = new HashMap<>();
@@ -143,7 +143,7 @@ public class OrderDetailsService {
 	private Map<String, Status> statusMap = new HashMap<>();
 	private Map<String, ElectricError> electricErrorMap = new HashMap<>();
 	private Map<String, FailureMode> failureModeMap = new HashMap<>();
-	
+
 	private Map<Long, Priority> priorityMapByid = new HashMap<>();
 
 	public List<OrderDetails> getAllOrderDetails() {
@@ -194,7 +194,7 @@ public class OrderDetailsService {
 	public void deleteById(Long id) {
 		orderDetailsRepository.deleteById(id);
 	}
-	
+
 //	public void updateUserIdById(Integer userId, Long id) {
 //		orderDetailsRepository.setUserIdForOrderDetails(userId, id);
 //	}
@@ -206,7 +206,7 @@ public class OrderDetailsService {
 	}
 
 	public Page<OrderDetails> searchBy(String sMaterial, String sCustomername, String sPriority, String sStatus,
-			String sElectricalError, String sFailureMode, String sArchWaferBox, String sArchPolyBox, PageRequest pageRequest) {
+									   String sElectricalError, String sFailureMode, String sArchWaferBox, String sArchPolyBox, PageRequest pageRequest) {
 		// return orderDetailsRepository.findAll(pageRequest);
 		StringBuilder sb = new StringBuilder("from OrderDetails od where od.id is not null");
 		if (sCustomername != null && sCustomername.length() > 0) {
@@ -233,7 +233,7 @@ public class OrderDetailsService {
 		if (sMaterial != null && sMaterial.length() > 0) {
 			sb.append(" and od.dbs_material LIKE :material");
 		}
-		
+
 		Query query = entityManager.createQuery(sb.toString());
 		if (sCustomername != null && sCustomername.length() > 0) {
 			query.setParameter("name", "%"+sCustomername+"%");
@@ -256,11 +256,11 @@ public class OrderDetailsService {
 		if (sArchPolyBox != null && sArchPolyBox.length() > 0) {
 			query.setParameter("archivPs", "%"+sArchPolyBox+"%");
 		}
-		
+
 		if (sMaterial != null && sMaterial.length() > 0) {
 			query.setParameter("material", "%"+sMaterial+"%");
 		}
-		
+
 		List<OrderDetails> list = query.getResultList();
 		// Page<OrderDetails> bookPage = new PageImpl<OrderDetails>(list, pageRequest.of(0, pageRequest.getPageSize()), ids.size());
 		/*
@@ -367,7 +367,7 @@ public class OrderDetailsService {
 		}
 		return list;
 	}
-	
+
 	public List<Priority> findAllPrioritiesById() {
 		List<Priority> list = priorityRepository.findAll();
 		priorityMapByid.clear();
@@ -387,7 +387,7 @@ public class OrderDetailsService {
 		}
 		return list;
 	}
-	
+
 	public List<SamplesRemain> findAllSampleRemains() {
 		List<SamplesRemain> list = samplesRemainRepository.findAll();
 		samplesRemainMap.clear();
@@ -401,7 +401,7 @@ public class OrderDetailsService {
 	public List<Personal> findAllPersonals() {
 		return personalRepository.findAll();
 	}
-	
+
 	public Optional<Personal> findPersonal() {
 		return personalRepository.findById(null);
 	}
@@ -457,11 +457,11 @@ public class OrderDetailsService {
 		}
 		return list;
 	}
-	
+
 	public String getDbs_prio_temp(String key) {
 		return key != null && priorityMap.containsKey(key) ? priorityMap.get(key).getNameDe() : null;
 	}
-	
+
 	public String getDbs_prio_temp_by_id(Long key) {
 		return key != null && priorityMapByid.get(key) !=null ? priorityMapByid.get(key).getNameDe() : null;
 	}
@@ -478,7 +478,7 @@ public class OrderDetailsService {
 		return key != null && failureModeMap.containsKey(key) ? failureModeMap.get(key).getNameDe() : null;
 	}
 
-	
+
 	public String getDbs_location_temp(String key) {
 		return key != null && locationMap.containsKey(key) ? locationMap.get(key).getNameDe() : null;
 	}
@@ -772,26 +772,26 @@ public class OrderDetailsService {
 		}
 		return orderDetails;
 	}
-	
+
 	public Object getOrders(DataTableRequest input) {
-		
+
 		PagedListHolder<OrderDetails> page = getpageList(input);
 		DataTableResult<OrderDetails> result = new DataTableResult<>();
 		result.setRecordsTotal(page.getNrOfElements());
 		result.setDraw(input.getDraw());
 		result.setRecordsFiltered(page.getNrOfElements());
 		result.setData(page.getPageList());
-		
+
 		return result;
 	}
-	
+
 	private PagedListHolder<OrderDetails> getpageList(DataTableRequest input){
 		List<OrderDetails> resultList = invokeOrderDetails(input);
-		
+
 		PagedListHolder<OrderDetails> pagedList = new PagedListHolder<>(resultList);
 		pagedList.setPage(input.getLength() < 0 ? 0 : (input.getStart()/input.getLength()));
 		pagedList.setPageSize(input.getLength() < 0 ? resultList.size() : input.getLength());
-		
+
 		String sortColumn = "";
 		String sortDir = "";
 		for(Order order : input.getOrder()) {
@@ -806,17 +806,17 @@ public class OrderDetailsService {
 			pagedList.resort();
 			pagedList.setPage(input.getLength() < 0 ? 0 : (input.getStart()/input.getLength()));
 			pagedList.setPageSize(input.getLength() < 0 ? resultList.size() : input.getLength());
-			
+
 		}
-		
+
 		return pagedList;
 	}
-	
+
 	private List<OrderDetails> invokeOrderDetails(DataTableRequest input){
 		StringBuilder sb = new StringBuilder("from OrderDetails od where od.id is not null");
-		
+
 		String sourceLink = input.getExternalFilter().getOrDefault("sourceLink", "search");
-		
+
 		if(sourceLink.equalsIgnoreCase("All New Orders")) {
 			sb.append(" and (od.dbs_status!='Neuer Auftrag' or od.dbs_status!='New Order')");
 		} else if(sourceLink.equalsIgnoreCase("All Open Orders")) {
@@ -880,7 +880,7 @@ public class OrderDetailsService {
 			sb.append(" and od.dbs_famo LIKE :famo");
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sArchWaferBox", ""))) {
-			
+
 			sb.append(" and od.dbs_fa_archiv_wf LIKE :archivWf");
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sArchPolyBox", ""))) {
@@ -892,14 +892,14 @@ public class OrderDetailsService {
 		if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search")) ) {
 			sb.append(" and od.user.id = :userId");
 		}
-		
-		  String columnVal = null;
-		 
-		 for(Column col : input.getColumns()) {
-			 if (StringUtils.hasText(col.getSearch().getValue())) {
-					//System.out.println(col.getData()+"===Column=========="+col.getSearch().getValue());
-					
-					switch (col.getData()) {
+
+		String columnVal = null;
+
+		for(Column col : input.getColumns()) {
+			if (StringUtils.hasText(col.getSearch().getValue())) {
+				//System.out.println(col.getData()+"===Column=========="+col.getSearch().getValue());
+
+				switch (col.getData()) {
 					case "id":
 						columnVal = col.getSearch().getValue();
 						break;
@@ -913,12 +913,12 @@ public class OrderDetailsService {
 						break;
 					default:
 						sb.append(" and lower(od." + col.getData() + ") LIKE :" + col.getData());
-					}
 				}
-		 }
-		 
+			}
+		}
+
 		System.out.println("===sb.toString()=========="+sb.toString());
-		
+
 		Query query = entityManager.createQuery(sb.toString());
 		if(StringUtils.hasText(input.getSearch().getValue())) {
 			query.setParameter("id", "%"+input.getSearch().getValue().trim().toLowerCase()+"%");
@@ -938,14 +938,14 @@ public class OrderDetailsService {
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sFailureMode", ""))) {
 			query.setParameter("famo", "%"+input.getExternalFilter().getOrDefault("sFailureMode", "")+"%");
 		}
-		
+
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sArchWaferBox", ""))) {
 			query.setParameter("archivWf", "%"+input.getExternalFilter().getOrDefault("sArchWaferBox", "")+"%");
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sArchPolyBox", ""))) {
 			query.setParameter("archivPs", "%"+input.getExternalFilter().getOrDefault("sArchPolyBox", "")+"%");
 		}
-		
+
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sMaterial", ""))) {
 			query.setParameter("material", "%"+input.getExternalFilter().getOrDefault("sMaterial", "")+"%");
 		}
@@ -957,7 +957,7 @@ public class OrderDetailsService {
 				query.setParameter(col.getData(), "%" + col.getSearch().getValue().trim().toLowerCase() + "%");
 			}
 		});
-		
+
 		List<OrderDetails> ordersList = query.getResultList();
 		List<OrderDetails> targetrdersList = null;
 
@@ -984,52 +984,52 @@ public class OrderDetailsService {
 		}
 		return targetrdersList;
 	}
-	
+
 	private long getIdValue(String id) {
 		int len = id.length();
 		try {
-		long searchId = Long.parseLong(id);
-		if (len == 1) {
-			searchId = searchId * 1000;
-		} else if (len == 2) {
-			searchId = searchId * 100;
-		} else if (len == 3) {
-			searchId = searchId * 10;
-		}
-		return searchId;
+			long searchId = Long.parseLong(id);
+			if (len == 1) {
+				searchId = searchId * 1000;
+			} else if (len == 2) {
+				searchId = searchId * 100;
+			} else if (len == 3) {
+				searchId = searchId * 10;
+			}
+			return searchId;
 		}catch (Exception e) {
 			return 0;
 		}
 	}
-	
+
 	private long getIdMaxValue(String id) {
 		int len = id.length();
 		try {
-		long searchId = Long.parseLong(id);
-		searchId= searchId+1;
-		if (len == 1) {
-			searchId = searchId * 1000;
-		} else if (len == 2) {
-			searchId = searchId * 100;
-		} else if (len == 3) {
-			searchId = searchId * 10;
-		}
-		return searchId;
+			long searchId = Long.parseLong(id);
+			searchId= searchId+1;
+			if (len == 1) {
+				searchId = searchId * 1000;
+			} else if (len == 2) {
+				searchId = searchId * 100;
+			} else if (len == 3) {
+				searchId = searchId * 10;
+			}
+			return searchId;
 		}catch (Exception e) {
 			return 0;
 		}
 	}
-	
+
 	private boolean isNumber(String strNum) {
 		if (StringUtils.isEmpty(strNum)) {
-	        return false;
-	    }
-	    try {
-	        Long.parseLong(strNum);
-	    } catch (NumberFormatException nfe) {
-	        return false;
-	    }
-	    return true;
+			return false;
+		}
+		try {
+			Long.parseLong(strNum);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 
 	public String connectFtpServer(String orderNumber) throws IOException, ResourceNotFoundException {
