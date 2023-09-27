@@ -351,13 +351,13 @@
                         <th th:text="#{table.header.date}" class="justify-content-center text-center align-middle">Date</th>
                         <th th:text="#{table.header.customer}" class="justify-content-center text-center align-middle">Customer</th>
                         <th th:text="#{table.header.priority}">Priority</th>
-                        <th th:text="#{table.header.material}" class="justify-content-center text-center align-middle">Material</th>
+<!--                        <th th:text="#{table.header.material}" class="justify-content-center text-center align-middle">Material</th>-->
                         <th th:text="#{table.header.lot.id}" class="justify-content-center text-center align-middle">Lot-ID</th>
                         <th th:text="#{table.header.part}" class="justify-content-center text-center align-middle">Part</th>
                         <th th:text="#{table.header.analysis.reason}" class="justify-content-center text-center align-middle">Analysis Reason</th>
-                        <th th:text="#{table.header.electrical.error}" class="justify-content-center text-center align-middle">Electrical Failure</th>
-                        <th th:text="#{table.header.error.mode}" class="justify-content-center text-center align-middle">Failure Mode</th>
-                        <th th:text="#{table.header.fa.editor}" class="justify-content-center text-center align-middle">FA Editor</th>
+<!--                        <th th:text="#{table.header.electrical.error}" class="justify-content-center text-center align-middle">Electrical Failure</th>-->
+<!--                        <th th:text="#{table.header.error.mode}" class="justify-content-center text-center align-middle">Failure Mode</th>-->
+<!--                        <th th:text="#{table.header.fa.editor}" class="justify-content-center text-center align-middle">FA Editor</th>-->
                     </tr>
                     </thead>
                 </table>
@@ -418,6 +418,7 @@
             var criteria = {}
 
             var orderDataTable = $('#table_order_1').DataTable({
+               "order": [1, 'desc'],
                 orderCellsTop: true,
                 //fixedHeader: true,
                 "searching": true,
@@ -539,10 +540,7 @@
                         "data" : "dbs_prio",
                         "class":"justify-content-center text-center align-middle"
                     },
-                    {
-                        /* "title": 'Material', */
-                        "data": $('#localeType').val() == 'de' ? "dbs_material_temp" : "dbs_material"
-                    },
+
                     {
                         /* "title": 'Lot-ID', */
                         "data": "dbs_lotid"
@@ -555,18 +553,7 @@
                         /* "title": 'Analysis Reason', */
                         "data": "dbs_fa_reason"
                     },
-                    {
-                        /* "title": 'Electrical Error', */
-                        "data": $('#localeType').val() == 'de' ? "dbs_elee_temp" : "dbs_elee"
-                    },
-                    {
-                        /* "title": 'Error Mode', */
-                        "data": $('#localeType').val() == 'de' ? "dbs_famo_temp" : "dbs_famo"
-                    },
-                    {
-                        /* "title": 'FA Editor', */
-                        "data": "dbs_fa_name"
-                    }
+
                 ],
                 "language": {
                     "paginate": {
@@ -631,6 +618,8 @@
                                        .focus()[0]
                                        .setSelectionRange(cursorPosition, cursorPosition); */
                                 });
+
+
                         });
 
 
@@ -641,6 +630,8 @@
                     });
                     orderDataTable.columns.adjust().draw();
                 }
+
+
 
             });
 

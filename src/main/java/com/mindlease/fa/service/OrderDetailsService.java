@@ -817,13 +817,13 @@ public class OrderDetailsService {
 
 		String sourceLink = input.getExternalFilter().getOrDefault("sourceLink", "search");
 
-		if(sourceLink.equalsIgnoreCase("All New Orders")) {
-			sb.append(" and (od.dbs_status!='Neuer Auftrag' or od.dbs_status!='New Order')");
-		} else if(sourceLink.equalsIgnoreCase("All Open Orders")) {
-			sb.append(" and (od.dbs_status!='Alle offenen Aufträge' or od.dbs_status!='all open orders') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress')");
+		if(sourceLink.equalsIgnoreCase("All Open Orders")) {
+			sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed')");
+		} else if(sourceLink.equalsIgnoreCase("Open FA Orders")) {
+			sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress')");
 		} else if(sourceLink.equalsIgnoreCase("Evaluation Orders")) {
 			sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerte' or od.dbs_status='FA done - please rate the result')");
-		}else if(sourceLink.equalsIgnoreCase("Chemical Preparation")){
+		} else if(sourceLink.equalsIgnoreCase("Chemical Preparation")){
 			sb.append(" and (od.dbs_status='Wartet auf Ätzung' or od.dbs_status='Waiting for Etching')");
 		}else if(sourceLink.equalsIgnoreCase("Electrical Measurement")){
 			sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement')");
