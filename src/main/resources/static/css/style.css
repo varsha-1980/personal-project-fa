@@ -293,7 +293,7 @@ input[type=search]::-webkit-search-cancel-button {
 	position: relative;
 	overflow: scroll;
 	width: 100%;
-	height: 10px;
+	
 }
 
 
