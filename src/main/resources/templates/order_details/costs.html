@@ -25,7 +25,7 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-10">
-									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+									<input class="form-control form-control-sm custom-select custom-select-sm" type="text" id = "costs1"
 										th:field="*{dbs_cost}" list="costs"
 										placeholder="Select Costs"
 										   th:attr="placeholder=#{label.placeholder.select_cost}"></input>
@@ -41,6 +41,18 @@
 				</div>
 			</div>
 			<script type="text/javascript">
+
+				 $(document).ready(function() {
+				  $('#costs1').keydown(function(event) {
+					// Check if the pressed key is Enter
+					if (event.key === 'Enter') {
+					  event.preventDefault(); // Prevent default behavior
+					  // Your custom logic here
+					}
+				  });
+				});
+
+
 				window.onbeforeunload = closingCode;
 
 				function closingCode(){
@@ -60,6 +72,7 @@
 								    });
 
 				}
+
 
 
 				$(document).ready(function() {

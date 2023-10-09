@@ -71,6 +71,27 @@
 			</div>
 
 			<script type="text/javascript">
+
+			 $(document).ready(function() {
+      $('#defaultCheck1').keydown(function(event) {
+        // Check if the pressed key is Enter
+        if (event.key === 'Enter') {
+          event.preventDefault(); // Prevent default behavior
+          // Your custom logic here
+        }
+      });
+    });
+
+
+     $(document).ready(function() {
+      $('input').keydown(function(event) {
+        // Check if the pressed key is Enter
+        if (event.key === 'Enter') {
+          event.preventDefault(); // Prevent default behavior
+          // Your custom logic here
+        }
+      });
+    });
 				window.onbeforeunload = closingCode;
 
 				function closingCode(){

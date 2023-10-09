@@ -1,135 +1,135 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	  xmlns:th="http://www.thymeleaf.org">
 
 <body>
-	<div th:fragment="position_select" class="mt-3 mb-3">
+<div th:fragment="position_select" class="mt-3 mb-3">
 
-		<div id="position_select_div" class="circle_border">
-			<!--<input class="form-check-input-reverse" type="checkbox"
-				style="position: relative; left: 0px; top: 10px;"
-				th:field="*{dbs_pos_12}"></input> <input
-				class="form-check-input-reverse" type="checkbox"
-				th:field="*{dbs_pos_01}"></input> <input
-				class="form-check-input-reverse" type="checkbox"
-				style="position: relative; left: 0px; top: 10px;"
-				th:field="*{dbs_pos_02}"></input> <br></br> <br></br> <input
-				class="form-check-input-reverse" type="checkbox"
-				style="position: relative; left: 10px; top: 0px;"
-				th:field="*{dbs_pos_11}"></input> <input
-				class="form-check-input-reverse" type="checkbox"
-				style="position: relative; left: 10px; top: 10px;"
-				th:field="*{dbs_pos_20}"></input><input class="form-check-input-reverse"
-				type="checkbox" th:field="*{dbs_pos_13}"></input><input
-				class="form-check-input-reverse" type="checkbox"
-				style="position: relative; left: -10px; top: 10px;"
-				th:field="*{dbs_pos_14}"></input> <input
-				class="form-check-input-reverse" type="checkbox"
-				style="position: relative; left: -10px; top: 0px;"
-				th:field="*{dbs_pos_03}"></input> <br></br> <br></br> <input
-				class="form-check-input-reverse" type="checkbox"
-				th:field="*{dbs_pos_10}"></input><input class="form-check-input-reverse"
-				type="checkbox" th:field="*{dbs_pos_19}"></input> <input
-				class="form-check-input-reverse" type="checkbox"
-				th:field="*{dbs_pos_21}"></input><input class="form-check-input-reverse"
-				type="checkbox" th:field="*{dbs_pos_15}"></input><input
-				class="form-check-input-reverse" type="checkbox"
-				th:field="*{dbs_pos_04}"></input> <br></br> <br></br> <input
-				class="form-check-input-reverse" type="checkbox"
-				style="position: relative; left: 10px; top: 0px;"
-				th:field="*{dbs_pos_09}"></input> <input
-				class="form-check-input-reverse" type="checkbox"
-				style="position: relative; left: 10px; top: -10px;"
-				th:field="*{dbs_pos_18}"></input> <input
-				class="form-check-input-reverse" type="checkbox"
-				th:field="*{dbs_pos_17}"></input> <input
-				class="form-check-input-reverse" type="checkbox"
-				style="position: relative; left: -10px; top: -10px;"
-				th:field="*{dbs_pos_16}"></input><input class="form-check-input-reverse"
-				type="checkbox" style="position: relative; left: -10px; top: 0px;"
-				th:field="*{dbs_pos_05}"></input> <br></br> <input
-				class="form-check-input-reverse" type="checkbox"
-				style="position: relative; left: 0px; top: -10px;"
-				th:field="*{dbs_pos_08}"></input> <input
-				class="form-check-input-reverse" type="checkbox"
-				th:field="*{dbs_pos_07}"></input> <input
-				class="form-check-input-reverse" type="checkbox"
-				style="position: relative; left: 0px; top: -10px;"
-				th:field="*{dbs_pos_06}"></input>    -->
-
-
+	<div id="position_select_div" class="circle_border">
+		<!--<input class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: 0px; top: 10px;"
+            th:field="*{dbs_pos_12}"></input> <input
+            class="form-check-input-reverse" type="checkbox"
+            th:field="*{dbs_pos_01}"></input> <input
+            class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: 0px; top: 10px;"
+            th:field="*{dbs_pos_02}"></input> <br></br> <br></br> <input
+            class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: 10px; top: 0px;"
+            th:field="*{dbs_pos_11}"></input> <input
+            class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: 10px; top: 10px;"
+            th:field="*{dbs_pos_20}"></input><input class="form-check-input-reverse"
+            type="checkbox" th:field="*{dbs_pos_13}"></input><input
+            class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: -10px; top: 10px;"
+            th:field="*{dbs_pos_14}"></input> <input
+            class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: -10px; top: 0px;"
+            th:field="*{dbs_pos_03}"></input> <br></br> <br></br> <input
+            class="form-check-input-reverse" type="checkbox"
+            th:field="*{dbs_pos_10}"></input><input class="form-check-input-reverse"
+            type="checkbox" th:field="*{dbs_pos_19}"></input> <input
+            class="form-check-input-reverse" type="checkbox"
+            th:field="*{dbs_pos_21}"></input><input class="form-check-input-reverse"
+            type="checkbox" th:field="*{dbs_pos_15}"></input><input
+            class="form-check-input-reverse" type="checkbox"
+            th:field="*{dbs_pos_04}"></input> <br></br> <br></br> <input
+            class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: 10px; top: 0px;"
+            th:field="*{dbs_pos_09}"></input> <input
+            class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: 10px; top: -10px;"
+            th:field="*{dbs_pos_18}"></input> <input
+            class="form-check-input-reverse" type="checkbox"
+            th:field="*{dbs_pos_17}"></input> <input
+            class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: -10px; top: -10px;"
+            th:field="*{dbs_pos_16}"></input><input class="form-check-input-reverse"
+            type="checkbox" style="position: relative; left: -10px; top: 0px;"
+            th:field="*{dbs_pos_05}"></input> <br></br> <input
+            class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: 0px; top: -10px;"
+            th:field="*{dbs_pos_08}"></input> <input
+            class="form-check-input-reverse" type="checkbox"
+            th:field="*{dbs_pos_07}"></input> <input
+            class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: 0px; top: -10px;"
+            th:field="*{dbs_pos_21}"></input>    -->
 
 
-			<input id ="2"
-				   class="form-check-input-reverse" type="checkbox"
-			></input>
-			<!--<input id ="3"
-                class="form-check-input-reverse" type="checkbox"
-                style="position: relative; left: 0px; top: 10px;"
-                ></input>--> <br></br> <br></br>
-			<input id ="4"
-				   class="form-check-input-reverse" type="checkbox"
-				   style="position: relative; left: 15px; top: -25px;"
-			></input>
-			<input id ="5"
-				   class="form-check-input-reverse" type="checkbox"
-				   style="position: relative; left: 10px; top: 10px;"
-			></input>
-			<input class="form-check-input-reverse" id ="6"
-				   type="checkbox"></input>
-			<input id="7"
-				   class="form-check-input-reverse" type="checkbox"
-				   style="position: relative; left: -10px; top: 10px;"
-			></input>
-			<input id ="8"
-				   class="form-check-input-reverse" type="checkbox"
-				   style="position: relative; left: -15px; top: -25px;"
-			></input> <br></br> <br></br>
-			<input id ="9"
-				   class="form-check-input-reverse"  type="checkbox"
-				   style="position: relative; right:13px;"
-			></input>
-			<input class="form-check-input-reverse" id ="10"
-				   type="checkbox" ></input>
-			<input
-				class="form-check-input-reverse" type="checkbox" style="margin: 13px;">
+
+
+		<input id ="2"
+			   class="form-check-input-reverse" type="checkbox"
+			   th:field="*{dbs_pos_12}"></input>
+		<!--<input id ="3"
+            class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: 0px; top: 10px;"
+            ></input>--> <br></br> <br></br>
+		<input id ="4"
+			   class="form-check-input-reverse" type="checkbox"
+			   style="position: relative; left: 15px; top: -25px;"
+			   th:field="*{dbs_pos_01}"></input>
+		<input id ="5"
+			   class="form-check-input-reverse" type="checkbox"
+			   style="position: relative; left: 10px; top: 10px;"
+			   th:field="*{dbs_pos_02}"></input>
+		<input class="form-check-input-reverse" id ="6"
+			   type="checkbox" th:field="*{dbs_pos_11}"></input>
+		<input id="7"
+			   class="form-check-input-reverse" type="checkbox"
+			   style="position: relative; left: -10px; top: 10px;"
+			   th:field="*{dbs_pos_20}"></input>
+		<input id ="8"
+			   class="form-check-input-reverse" type="checkbox"
+			   style="position: relative; left: -15px; top: -25px;"
+			   th:field="*{dbs_pos_13}"></input> <br></br> <br></br>
+		<input id ="9"
+			   class="form-check-input-reverse"  type="checkbox"
+			   style="position: relative; right:13px;"
+			   th:field="*{dbs_pos_14}"></input>
+		<input class="form-check-input-reverse" id ="10"
+			   type="checkbox" th:field="*{dbs_pos_15}"></input>
+		<input
+				class="form-check-input-reverse" type="checkbox" style="margin: 13px;" th:field="*{dbs_pos_04}">
 		</input>
 
-			</input>
-			<input class="form-check-input-reverse" id ="11"
-				   type="checkbox" ></input>
-			<input
-					class="form-check-input-reverse" type="checkbox" id ="12"
-					style="position: relative; left:13px;"
-			></input> <br></br> <br></br>
-			<input id ="13"
-				   class="form-check-input-reverse" type="checkbox"
-				   style="position: relative; left: 24px; top: 25px;"
-			></input>
-			<input id ="14"
-				   class="form-check-input-reverse" type="checkbox"
-				   style="position: relative; left: 10px; top: -10px;"
-			></input>
-			<input id ="15"
-				   class="form-check-input-reverse" type="checkbox"
-			></input>
-			<input id ="16"
-				   class="form-check-input-reverse" type="checkbox"
-				   style="position: relative; left: -10px; top: -10px;"
-			></input>
-			<input class="form-check-input-reverse" id ="17"
-				   type="checkbox" style="position: relative; left: -25px; top: 26px;"
-			></input> <br></br>
-			<!--<input id ="18"
-                class="form-check-input-reverse" type="checkbox"
-                style="position: relative; left: 0px; top: -10px;"
-               ></input>-->
-			<input id ="19"
-				   class="form-check-input-reverse" type="checkbox"
-			></input>
-			<div class="triangle-up"></div>
-		</div>
-
+		</input>
+		<input class="form-check-input-reverse" id ="11"
+			   type="checkbox" th:field="*{dbs_pos_18}"></input>
+		<input
+				class="form-check-input-reverse" type="checkbox" id ="12"
+				style="position: relative; left:13px;"
+				th:field="*{dbs_pos_17}"></input> <br></br> <br></br>
+		<input id ="13"
+			   class="form-check-input-reverse" type="checkbox"
+			   style="position: relative; left: 24px; top: 25px;"
+			   th:field="*{dbs_pos_05}"></input>
+		<input id ="14"
+			   class="form-check-input-reverse" type="checkbox"
+			   style="position: relative; left: 10px; top: -10px;"
+			   th:field="*{dbs_pos_08}"></input>
+		<input id ="15"
+			   class="form-check-input-reverse" type="checkbox"
+			   th:field="*{dbs_pos_21}"></input>
+		<input id ="16"
+			   class="form-check-input-reverse" type="checkbox"
+			   style="position: relative; left: -10px; top: -10px;"
+			   th:field="*{dbs_pos_10}"></input>
+		<input class="form-check-input-reverse" id ="17"
+			   type="checkbox" style="position: relative; left: -25px; top: 26px;"
+			   th:field="*{dbs_pos_03}"></input> <br></br>
+		<!--<input id ="18"
+            class="form-check-input-reverse" type="checkbox"
+            style="position: relative; left: 0px; top: -10px;"
+           ></input>-->
+		<input id ="19"
+			   class="form-check-input-reverse" type="checkbox"
+			   th:field="*{dbs_pos_16}"></input>
+		<div class="triangle-up"></div>
 	</div>
+
+</div>
 
 </body>
 </html>
