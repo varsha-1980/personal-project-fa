@@ -21,7 +21,7 @@ spring:
 app:
    message: This is the primary Application Property for ${spring.application.name}
 server:
-  port: 8989
+  port: 9898
   servlet:
     context-path: /FailureAnalysis
 

@@ -812,30 +812,287 @@ public class OrderDetailsService {
 		return pagedList;
 	}
 
+//	private List<OrderDetails> invokeOrderDetails(DataTableRequest input){
+//		StringBuilder sb = new StringBuilder("from OrderDetails od where od.id is not null");
+//
+//		String sourceLink = input.getExternalFilter().getOrDefault("sourceLink", "search");
+//
+//		if(sourceLink.equalsIgnoreCase("All Open Orders")) {
+//			sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') ");
+//		} else if(sourceLink.equalsIgnoreCase("Open FA Orders")) {
+//			sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress')");
+//		} else if(sourceLink.equalsIgnoreCase("Evaluation Orders")) {
+//			sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerte' or od.dbs_status='FA done - please rate the result')");
+//		} else if(sourceLink.equalsIgnoreCase("Chemical Preparation")){
+//			sb.append(" and (od.dbs_status='Wartet auf Ätzung' or od.dbs_status='Waiting for Etching') order by od.dbs_prio  ASC , od.id ASC");
+//		}else if(sourceLink.equalsIgnoreCase("Electrical Measurement")){
+//			sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement')  order by od.dbs_prio  ASC , od.id ASC ");
+//		}
+//		else if(sourceLink.equalsIgnoreCase("Hotspot / IR / LC")){
+//			sb.append(" and (od.dbs_status='Wartet auf Hotspot IR/LC' or od.dbs_status='Waiting for Hotspot IR/LC')  order by od.dbs_prio  ASC , od.id ASC");}
+//		else if(sourceLink.equalsIgnoreCase("REM / FIB / EDX")){
+//			sb.append(" and (od.dbs_status='Wartet auf REM/FIB/EDX' or od.dbs_status='Waiting for REM/FIB/EDX') order by od.dbs_prio  ASC , od.id ASC");}
+//		else if(sourceLink.equalsIgnoreCase("Cuts")){
+//			sb.append(" and (od.dbs_status='Wartet auf Schliff' or od.dbs_status='Waiting for cuts') order by od.dbs_prio  ASC , od.id ASC");}
+//		else if(sourceLink.equalsIgnoreCase("Orders Material /Info Missing")){
+//			sb.append(" and (od.dbs_status='Material/Info fehlt' or od.dbs_status='Material / info missing') order by od.dbs_prio  ASC , od.id ASC");}
+//
+//
+//		String[] activeProfiles = environment.getActiveProfiles(); // it will return String Array of all active profile.
+//		String profileName = "dev";
+//		if (activeProfiles != null && activeProfiles.length > 0) {
+//			profileName = activeProfiles[activeProfiles.length-1];
+//			System.out.println("activeProfile name==:" + profileName);
+//		}
+//		System.out.println("profileName==:" + profileName);
+//		if(StringUtils.hasText(input.getSearch().getValue())) {
+////			System.out.println("===global==========:"+input.getSearch().getValue());
+//			sb.append(" and ( lower(od.dbs_lotid) like :id");
+//			sb.append(" or CAST(od.id as string) like :id");
+//			if(profileName.equalsIgnoreCase("dev")) {
+//				sb.append(" or TO_CHAR(dbs_fa_date, 'MM-dd-yyyy') like :id");
+//			}else {
+//				sb.append(" or CONVERT(VARCHAR(10), dbs_fa_date, 110) like :id");
+//			}
+//			sb.append(" or lower(od.dbs_ag_name) like :id");
+//			sb.append(" or lower(od.dbs_material) like :id");
+//			sb.append(" or lower(od.dbs_prio) like :id");
+//			sb.append(" or lower(od.dbs_part) like :id");
+//			sb.append(" or lower(od.dbs_fa_reason) like lower(:id)");
+//			sb.append(" or lower(od.dbs_fa_name) like lower(:id)");
+//			sb.append(" or lower(od.dbs_elee) like :id ");
+//			sb.append(" or lower(od.dbs_famo) like :id )");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sCustomername", ""))) {
+//			sb.append(" and od.dbs_ag_name LIKE :name");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sPriority", ""))) {
+//			sb.append(" and od.dbs_prio LIKE :prio");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sStatus", ""))) {
+//			sb.append(" and od.dbs_status LIKE :status");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sElectricalError", ""))) {
+//			sb.append(" and od.dbs_elee LIKE :elee");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sFailureMode", ""))) {
+//			sb.append(" and od.dbs_famo LIKE :famo");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sArchWaferBox", ""))) {
+//
+//			sb.append(" and od.dbs_fa_archiv_wf LIKE :archivWf");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sArchPolyBox", ""))) {
+//			sb.append(" and od.dbs_fa_archiv_ps LIKE :archivPs");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sMaterial", ""))) {
+//			sb.append(" and od.dbs_material LIKE :material");
+//		}
+////		if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search")) ) {
+////			sb.append(" and od.user.id = :userId");
+////		}
+//		if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N")  ) {
+//
+//			sb.append(" and od.user.id = :userId");
+//		}
+//
+//		String columnVal = null;
+//
+//		for(Column col : input.getColumns()) {
+//			if (StringUtils.hasText(col.getSearch().getValue())) {
+//				//System.out.println(col.getData()+"===Column=========="+col.getSearch().getValue());
+//
+//				switch (col.getData()) {
+//					case "id":
+//						columnVal = col.getSearch().getValue();
+//						break;
+//					case "dbs_fa_date":
+//						//System.out.println("===dbs_fa_date==========");
+//						if(profileName.equalsIgnoreCase("dev")) {
+//							sb.append(" and TO_CHAR(dbs_fa_date, 'MM-dd-yyyy') like :" + col.getData());
+//						}else {
+//							sb.append(" and CONVERT(VARCHAR(10), dbs_fa_date, 110) like :" + col.getData());
+//						}
+//						break;
+//					default:
+//						sb.append(" and lower(od." + col.getData() + ") LIKE :" + col.getData());
+//				}
+//			}
+//		}
+//
+//		System.out.println("===sb.toString()=========="+sb.toString());
+//
+//		Query query = entityManager.createQuery(sb.toString());
+//		if(StringUtils.hasText(input.getSearch().getValue())) {
+//			query.setParameter("id", "%"+input.getSearch().getValue().trim().toLowerCase()+"%");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sCustomername", ""))) {
+//			query.setParameter("name", "%"+input.getExternalFilter().getOrDefault("sCustomername", "")+"%");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sPriority", ""))) {
+//			query.setParameter("prio", "%"+input.getExternalFilter().getOrDefault("sPriority", "")+"%" );
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sStatus", ""))) {
+//			query.setParameter("status", "%"+input.getExternalFilter().getOrDefault("sStatus", "")+"%");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sElectricalError", ""))) {
+//			query.setParameter("elee", "%"+input.getExternalFilter().getOrDefault("sElectricalError", "")+"%");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sFailureMode", ""))) {
+//			query.setParameter("famo", "%"+input.getExternalFilter().getOrDefault("sFailureMode", "")+"%");
+//		}
+//
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sArchWaferBox", ""))) {
+//			query.setParameter("archivWf", "%"+input.getExternalFilter().getOrDefault("sArchWaferBox", "")+"%");
+//		}
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sArchPolyBox", ""))) {
+//			query.setParameter("archivPs", "%"+input.getExternalFilter().getOrDefault("sArchPolyBox", "")+"%");
+//		}
+//
+//		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sMaterial", ""))) {
+//			query.setParameter("material", "%"+input.getExternalFilter().getOrDefault("sMaterial", "")+"%");
+//		}
+////		if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search"))) {
+////			query.setParameter("userId", Integer.valueOf(input.getExternalFilter().getOrDefault("userId", "0")));
+////		}
+//
+//		if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N")  ) {
+//			query.setParameter("userId", Integer.valueOf(input.getExternalFilter().getOrDefault("userId", "0")));
+//		}
+//
+//		input.getColumns().stream().forEach(col -> {
+//			if (StringUtils.hasText(col.getSearch().getValue()) && !col.getData().contentEquals("id")) {
+//				query.setParameter(col.getData(), "%" + col.getSearch().getValue().trim().toLowerCase() + "%");
+//			}
+//		});
+//
+//		List<OrderDetails> ordersList = query.getResultList();
+//		List<OrderDetails> targetrdersList = null;
+//
+//		if (!StringUtils.isEmpty(columnVal) && isNumber(columnVal)) {
+//			targetrdersList = new ArrayList<>();
+////			for (OrderDetails order : ordersList) {
+////				if (order.getId() >= getIdValue(columnVal) && order.getId() < getIdMaxValue(columnVal)) {
+////					targetrdersList.add(order);
+////				}
+////			}
+//
+//			long id = getOrderIdValue(columnVal);
+//			try {
+//				OrderDetails orderDetails = ordersList.stream().filter(order -> order.getId() == id).findFirst().get();
+//				targetrdersList.add(orderDetails);
+//			}catch (Exception e){
+//				System.out.println(e.getMessage());
+//				targetrdersList = new ArrayList<>();
+//			}
+//		} else {
+//			targetrdersList = ordersList;
+//		}
+//
+//		for (OrderDetails o : targetrdersList) {
+//
+//			o.setDbs_elee_temp(getDbs_elee_temp(o.getDbs_elee()));
+//			o.setDbs_location_temp(getDbs_location_temp(o.getDbs_location()));
+//			o.setDbs_famo_temp(getDbs_famo_temp(o.getDbs_famo()));
+//			o.setDbs_status_temp(getDbs_status_temp(o.getDbs_status()));
+//			o.setDbs_material_temp(getDbs_material_temp(o.getDbs_material()));
+//			o.setDbs_prio_temp(getDbs_prio_temp(o.getDbs_prio()));
+//
+//		}
+//		return targetrdersList;
+//	}
+
 	private List<OrderDetails> invokeOrderDetails(DataTableRequest input){
 		StringBuilder sb = new StringBuilder("from OrderDetails od where od.id is not null");
 
 		String sourceLink = input.getExternalFilter().getOrDefault("sourceLink", "search");
 
+		boolean isUser = input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") ;
+
+
 		if(sourceLink.equalsIgnoreCase("All Open Orders")) {
-			sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') ");
+			if(isUser) {
+				sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') and   od.user.id = :userId");
+			}else {
+				sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') ");
+			}
 		} else if(sourceLink.equalsIgnoreCase("Open FA Orders")) {
-			sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress')");
+			if(isUser) {
+				sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress') and   od.user.id = :userId");
+			}else {
+				sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress')");
+
+			}
 		} else if(sourceLink.equalsIgnoreCase("Evaluation Orders")) {
-			sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerte' or od.dbs_status='FA done - please rate the result')");
+
+			if(isUser){
+				sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerte' or od.dbs_status='FA done - please rate the result')  and   od.user.id = :userId");
+			}
+			else{
+				sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerte' or od.dbs_status='FA done - please rate the result')");
+			}
+
 		} else if(sourceLink.equalsIgnoreCase("Chemical Preparation")){
-			sb.append(" and (od.dbs_status='Wartet auf Ätzung' or od.dbs_status='Waiting for Etching') order by od.dbs_prio  ASC , od.id ASC");
+
+			if(isUser){
+				sb.append(" and (od.dbs_status='Wartet auf Ätzung' or od.dbs_status='Waiting for Etching')  and   od.user.id = :userId  order by od.dbs_prio  ASC , od.id ASC");
+			}
+			else {
+				sb.append(" and (od.dbs_status='Wartet auf Ätzung' or od.dbs_status='Waiting for Etching') order by od.dbs_prio  ASC , od.id ASC");
+			}
 		}else if(sourceLink.equalsIgnoreCase("Electrical Measurement")){
-			sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement')  order by od.dbs_prio  ASC , od.id ASC ");
+
+			if(isUser) {
+				sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement')  and   od.user.id = :userId  order by od.dbs_prio  ASC , od.id ASC ");
+			}else{
+				sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement')  order by od.dbs_prio  ASC , od.id ASC ");
+
+			}
+
 		}
 		else if(sourceLink.equalsIgnoreCase("Hotspot / IR / LC")){
-			sb.append(" and (od.dbs_status='Wartet auf Hotspot IR/LC' or od.dbs_status='Waiting for Hotspot IR/LC')  order by od.dbs_prio  ASC , od.id ASC");}
+
+			if(isUser) {
+				sb.append(" and (od.dbs_status='Wartet auf Hotspot IR/LC' or od.dbs_status='Waiting for Hotspot IR/LC') and   od.user.id = :userId  order by od.dbs_prio  ASC , od.id ASC");
+			}else {
+				sb.append(" and (od.dbs_status='Wartet auf Hotspot IR/LC' or od.dbs_status='Waiting for Hotspot IR/LC')  order by od.dbs_prio  ASC , od.id ASC");
+
+			}
+		}
+
+
 		else if(sourceLink.equalsIgnoreCase("REM / FIB / EDX")){
-			sb.append(" and (od.dbs_status='Wartet auf REM/FIB/EDX' or od.dbs_status='Waiting for REM/FIB/EDX') order by od.dbs_prio  ASC , od.id ASC");}
+
+			if(isUser) {
+				sb.append(" and (od.dbs_status='Wartet auf REM/FIB/EDX' or od.dbs_status='Waiting for REM/FIB/EDX') and   od.user.id = :userId  order by od.dbs_prio  ASC , od.id ASC");
+			}else{
+				sb.append(" and (od.dbs_status='Wartet auf REM/FIB/EDX' or od.dbs_status='Waiting for REM/FIB/EDX') order by od.dbs_prio  ASC , od.id ASC");
+			}
+		}
 		else if(sourceLink.equalsIgnoreCase("Cuts")){
-			sb.append(" and (od.dbs_status='Wartet auf Schliff' or od.dbs_status='Waiting for cuts') order by od.dbs_prio  ASC , od.id ASC");}
+
+			if(isUser) {
+				sb.append(" and (od.dbs_status='Wartet auf Schliff' or od.dbs_status='Waiting for cuts')  and   od.user.id = :userId order by od.dbs_prio  ASC , od.id ASC");
+			}else {
+				sb.append(" and (od.dbs_status='Wartet auf Schliff' or od.dbs_status='Waiting for cuts') order by od.dbs_prio  ASC , od.id ASC");
+			}
+		}
 		else if(sourceLink.equalsIgnoreCase("Orders Material /Info Missing")){
-			sb.append(" and (od.dbs_status='Material/Info fehlt' or od.dbs_status='Material / info missing') order by od.dbs_prio  ASC , od.id ASC");}
+
+			if(isUser) {
+				sb.append(" and (od.dbs_status='Material/Info fehlt' or od.dbs_status='Material / info missing') and   od.user.id = :userId  order by od.dbs_prio  ASC , od.id ASC");
+			}else {
+				sb.append(" and (od.dbs_status='Material/Info fehlt' or od.dbs_status='Material / info missing') order by od.dbs_prio  ASC , od.id ASC");
+
+			}
+
+		} else if (sourceLink.equalsIgnoreCase("All New Orders")) {
+			if(isUser) {
+				sb.append(" and (od.dbs_status='Neuer Auftrag' or od.dbs_status='New Order') and   od.user.id = :userId order by od.dbs_prio  ASC , od.id ASC");
+			}else {
+				sb.append(" and (od.dbs_status='Neuer Auftrag' or od.dbs_status='New Order') ");
+			}
+		}
 
 
 		String[] activeProfiles = environment.getActiveProfiles(); // it will return String Array of all active profile.
@@ -888,14 +1145,14 @@ public class OrderDetailsService {
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sMaterial", ""))) {
 			sb.append(" and od.dbs_material LIKE :material");
 		}
-//		if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search")) ) {
-//			sb.append(" and od.user.id = :userId");
-//		}
-		if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N")  ) {
-
+		if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search")) ) {
 			sb.append(" and od.user.id = :userId");
 		}
 
+		/*if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N")  && !StringUtils.hasText(sourceLink)) {
+			sb.append(" and od.user.id = :userId");
+		}
+*/
 		String columnVal = null;
 
 		for(Column col : input.getColumns()) {

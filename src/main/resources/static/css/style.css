@@ -296,6 +296,14 @@ input[type=search]::-webkit-search-cancel-button {
 	
 }
 
+.padding_class {
+    padding: 35px 16px !important;
+}
+
+.margin_class {
+    margin-bottom: 45px !important;
+}
+
 
 
 /* .btn-message-center {
