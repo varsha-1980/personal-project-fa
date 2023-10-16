@@ -6,6 +6,7 @@
 	  layout:decorate="~{layout}">
 <head>
 	<title>Home</title>
+
 </head>
 <body>
 <div layout:fragment="content">
@@ -32,106 +33,136 @@
 						<li class="list-group-item border-left-0  border-right-0">
 
 							<div class="row">
-								<div class="col-md-4 d-flex">
+								<div class="col-md-12 d-flex">
 									<ul
-											class="list-group blockquote list-inline mx-md-auto justify-content-center">
-										<li class="list-group-item border-0 row"><a
-												th:href="@{/orderdetails/create}"> <i class="fa fa-file"><span
-												class="ml-1" th:text="#{label.menupage.create_new_order}">Create
-															a new order</span></i></a> <br><br></li>
+											class="list-group blockquote list-inline mx-md-auto justify-content-center" style="display:block !important;">
+										<li class="list-group-item border-0 row" style="float:left;width:130px;height:175px;margin:25px;"><a
+												th:href="@{/orderdetails/create}" style="text-decoration:none; color:#000;">
+											<img th:src="@{/static/images/create_order.png}" style="width: 130px;height: 130px; border-radius: 16px;
+    		  background-color: #f7f8fa;  border: solid 1px #dbe1e8;  margin: 0 auto 5px; padding: 20px; transition: all 0.5s ease;  position: relative;"></img><br>
+											<span
+												class="ml-1" th:text="#{label.menupage.create_new_order}" style="text-align: center;
+    		width:130px;display: block;font-size: 16px;  margin: 0px !important;  padding: 0px;">Create
+															a new order</span></a> </li>
+
+										<li class="list-group-item border-0 row" style="float:left;width:130px;height:175px;margin:25px;"><a
+												th:href="@{/orderdetails(fromLink=${'search'})}" style="text-decoration:none; color:#000;">
+											<img th:src="@{/static/images/search_order.png}" style="width: 130px;height: 130px; border-radius: 16px;
+    		  background-color: #f7f8fa;  border: solid 1px #dbe1e8;  margin: 0 auto 5px; padding: 20px; transition: all 0.5s ease;  position: relative;"></img><br>
+											<span
+													class="ml-1" th:text="#{label.menupage.search_for_orders}" style="text-align: center;
+    		width:130px;display: block;font-size: 16px;  margin: 0px !important;  padding: 0px;">Search
+															for an order</span></a> </li>
 
 
 
-										<li class="list-group-item border-0 row padding_class"><a
-												th:href="@{/orderdetails(fromLink=${'search'})}"> <i
-												class="fa fa-search"><span class="ml-1"
-																		   th:text="#{label.menupage.search_for_orders}">Search
-															for an order</span></i></a><br><br></li>
+
 
 
 										<!-- <li class="list-group-item border-0 row"><a th:href="@{#}"> <i
                                                 class="fa fa-list-alt"><span class="ml-1"
                                                     th:text="#{label.menupage.my_orders_form}">my_orders_form</span></i></a></li> -->
-										<li class="list-group-item border-0 row"><a
-												th:href="@{/orderdetails}"> <i class="fa fa-table"><span
-												class="ml-1" th:text="#{label.menupage.my_orders_table}">My
-															orders <!--(table)--></span></i></a></li>
+										<li class="list-group-item border-0 row" style="float:left;width:130px;height:175px;margin:25px;"><a
+												th:href="@{/orderdetails}" style="text-decoration:none; color:#000;"><img th:src="@{/static/images/my_orders.png}" style="width: 130px;height: 130px; border-radius: 16px;
+    		  background-color: #f7f8fa;  border: solid 1px #dbe1e8;  margin: 0 auto 5px; padding: 20px; transition: all 0.5s ease;  position: relative;"><span
+												class="ml-1" th:text="#{label.menupage.my_orders_table}" style="text-align: center;
+    		width:130px;display: block;font-size: 16px;  margin: 0px !important;  padding: 0px;">My
+															orders <!--(table)--></span></a></li>
+
+										<li class="list-group-item border-0 row"  style="float:left;width:130px;height:175px;margin:25px;"><a
+												th:href="@{/orderdetails(fromLink=${'Electrical Measurement'})}" style="text-decoration:none; color:#000;" >
+											<img th:src="@{/static/images/measurement.png}" style="width: 130px;height: 130px; border-radius: 16px;
+    		  background-color: #f7f8fa;  border: solid 1px #dbe1e8;  margin: 0 auto 5px; padding: 20px; transition: all 0.5s ease;  position: relative;"><span class="ml-1"
+											th:text="#{label.menupage.electrical_measurement}" style="text-align: center;
+    		width:130px;display: block;font-size: 16px;  margin: 0px !important;  padding: 0px;">Electrical measurement </span></a></li>
+
+
+
+										<li class="list-group-item border-0 row" style="float:left;width:130px;height:175px;margin:25px;"><a
+												th:href="@{/orderdetails(fromLink=${'Hotspot / IR / LC'})}" style="text-decoration:none; color:#000;">
+											<img th:src="@{/static/images/hotspot.png}" style="width: 130px;height: 130px; border-radius: 16px;background-color: #f7f8fa;  border: solid 1px #dbe1e8;  margin: 0 auto 5px; padding: 20px; transition: all 0.5s ease;  position: relative;">
+											<span class="ml-1"
+												  th:text="#{label.menuage.hotspotp_ir/lc}" style="text-align: center;
+    		width:130px;display: block;font-size: 16px;  margin: 0px !important;  padding: 0px;">Hotspot IR / LC </span></a></li>
+
+										<li class="list-group-item border-0 row" style="float:left;width:130px;height:175px;margin:25px;"><a
+												th:href="@{/orderdetails(fromLink=${'Chemical Preparation'})}" style="text-decoration:none; color:#000;">
+											<img th:src="@{/static/images/chemical_prep.png}" style="width: 130px;height: 130px; border-radius: 16px;background-color: #f7f8fa;  border: solid 1px #dbe1e8;  margin: 0 auto 5px; padding: 20px; transition: all 0.5s ease;  position: relative;">
+
+											<span class="ml-1" th:text="#{label.menupage.chemical_preparaion}" style="text-align: center;
+    		width:130px;display: block;font-size: 16px;  margin: 0px !important;  padding: 0px;">Chemical Preparation</span></a></li>
 									</ul>
 								</div>
-								<div class="col-md-4 d-flex">
+								<div class="col-md-12 d-flex">
 									<ul
-											class="list-group blockquote list-inline mx-md-auto justify-content-center">
+											class="list-group blockquote list-inline mx-md-auto justify-content-center" style="display:block !important;">
 
 
 
-										<li class="list-group-item border-0 row"><a
-												th:href="@{/orderdetails(fromLink=${'Electrical Measurement'})}"> <i
-												class="fa fa-table"><span class="ml-1"
-																		  th:text="#{label.menupage.electrical_measurement}">Electrical measurement </span></i></a></li>
 
-
-
-										<li class="list-group-item border-0 row"><a
-												th:href="@{/orderdetails(fromLink=${'Hotspot / IR / LC'})}"> <i
-												class="fa fa-table"><span class="ml-1"
-																		  th:text="#{label.menuage.hotspotp_ir/lc}">Hotspot IR / LC </span></i></a></li>
-
-										<li class="list-group-item border-0 row"><a
-												th:href="@{/orderdetails(fromLink=${'Chemical Preparation'})}"> <i
-												class="fa fa-table">
-											<span class="ml-1" th:text="#{label.menupage.chemical_preparaion}">Chemical Preparation</span></i></a></li>
 
 
 
 										<!-- <li class="list-group-item border-0 row"><a th:href="@{/orderdetails(fromLink=${'search'})}"> <i
                                                 class="fa fa-table"><span class="ml-1"
                                                     th:text="#{label.menupage.open_orders_ex_service}">Open orders ext. service</span></i></a></li> -->
-										<li class="list-group-item border-0 row"><a
-												th:href="@{/orderdetails(fromLink=${'REM / FIB / EDX'})}"> <i
-												class="fa fa-table"><span class="ml-1"
-																		  th:text="#{label.menupage.REM_FIB_EDX}">REM / FIB / EDX</span></i></a></li>
+										<li class="list-group-item border-0 row" style="float:left;width:130px;height:175px;margin:25px;"><a
+												th:href="@{/orderdetails(fromLink=${'REM / FIB / EDX'})}" style="text-decoration:none; color:#000;">
+											<img th:src="@{/static/images/rem.png}" style="width: 130px;height: 130px; border-radius: 16px;background-color: #f7f8fa;  border: solid 1px #dbe1e8;  margin: 0 auto 5px; padding: 20px; transition: all 0.5s ease;  position: relative;">
 
-										<li class="list-group-item border-0 row"><a
-												th:href="@{/orderdetails(fromLink=${'Cuts'})}"> <i
-												class="fa fa-table"><span class="ml-1"
-																		  th:text="#{label.menupage.Cuts}">Cuts</span></i></a></li>
+											<span class="ml-1"
+												  th:text="#{label.menupage.REM_FIB_EDX}" style="text-align: center;
+    		width:130px;display: block;font-size: 16px;  margin: 0px !important;  padding: 0px;">REM / FIB / EDX</span></a></li>
+
+										<li class="list-group-item border-0 row" style="float:left;width:130px;height:175px;margin:25px;"><a
+												th:href="@{/orderdetails(fromLink=${'Cuts'})}" style="text-decoration:none; color:#000;">
+											<img th:src="@{/static/images/cut.png}" style="width: 130px;height: 130px; border-radius: 16px;background-color: #f7f8fa;  border: solid 1px #dbe1e8;  margin: 0 auto 5px; padding: 20px; transition: all 0.5s ease;  position: relative;">
+
+											<span class="ml-1"
+												  th:text="#{label.menupage.Cuts}" style="text-align: center;
+    		width:130px;display: block;font-size: 16px;  margin: 0px !important;  padding: 0px;">Mechanical Preparation</span></a></li>
+
+										<li class="list-group-item border-0 row" style="float:left;width:130px;height:175px;margin:25px;"><a
+												th:href="@{/orderdetails(fromLink=${'All New Orders'})}" style="text-decoration:none; color:#000;">
+											<img th:src="@{/static/images/new_order.png}" style="width: 130px;height: 130px; border-radius: 16px;background-color: #f7f8fa;  border: solid 1px #dbe1e8;  margin: 0 auto 5px; padding: 20px; transition: all 0.5s ease;  position: relative;">
+											<span class="ml-1"
+																		 th:text="#{label.menupage.all_new_orders}" style="text-align: center;
+    		width:130px;display: block;font-size: 16px;  margin: 0px !important;  padding: 0px;">All New orders</span>
+										</a></li>
+
+
+										<li class="list-group-item border-0 row "  style="float:left;width:130px;height:175px;margin:25px;"><a
+												th:href="@{/orderdetails(fromLink=${'All Open Orders'})}" style="text-decoration:none; color:#000;">
+											<img th:src="@{/static/images/open_order.png}" style="width: 130px;height: 130px; border-radius: 16px;background-color: #f7f8fa;  border: solid 1px #dbe1e8;  margin: 0 auto 5px; padding: 20px; transition: all 0.5s ease;  position: relative;">
+											<span class="ml-1"
+																		 th:text="#{label.menupage.all_open_oders}" style="text-align: center;
+    		width:130px;display: block;font-size: 16px;  margin: 0px !important;  padding: 0px;">All open
+															orders</span>
+										</a></li>
+
+										<li class="list-group-item border-0 row" style="float:left;width:130px;height:175px;margin:25px;"><a
+												th:href="@{/orderdetails(fromLink=${'Evaluation Orders'})}" style="text-decoration:none; color:#000;">
+											<img th:src="@{/static/images/order_eval.png}" style="width: 130px;height: 130px; border-radius: 16px;background-color: #f7f8fa;  border: solid 1px #dbe1e8;  margin: 0 auto 5px; padding: 20px; transition: all 0.5s ease;  position: relative;">
+											<span class="ml-1"
+																		 th:text="#{label.menupage.orders_for_evaluation}" style="text-align: center;
+    		width:130px;display: block;font-size: 16px;  margin: 0px !important;  padding: 0px;">Orders
+															for evaluation</span>
+										</a></li>
+
+
+										<li class="list-group-item border-0 row " style="float:left;width:130px;height:175px;margin:25px;"><a
+												th:href="@{/orderdetails(fromLink=${'Orders Material /Info Missing'})}" style="text-decoration:none; color:#000;">
+											<img th:src="@{/static/images/missing_info.png}" style="width: 130px;height: 130px; border-radius: 16px;background-color: #f7f8fa;  border: solid 1px #dbe1e8;  margin: 0 auto 5px; padding: 20px; transition: all 0.5s ease;  position: relative;">
+											<span class="ml-1"
+																		 th:text="#{label.menupage.order_material}" style="text-align: center;
+    		width:130px;display: block;font-size: 16px;  margin: 0px !important;  padding: 0px;">Orders material / info is missing</span>
+										</a></li>
 
 
 
 									</ul>
 								</div>
-								<div class="col-md-4 d-flex">
-									<ul
-											class="list-group blockquote list-inline mx-md-auto justify-content-center margin_class">
-										<li class="list-group-item border-0 row"><a
-												th:href="@{/orderdetails(fromLink=${'All New Orders'})}">
-											<i class="fa fa-table"><span class="ml-1"
-																		 th:text="#{label.menupage.all_new_orders}">All New orders</span></i>
-										</a></li>
 
-
-										<li class="list-group-item border-0 row "><a
-												th:href="@{/orderdetails(fromLink=${'All Open Orders'})}">
-											<i class="fa fa-table"><span class="ml-1"
-																		 th:text="#{label.menupage.all_open_oders}">All open
-															orders</span></i>
-										</a></li>
-
-										<li class="list-group-item border-0 row"><a
-												th:href="@{/orderdetails(fromLink=${'Evaluation Orders'})}">
-											<i class="fa fa-table"><span class="ml-1"
-																		 th:text="#{label.menupage.orders_for_evaluation}">Orders
-															for evaluation</span></i>
-										</a></li>
-
-
-										<li class="list-group-item border-0 row "><a
-												th:href="@{/orderdetails(fromLink=${'Orders Material /Info Missing'})}">
-											<i class="fa fa-table"><span class="ml-1"
-																		 th:text="#{label.menupage.order_material}">Orders material / info is missing</span></i>
-										</a></li>
-									</ul>
-								</div>
 								<!-- <div class="col-md-4 d-flex">
                                     <ul
                                         class="list-group blockquote list-inline mx-md-auto justify-content-center">
