@@ -102,7 +102,7 @@
 											</thead>
 											<tbody>
 												<tr th:each="_m : ${generalInvestigationMethods}">
-													<td th:text="__${#locale}__ == 'de' ? ${_m.nameDe} : ${_m.name}" style="padding: 0 !important;"></td>
+													<td th:text="__${#locale}__ == 'de' ? ${_m.nameDe} : ${_m.name}" ></td>
 													<td style="padding: 0 !important;"><a th:href="@{#}" class="btn btn-danger btn-sm" onclick="onAnalysisMethodsDelete(1, this.id )" th:id="${_m.id}">
 															<i class="fa fa-trash"></i>
 													</a></td>
@@ -120,7 +120,7 @@
 											</thead>
 											<tbody>
 												<tr th:each="_m : ${housedExaminationMethods}">
-													<td th:text="__${#locale}__ == 'de' ? ${_m.nameDe} : ${_m.name}" style="padding: 0 !important;"></td>
+													<td th:text="__${#locale}__ == 'de' ? ${_m.nameDe} : ${_m.name}" ></td>
 													<td style="padding: 0 !important;"><a th:href="@{#}" class="btn btn-danger btn-sm" onclick="onAnalysisMethodsDelete(2, this.id )" th:id="${_m.id}">
 															<i class="fa fa-trash"></i>
 													</a></td>
@@ -140,7 +140,7 @@
 											</thead>
 											<tbody>
 												<tr th:each="_m : ${wafersExaminationMethods}">
-													<td th:text="__${#locale}__ == 'de' ? ${_m.nameDe} : ${_m.name}" style="padding: 0 !important;"></td>
+													<td th:text="__${#locale}__ == 'de' ? ${_m.nameDe} : ${_m.name}" ></td>
 													<td style="padding: 0 !important;"><a th:href="@{#}" class="btn btn-danger btn-sm" onclick="onAnalysisMethodsDelete(3, this.id )" th:id="${_m.id}">
 															<i class="fa fa-trash"></i>
 													</a></td>

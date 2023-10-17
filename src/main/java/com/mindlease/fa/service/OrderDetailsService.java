@@ -1145,8 +1145,13 @@ public class OrderDetailsService {
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sMaterial", ""))) {
 			sb.append(" and od.dbs_material LIKE :material");
 		}
+		//changes made by varsha
 		if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search")) ) {
-			sb.append(" and od.user.id = :userId");
+			sb.append(" and od.user.id = :userId ");
+		}
+		/*always execute*/
+		if((!StringUtils.hasText(sourceLink))){
+			sb.append(" order by od.id desc");
 		}
 
 		/*if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N")  && !StringUtils.hasText(sourceLink)) {

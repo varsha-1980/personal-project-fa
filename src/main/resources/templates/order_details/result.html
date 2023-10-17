@@ -139,23 +139,23 @@
 											class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 								</div>
 								<div class="col-md-8">
-									<!--<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+									<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
 										th:field="*{dbs_res_name}" list="evaluator"
 										placeholder="Select Evaluator"
 										   th:attr="placeholder=#{label.search.placeholder.select_evaluator}"></input>
 									<datalist id="evaluator">
 										<option th:each="_p: ${evaluatorList}"
 											th:value="${_p.pers_short}" th:text="${_p.pers_short}"></option>
-									</datalist>-->
+									</datalist>
 
-									<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+									<!--<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
 											th:field="*{dbs_res_name}" th:label="#{label.search.placeholder.select_evaluator}">
 										<option value="" th:label="#{label.search.placeholder.select_evaluator}"    ></option>
 										<option th:each="_p: ${evaluatorList}"
 												th:value="${_p.pers_short}" th:text="${_p.pers_short}"></option>
-												<!--th:value="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"
-												th:text="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"></option>-->
-									</select>
+												&lt;!&ndash;th:value="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"
+												th:text="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"></option>&ndash;&gt;
+									</select>-->
 
 
 								</div>

@@ -25,7 +25,7 @@
 									class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 						</div>
 						<div class="col-md-8">
-							<!--<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
+							<input class="form-control form-control-sm custom-select custom-select-sm" type="text"
                                 th:field="*{dbs_part}" list="parts"
                                 onchange="onPartChangePost(this);" placeholder="Select Part"
                                 ></input>
@@ -33,17 +33,17 @@
                             <datalist id="parts">
                                 <option th:each="_part: ${partList}" th:value="${_part.name}"
                                     th:text="${_part.name}"></option>
-                            </datalist>-->
+                            </datalist>
 
 
-							<select th:field="*{dbs_part}" class="select2"
+							<!--<select th:field="*{dbs_part}" class="select2"
 									th:data-placeholder="#{label.search.placeholder.Select_Part}"
 									onchange="onPartChangePost(this);">
 								<option value="" text=""></option>
 								<option th:each="_part: ${partList}"
 										th:value="${_part.name}" th:text="${_part.name}"></option>
 							</select>
-
+-->
 							<!--<select class="form-control select1"
                                th:field="*{dbs_part}" onchange="onPartChangePost(this);" required="required">
                                <option value="">Select Part</option>
