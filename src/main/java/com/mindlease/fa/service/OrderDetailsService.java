@@ -1020,7 +1020,7 @@ public class OrderDetailsService {
 			if(isUser) {
 				sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress') and   od.user.id = :userId");
 			}else {
-				sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress')");
+				sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress') order by od.dbs_prio  ASC , od.id ASC");
 
 			}
 		} else if(sourceLink.equalsIgnoreCase("Evaluation Orders")) {
@@ -1029,7 +1029,7 @@ public class OrderDetailsService {
 				sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerte' or od.dbs_status='FA done - please rate the result')  and   od.user.id = :userId order by od.dbs_prio  ASC , od.id ASC");
 			}
 			else{
-				sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerte' or od.dbs_status='FA done - please rate the result')");
+				sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerte' or od.dbs_status='FA done - please evaluate the result') order by od.dbs_prio  ASC , od.id ASC");
 			}
 
 		} else if(sourceLink.equalsIgnoreCase("Chemical Preparation")){
@@ -1045,7 +1045,7 @@ public class OrderDetailsService {
 			if(isUser) {
 				sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement')  and   od.user.id = :userId  order by od.dbs_prio  ASC , od.id ASC ");
 			}else{
-				sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement')  order by od.dbs_prio  ASC , od.id ASC ");
+				sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement') order by od.dbs_prio  ASC , od.id ASC");
 
 			}
 
@@ -1090,7 +1090,7 @@ public class OrderDetailsService {
 			if(isUser) {
 				sb.append(" and (od.dbs_status='Neuer Auftrag' or od.dbs_status='New Order') and   od.user.id = :userId order by od.dbs_prio  ASC , od.id ASC");
 			}else {
-				sb.append(" and (od.dbs_status='Neuer Auftrag' or od.dbs_status='New Order') ");
+				sb.append(" and (od.dbs_status='Neuer Auftrag' or od.dbs_status='New Order') order by od.dbs_prio  ASC , od.id ASC ");
 			}
 		}
 
