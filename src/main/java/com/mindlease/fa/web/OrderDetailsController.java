@@ -301,16 +301,17 @@ public class OrderDetailsController {
 		boolean isFARequester = AuthorityUtils.authorityListToSet(userDetails.getAuthorities())
 				.contains("FA-REQUESTOR");
 		if (!tab.isPresent()) {
-			TabValues currentTab = isFA ? TabValues.values()[6] : TabValues.values()[0];
+//			TabValues currentTab = isFA ? TabValues.values()[6] : TabValues.values()[0];
+			TabValues currentTab = TabValues.values()[0];
 			if (currentTab != null) {
 				model.addAttribute(FailureAnalysisConstants.CURRENT_TAB, currentTab);
-				model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
-						(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
+//				model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
+//						(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
 				model.addAttribute(FailureAnalysisConstants.NEXT_TAB, currentTab.getNext());
 				entity.setCurrentTab(currentTab);
 				entity.setPreviousTab(currentTab.getPrevious());
-				entity.setNextTab((isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null
-						: currentTab.getNext());
+//				entity.setNextTab((isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null
+//						: currentTab.getNext());
 			}
 			model.addAttribute("userName", currentPrincipalName);
 			model.addAttribute("userDetails", userDetails);
@@ -325,10 +326,10 @@ public class OrderDetailsController {
 		else {
 			TabValues currentTab = tab.get();
 			model.addAttribute(FailureAnalysisConstants.CURRENT_TAB, currentTab);
-			model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
-					(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
-			model.addAttribute(FailureAnalysisConstants.NEXT_TAB,
-					(isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null : currentTab.getNext());
+//			model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
+//					(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
+//			model.addAttribute(FailureAnalysisConstants.NEXT_TAB,
+//					(isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null : currentTab.getNext());
 			entity.setCurrentTab(currentTab);
 			entity.setPreviousTab(currentTab.getPrevious());
 			entity.setNextTab(currentTab.getNext());

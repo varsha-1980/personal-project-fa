@@ -78,7 +78,6 @@
 										aria-controls="nav-processing"
 										aria-selected="${currentTab.value == 'processing'}? 'true'"
 										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB7.ordinal() == currentTab.ordinal()? 'active' : '')}"><span
-										th:if="${#httpServletRequest.requestURI != '/FailureAnalysis/orderdetails/create'}"
 										th:text="#{label.editpage.tab7}">Processing FA</span></a>
 
 								<a
@@ -88,7 +87,7 @@
 										onclick="return ontabclick('TAB8')"
 										aria-selected="${currentTab.value == 'costs'}? 'true'"
 										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB8.ordinal() == currentTab.ordinal()? 'active' : '')}"><span
-										th:if="${#httpServletRequest.requestURI != '/FailureAnalysis/orderdetails/create'}"
+
 										th:text="#{label.editpage.tab8}">Costs</span></a>
 
 								<a
@@ -97,7 +96,7 @@
 										onclick="return ontabclick('TAB9')"
 										aria-selected="${currentTab.value == 'result'}? 'true'"
 										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB9.ordinal() == currentTab.ordinal()? 'active' : '')}"><span
-										th:if="${#httpServletRequest.requestURI != '/FailureAnalysis/orderdetails/create'}"
+
 										th:text="#{label.editpage.tab9}">Result</span></a>
 
 								<a
@@ -109,8 +108,7 @@
 										aria-selected="${currentTab.value == 'statistics'}? 'true'"
 										th:classappend="${(T(com.mindlease.fa.util.TabValues).TAB10.ordinal() == currentTab.ordinal()? 'active' : '')}">
 
-											<span th:if="${#httpServletRequest.requestURI != '/FailureAnalysis/orderdetails/create'}"
-												  th:text="#{label.editpage.tab10}">Statistics</span>
+											<span th:text="#{label.editpage.tab10}">Statistics</span>
 
 								</a>
 
@@ -190,7 +188,7 @@
 						<div class="tab-pane"
 							 th:classappend="${currentTab.value == 'order'}? 'show active'"
 							 id="nav-information" role="tabpanel"
-							 sec:authorize="!hasAuthority('FA')"
+
 							 aria-labelledby="nav-information-tab">
 							<div th:if="${currentTab.value == 'order'}"
 								 th:insert="order_details/order_information :: order_information"></div>
@@ -198,35 +196,35 @@
 						<div class="tab-pane"
 							 th:classappend="${currentTab.value == 'geometry'}? 'show active'"
 							 id="nav-geometry" role="tabpanel"
-							 sec:authorize="!hasAuthority('FA')"
+
 							 aria-labelledby="nav-geometry-tab">
 							<div th:if="${currentTab.value == 'geometry'}"
 								 th:insert="order_details/geometry :: geometry"></div>
 						</div>
 						<div class="tab-pane"
 							 th:classappend="${currentTab.value == 'reason'}? 'show active'"
-							 id="nav-reason" sec:authorize="!hasAuthority('FA')"
+							 id="nav-reason"
 							 role="tabpanel" aria-labelledby="nav-reason-tab">
 							<div th:if="${currentTab.value == 'reason'}"
 								 th:insert="order_details/reason :: reason"></div>
 						</div>
 						<div class="tab-pane"
 							 th:classappend="${currentTab.value == 'analysis'}? 'show active'"
-							 id="nav-analysis" sec:authorize="!hasAuthority('FA')"
+							 id="nav-analysis"
 							 role="tabpanel" aria-labelledby="nav-analysis-tab">
 							<div th:if="${currentTab.value == 'analysis'}"
 								 th:insert="order_details/analysis_methods :: analysis"></div>
 						</div>
 						<div class="tab-pane"
 							 th:classappend="${currentTab.value == 'position'}? 'show active'"
-							 id="nav-description" sec:authorize="!hasAuthority('FA')"
+							 id="nav-description"
 							 role="tabpanel" aria-labelledby="nav-description-tab">
 							<div  th:if="${currentTab.value == 'position'}"
 								  th:insert="order_details/position_description :: position"></div>
 						</div>
 						<div class="tab-pane"
 							 th:classappend="${currentTab.value == 'location'}? 'show active'"
-							 id="nav-location" sec:authorize="!hasAuthority('FA')"
+							 id="nav-location"
 							 role="tabpanel" aria-labelledby="nav-location-tab">
 							<div th:if="${currentTab.value == 'location'}"
 
@@ -235,21 +233,20 @@
 						<div class="tab-pane"
 							 th:classappend="${currentTab.value == 'processing'}? 'show active'"
 							 id="nav-processing" role="tabpanel"
-							 sec:authorize="!hasAuthority('FA-REQUESTOR')"
 							 aria-labelledby="nav-processing-tab">
 							<div th:if="${currentTab.value == 'processing'}"
 								 th:insert="order_details/processing_fa :: processing"></div>
 						</div>
 						<div class="tab-pane"
 							 th:classappend="${currentTab.value == 'costs'}? 'show active'"
-							 sec:authorize="!hasAuthority('FA-REQUESTOR')" id="nav-costs"
+							  id="nav-costs"
 							 role="tabpanel" aria-labelledby="nav-costs-tab">
 							<div th:if="${currentTab.value == 'costs'}"
 								 th:insert="order_details/costs :: costs"></div>
 						</div>
 						<div class="tab-pane"
 							 th:classappend="${currentTab.value == 'result'}? 'show active'"
-							 sec:authorize="!hasAuthority('FA-REQUESTOR')" id="nav-result"
+							 id="nav-result"
 							 role="tabpanel" aria-labelledby="nav-result-tab">
 							<div th:if="${currentTab.value == 'result'}"
 								 th:insert="order_details/result :: result"></div>
@@ -257,7 +254,7 @@
 						<div class="tab-pane"
 							 th:classappend="${currentTab.value == 'statistics'}? 'show active'"
 							 id="nav-statistics" role="tabpanel"
-							 sec:authorize="!hasAuthority('FA-REQUESTOR')"
+
 							 aria-labelledby="nav-statistics-tab">
 							<div th:if="${currentTab.value == 'statistics'}"
 								 th:insert="order_details/statistics :: statistics"></div>
