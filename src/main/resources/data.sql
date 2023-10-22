@@ -185,13 +185,14 @@ INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date
 INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date, modified_by, modified_date, name, name_de, version) VALUES (4, 'N', 'Y', 'Company_4',1, '2019-07-26 11:20:42',1, '2019-07-26 11:20:42', 'Company_4', 'Company_4', 4);
 
 
-INSERT INTO users (id, email, password, first_name, last_name, COMPANY_ID) VALUES
-(1, 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 1),
-(3, 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 1),
-(5, 'admin1@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 2),
-(6, 'user1@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2),
-(7, 'majaffar87656@gmail.com', '$2a$12$ZRyY9yV9tY.B55Wn4IfS/OTRAxFzwDoyHz975r16hwuGHubthYj0i', 'Mohd Abdul', 'Jaffar' , 1),
-(8, 'varshadevgankar@gmail.com', '$2a$12$ZRyY9yV9tY.B55Wn4IfS/OTRAxFzwDoyHz975r16hwuGHubthYj0i', 'Varsha', 'Devgankar' , 1);
+INSERT INTO users (id, email, password, first_name, last_name, COMPANY_ID, LANGUAGE ) VALUES
+(1, 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 1,'en'),
+(3, 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 1,'en'),
+(5, 'admin1@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 2,'en'),
+(6, 'user1@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2,'en'),
+(7, 'majaffar87656@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Mohd Abdul', 'Jaffar' , 1,'en'),
+(8, 'varshadevgankar@gmail.com', '$2a$12$ZRyY9yV9tY.B55Wn4IfS/OTRAxFzwDoyHz975r16hwuGHubthYj0i', 'Varsha', 'Devgankar' , 1,'en'),
+(9, 'jaffar@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Abdul', 'Jaffar' , 1,'en');
 
 
 INSERT INTO  roles (id, name) VALUES
@@ -208,6 +209,7 @@ INSERT INTO  user_role (user_id, role_id) VALUES (3, 3);
 INSERT INTO  user_role (user_id, role_id) VALUES (5, 4);
 INSERT INTO  user_role (user_id, role_id) VALUES (6, 4);
 INSERT INTO  user_role (user_id, role_id) VALUES (7, 3);
+INSERT INTO  user_role (user_id, role_id) VALUES (9, 5);
 INSERT INTO  user_role (user_id, role_id) VALUES (8, 4);
 
 /*

@@ -280,7 +280,7 @@
 								</div>
 							</div>
 
-							<div class="form-group col-md-4" sec:authorize="hasAuthority('FA')">
+							<div class="form-group col-md-4" >
 								<div class="col-md-12">
 									<label for="inputEmail4"><span
 											th:text="#{label.editpage.tab7.mail_to_client}">Mail to
@@ -304,7 +304,6 @@
 				$(document).ready(function () {   $('.select2').select2({   allowClear: true, width: '100%'});});
 
 		       function sendEmail(){
-		       alert("Send email");
 
 		       var form = $(document.getElementById('procform'));
 
@@ -315,12 +314,91 @@
 								        data: form.serialize(), // serializes the form's elements.
 								        success: function(data)
 								        {
-								          alert(data); // show response from the php script.
+								        console.log(data);
+								        if(data.status === "error"){
+								          alert("Cannot send email");
+								        }else {
+								         var encodedBodyHTML = data.emailBody;
+
+
+								          var mailtoLink = "mailto:"+data.mailTo+"?subject=" + data.subject + "&body=" + data.emailBody;
+
+											// Open the default email client
+											window.location.href = mailtoLink;
+								        }
+								         // alert(data); // show response from the php script.
 								        }
 								    });
 		       }
 		
-	
+
+
+	function openOutlook() {
+        var subject = "Order Creation"
+        var body = "Hello Nick,\n"+
+                      "\n"+
+                  "The requested investigations for the following order have been carried out.\n"+
+                      "\n"+
+                      "Order ID: 8882\n"+
+                      "Lot ID: ET05Y01.1\n"+
+                     "Geometry: NRMD150AUSV8PTS\n"+
+                       "\n"+
+                    "The following link takes you to the analysis results.\n"+
+                    "\\wsiz03\iz_rem\Orders_after_numbers\8882\n"+
+                    "\n"+
+                    "The following link takes you to the analysis database.\n"+
+                    "\\wsiz03\shares\IZ_REM\Database\Analysis Database.accdb\n"+
+                     "\n"+
+                    "Please assess the image material/measurements promptly and document the result of the analysis in\n the database.\n"+
+                   "If further work is necessary, please let me know. If this is not the case, \n"+
+                   "please set the processing status to 'order closed'.\n"+
+                    "\n"+
+                   "Best regards, Daniela";
+        var mailto = "nickbarrow@vishay.com"
+        var mailtoLink = "mailto:"+mailto+"?subject=" + subject + "&body=" + body;
+
+        // Open the default email client
+        window.location.href = mailtoLink;
+    }
+
+    function OutlookEmail(p_to, p_subject, p_cc,
+                          ptxt_body, ptxt_attachments) {
+
+    var olByValue = 1;
+    var olMailItem = 0;
+
+    var oOApp = guixt.CreateObject("Outlook.Application");
+    if (!oOApp)
+    {
+        alert("Outlook not installed");
+        return
+    };
+    var oOMail = oOApp.CreateItem(olMailItem);
+
+
+    // attachments
+    if (ptxt_attachments) {
+        var attachments = guixt.GetText(ptxt_attachments).split("\n");
+        for (var k = 0; k < attachments.length; k++) {
+            var attachment = attachments[k];
+            if (attachment.length > 0) {
+                oOMail.Attachments.Add(attachment, olByValue, 0);
+
+            };
+        };
+    };
+
+    oOMail.To = p_to;
+    oOMail.CC = p_cc;
+    oOMail.Subject = p_subject;
+
+    oOMail.BodyFormat = 2;
+    oOMail.HTMLBody = guixt.GetText(ptxt_body);
+
+    oOMail.display();
+
+
+};
 			
 			
 			
