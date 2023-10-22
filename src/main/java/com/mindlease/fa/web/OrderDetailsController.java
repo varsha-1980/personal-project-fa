@@ -739,12 +739,14 @@ public class OrderDetailsController {
 		log.info("---------sender----------{}",senderDetails);
 
 		emailTemplate.setMailTo( recipientDetails!=null ?recipientDetails.getEmail():"");
-		emailTemplate.setSubject("Order Details");
 
 		if(recipientDetails!=null ) {
 			if(recipientDetails.getLanguage()!=null) {
 				if (recipientDetails.getLanguage().equals("en")) {
 
+					if(orderDetails!=null ) {
+						emailTemplate.setSubject("Order No." + orderDetails.getId() + ": The analysis is finished");
+					}
 					ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 					InputStream inputStream = classLoader.getResourceAsStream("templates/English_EmailTemplate.txt");
 
@@ -779,6 +781,10 @@ public class OrderDetailsController {
 					}
 
 				} else {
+
+					if(orderDetails!=null ) {
+						emailTemplate.setSubject("Auftrag-Nr."+orderDetails.getId()+": Die Analyse ist fertig");
+					}
 					ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 					InputStream inputStream = classLoader.getResourceAsStream("templates/German_EmailTemplate.html");
 
