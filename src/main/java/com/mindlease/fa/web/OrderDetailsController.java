@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.mindlease.fa.config.LocaleConfig;
+import com.mindlease.fa.dto.EmailTemplate;
 import com.mindlease.fa.repository.OrderDetailsRepository;
+import com.mindlease.fa.repository.UserRepository;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,8 +77,7 @@ public class OrderDetailsController {
 	private String sharedFolderPathURl;
 
 	@Autowired
-	JavaMailSender mailSender;
-
+	private UserRepository userRepository;
 
 	@Autowired
 	OrderDetailsRepository orderDetailsRepository;
@@ -282,16 +283,18 @@ public class OrderDetailsController {
 		boolean isFARequester = AuthorityUtils.authorityListToSet(userDetails.getAuthorities())
 				.contains("FA-REQUESTOR");
 		if (!tab.isPresent()) {
-			TabValues currentTab = isFA ? TabValues.values()[6] : TabValues.values()[0];
+			//TabValues currentTab = isFA ? TabValues.values()[6] : TabValues.values()[0];
+			TabValues currentTab = TabValues.values()[0];
+
 			if (currentTab != null) {
 				model.addAttribute(FailureAnalysisConstants.CURRENT_TAB, currentTab);
-				model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
-						(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
+//				model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
+//						(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
 				model.addAttribute(FailureAnalysisConstants.NEXT_TAB, currentTab.getNext());
 				entity.setCurrentTab(currentTab);
 				entity.setPreviousTab(currentTab.getPrevious());
-				entity.setNextTab((isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null
-						: currentTab.getNext());
+//				entity.setNextTab((isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null
+//						: currentTab.getNext());
 			}
 			model.addAttribute("userName", currentPrincipalName);
 			model.addAttribute("userDetails", userDetails);
@@ -306,10 +309,10 @@ public class OrderDetailsController {
 		else {
 			TabValues currentTab = tab.get();
 			model.addAttribute(FailureAnalysisConstants.CURRENT_TAB, currentTab);
-			model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
-					(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
-			model.addAttribute(FailureAnalysisConstants.NEXT_TAB,
-					(isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null : currentTab.getNext());
+//			model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
+//					(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
+//			model.addAttribute(FailureAnalysisConstants.NEXT_TAB,
+//					(isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null : currentTab.getNext());
 			entity.setCurrentTab(currentTab);
 			entity.setPreviousTab(currentTab.getPrevious());
 			entity.setNextTab(currentTab.getNext());
@@ -590,7 +593,7 @@ public class OrderDetailsController {
 			String isAdmin = "N";
 			for(Role role :user.getRoles()) {
 				System.out.println("role-----------------------------" + role.getName());
-				if(role.getName().equalsIgnoreCase("admin") || role.getName().equalsIgnoreCase("SUPER-ADMIN")) {
+				if(role.getName().equalsIgnoreCase("admin") || role.getName().equalsIgnoreCase("SUPER-ADMIN") || role.getName().equalsIgnoreCase("fa")) {
 					isAdmin = "Y";
 					break;
 				}
@@ -689,70 +692,123 @@ public class OrderDetailsController {
 	}
 
 	@PostMapping(path = "/orderdetails/sendEmail")
-	public void sendEmail(Model model,@ModelAttribute OrderDetails orderDetailsDto, Principal principal){
-		System.out.println(orderDetailsDto.getUser());
-		System.out.println(orderDetailsDto);
-		System.out.println(model);
+	@ResponseBody
+	public EmailTemplate sendEmail(Principal principal, Model model, @ModelAttribute OrderDetails orderDetailsDto){
+
+		EmailTemplate emailTemplate = new EmailTemplate();
+
+		Map<String,String> replacementMap = new HashMap<>();
+
 		OrderDetails orderDetails = orderDetailsRepository.findById(orderDetailsDto.getId()).get();
+
 		System.out.println(orderDetails);
-		User user = orderDetails.getUser();
 
-		//String lotId = orderDetailsDto.getDbs_lotid();
-		//String geometry = orderDetailsDto.get;
-		MimeMessage message = mailSender.createMimeMessage();
-		try {
-			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-			String htmlMsg = "<!DOCTYPE html>\n" +
-					"<html>\n" +
-					"<head>\n" +
-					"<title>Page Title</title>\n" +
-					"</head>\n" +
-					"<body>\n" +
-					"\n" +
-					"<p style=\"font-size:20px;\">Hello "+user.getFirstName()+",</p>\n" +
-					"\n" +
-					"<p style=\"font-size:20px;\">Die gewunschten Untersuchungen zu folgendem Auftrag sind erfolgt. </p>\n" +
-					"\n" +
-					"\n" +
-					"<p style=\"font-size:20px;\"> Auftrags ID:   &nbsp;&nbsp;"+orderDetails.getId()+"</p>\n" +
-					"<p style=\"font-size:20px;\">Lot ID:          &nbsp;&nbsp;"+orderDetails.getDbs_lotid()+"</p>\n" +
-					"<p style=\"font-size:20px;\">Geometrie:  &nbsp;&nbsp;"+orderDetails.getDbs_part()+"</p>\n" +
-					"\n" +
-					"<p style=\"font-size:20px;\">\n" +
-					"Uber folgenden Link gelangst Du zu den Analysenergebnissen. \n" +
-					"</p>\n" +
-					"<p style=\"font-size:20px;\"><a href=\"#\">\\\\wsiz03\\iz_rem\\Auftraege_nach_Nummern\\"+orderDetails.getId()+"</a></p>\n" +
-					"\n" +
-					"<p style=\"font-size:20px;\">Uber folgenden Link gelangst Du zur Analysendatenbank.</p>\n" +
-					"\n" +
-					"\n" +
-					"<p style=\"font-size:20px;\"><a href=\"#\">\\\\wsiz03\\shares\\IZ_REM\\Datenbank\\Analysendatenbank.accdb</a></p>\n" +
-					"\n" +
-					"\n" +
-					"<p style=\"font-size:20px;\">Bitte das Bildmaterial/ die Messungen zeitnah beurteilen und das Ergebnis der </p>" +
-					"<p style=\"font-size:20px;\"> Analyse in der Datenbank dokumentieren.Sollten noch Nacharbeiten erforderlich sein, bitte ich um kurze Mitteilung. </p>\n" +
-					"<p style=\"font-size:20px;\">Ist das nicht der Fall, bitte den Beardeitungsstatus auf 'Auftrag geschlossen' setzen.</p>\n" +
-					"\n" +
-					"\n" +
-					"<p style=\"font-size:20px;\">Viele GruBe,</p>\n" +
-					"<p style=\"font-size:20px;\">Daniela</p>\n" +
-					"</body>\n" +
-					"</html>\n" +
-					"\n" +
-					"\n";
-			helper.setTo(principal.getName());
-			helper.setText(htmlMsg, true);
+		User recipientDetails = orderDetails.getUser();
+		User senderDetails = userRepository.findByEmail(principal.getName()).get();
 
-			mailSender.send(message);
-			System.out.println("Email Send");
-		} catch (MessagingException m) {
-			System.out.println("Exception occurred");
+		if(recipientDetails == null || senderDetails  == null){
+			emailTemplate.setStatus("error");
+		}else {
+			emailTemplate.setStatus("success");
 		}
 
+		replacementMap.put("ORDER_ID", String.valueOf(orderDetails.getId()));
+		replacementMap.put("LOT_ID", orderDetails.getDbs_lotid());
+		replacementMap.put("GEOMETRY_ID",orderDetails.getDbs_part());
+
+		replacementMap.put("TO_NAME", recipientDetails!=null ? recipientDetails.getFirstName() : "" );
+		replacementMap.put("FROM_NAME", senderDetails!=null ? senderDetails.getFirstName() : "");
+
+		log.info("--------recipient-------{}",recipientDetails);
+		log.info("---------sender----------{}",senderDetails);
+
+		emailTemplate.setMailTo( recipientDetails!=null ?recipientDetails.getEmail():"");
+
+		if(recipientDetails!=null ) {
+			if(recipientDetails.getLanguage()!=null) {
+				if (recipientDetails.getLanguage().equals("en")) {
+
+					if(orderDetails!=null ) {
+						emailTemplate.setSubject("Order No." + orderDetails.getId() + ": The analysis is finished");
+					}
+					ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+					InputStream inputStream = classLoader.getResourceAsStream("templates/English_EmailTemplate.txt");
+
+					// File file = ResourceUtils.getFile("classpath:static/html/LinkExpired.html");
+					StringBuilder contentBuilder = new StringBuilder();
+					try {
+						BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+						String str;
+						while ((str = in.readLine()) != null) {
+							contentBuilder.append(str);
+						}
+						in.close();
+					} catch (IOException e) {
+						log.error(e.getMessage());
+					}
+					System.out.println(contentBuilder);
+					if (contentBuilder.length() > 0) {
+
+						String content = contentBuilder.toString();
+
+						System.out.println(content);
+
+						for (Map.Entry<String, String> entry : replacementMap.entrySet()) {
+							String key = entry.getKey();
+							String value = entry.getValue();
+							content = content.replaceAll(key, value);
+						}
+
+						emailTemplate.setEmailBody(content);
 
 
+					}
 
+				}
+				else {
+
+					if(orderDetails!=null ) {
+						emailTemplate.setSubject("Auftrag-Nr."+orderDetails.getId()+": Die Analyse ist fertig");
+					}
+					ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+					InputStream inputStream = classLoader.getResourceAsStream("templates/German_EmailTemplate.txt");
+
+					// File file = ResourceUtils.getFile("classpath:static/html/LinkExpired.html");
+					StringBuilder contentBuilder = new StringBuilder();
+					try {
+						BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+						String str;
+						while ((str = in.readLine()) != null) {
+							contentBuilder.append(str);
+						}
+						in.close();
+					} catch (IOException e) {
+						log.error(e.getMessage());
+					}
+					if (contentBuilder.length() > 0) {
+
+						String content = contentBuilder.toString();
+						for (Map.Entry<String, String> entry : replacementMap.entrySet()) {
+							String key = entry.getKey();
+							String value = entry.getValue();
+							content = content.replaceAll(key, value);
+						}
+
+						emailTemplate.setEmailBody(content);
+
+
+					}
+
+				}
+			}else {
+				emailTemplate.setStatus("error");
+			}
+		}
+
+		System.out.println(emailTemplate);
+		return  emailTemplate;
 	}
+
 
 
 }

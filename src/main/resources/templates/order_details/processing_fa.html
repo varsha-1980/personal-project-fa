@@ -280,7 +280,7 @@
 								</div>
 							</div>
 
-							<div class="form-group col-md-4" sec:authorize="hasAuthority('FA')">
+							<div class="form-group col-md-4" >
 								<div class="col-md-12">
 									<label for="inputEmail4"><span
 											th:text="#{label.editpage.tab7.mail_to_client}">Mail to
@@ -303,8 +303,7 @@
 			<script type="text/javascript">
 				$(document).ready(function () {   $('.select2').select2({   allowClear: true, width: '100%'});});
 
-		       function sendEmail(){
-		       alert("Send email");
+		    function sendEmail(){
 
 		       var form = $(document.getElementById('procform'));
 
@@ -315,7 +314,19 @@
 								        data: form.serialize(), // serializes the form's elements.
 								        success: function(data)
 								        {
-								          alert(data); // show response from the php script.
+								        console.log(data);
+								        if(data.status === "error"){
+								          alert("Cannot send email");
+								        }else {
+								         var encodedBodyHTML = data.emailBody;
+
+
+								          var mailtoLink = "mailto:"+data.mailTo+"?subject=" + data.subject + "&body=" + data.emailBody;
+
+											// Open the default email client
+											window.location.href = mailtoLink;
+								        }
+								         // alert(data); // show response from the php script.
 								        }
 								    });
 		       }

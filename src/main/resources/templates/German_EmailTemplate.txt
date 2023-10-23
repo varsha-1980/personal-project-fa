@@ -1,0 +1,20 @@
+
+Hello TO_NAME, %0D%0A%0D%0A
+
+Die gewünschten Untersuchungen zu folgenden Auftrag sind erfolgt.  %0D%0A%0D%0A
+
+Auftrags ID:   %09 %09 ORDER_ID %0D%0A%0D%0A
+Lot ID:     %09 %09 LOT_ID %0D%0A%0D%0A
+Geometrie:   %09 %09 GEOMETRY_ID %0D%0A%0D%0A
+
+Über folgenden Link gelangst Du zu den Analysenergebnissen.%0D%0A
+\\wsiz03\iz_rem\Orders_after_numbers\ORDER_ID %0D%0A%0D%0A
+
+Über folgenden Link gelangst Du zur Analysedatenbank. %0D%0A
+\\wsiz03\shares\IZ_REM\Database\Analysis Database.accdb %0D%0A%0D%0A
+
+Bitte das Bildmaterial/ die  Messungen zeitnah beurteilen und das Ergebnis der Analyse in der Datenbank dokumentieren. %0D%0A
+Sollten noch Nacharbeiten erforderlich sein, bitte ich um kurze Mitteilung. %0D%0A
+Ist das nicht der Fall, bitte den Bearbeitungsstatus auf 'Auftrag geschlossen' setzen.%0D%0A%0D%0A
+
+Viele grüße, %0D%0A FROM_NAME %0D%0A%0D%0A

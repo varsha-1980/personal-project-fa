@@ -1,0 +1,20 @@
+
+Hello TO_NAME, %0D%0A%0D%0A
+
+The desired investigations for the following order have been carried out.  %0D%0A%0D%0A
+
+Order ID:   %09 %09 ORDER_ID %0D%0A%0D%0A
+Lot ID:     %09 %09 LOT_ID %0D%0A%0D%0A
+Geometry:   %09 %09 GEOMETRY_ID %0D%0A%0D%0A
+
+You can access the analysis results via the following link.%0D%0A
+\\wsiz03\iz_rem\Orders_after_numbers\ORDER_ID %0D%0A%0D%0A
+
+You can access the analysis database via the following link. %0D%0A
+\\wsiz03\shares\IZ_REM\Database\Analysis Database.accdb %0D%0A%0D%0A
+
+Please assess the image material/measurements promptly and document the result of the analysis in the database. %0D%0A
+If any further work is required, please let me know shortly.%0D%0A
+If this is not the case, please set the processing status to 'Order closed'.%0D%0A%0D%0A
+
+Best regards, %0D%0A FROM_NAME %0D%0A%0D%0A
