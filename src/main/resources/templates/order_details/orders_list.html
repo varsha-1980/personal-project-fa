@@ -363,10 +363,13 @@
                 </table>
             </div>
 
+            <a th:href="@{/home}"> <button
+                    type="button" class="btn btnbgcolor">
+                <span th:text="#{label.cancel}">Close</span>
+            </button></a>
         </div>
         <input type="hidden" th:value='#{label.button.csv}' id='csvButtonText'> <input type="hidden"
-                                                                                       th:value='#{label.button.print}' id='printButtonText'> <input type="hidden"
-                                                                                                                                                     th:value='#{label.button.copy}' id='copyButtonText'>
+                                                                                       th:value='#{label.button.print}' id='printButtonText'> <input type="hidden" th:value='#{label.button.copy}' id='copyButtonText'>
         <input type="hidden" th:value='#{label.Search}' id='searchBoxText'>
         <br />
 
