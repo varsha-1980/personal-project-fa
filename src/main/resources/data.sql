@@ -186,7 +186,7 @@ INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date
 
 
 INSERT INTO users (id, email, password, first_name, last_name, COMPANY_ID,LANGUAGE) VALUES
-(1, 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 1,'en'),
+(1, 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 1, null),
 (3, 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 1,'en'),
 (5, 'admin1@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 2,'en'),
 (6, 'user1@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2,'en'),

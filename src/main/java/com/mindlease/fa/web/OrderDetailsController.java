@@ -659,6 +659,7 @@ public class OrderDetailsController {
 	@RequestMapping(path = {"/change/language/{ln}", "/orderdetails/change/language/{ln}"},method = RequestMethod.GET)
 	public void changeLanguage(@PathVariable("ln") String language, HttpServletRequest httpServletRequest , HttpServletResponse httpServletResponse){
 		log.info("-----------Changing language-----------------");
+		log.info("------------Reuqest---------{}",httpServletRequest.getRequestURL());
 		LocaleConfig localeConfig = new LocaleConfig();
 		if(language.equalsIgnoreCase("de")) {
 			localeConfig.localeResolver().setLocale(httpServletRequest, httpServletResponse, Locale.GERMAN);

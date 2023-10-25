@@ -1012,24 +1012,24 @@ public class OrderDetailsService {
 
 		if(sourceLink.equalsIgnoreCase("All Open Orders")) {
 			if(isUser) {
-				sb.append(" and od.dbs_status NOT IN (  'Auftrag abgeschlosse'  , 'Order completed') and   od.user.id = :userId order by od.dbs_prio  ASC , od.id ASC");
+				sb.append(" and od.dbs_status NOT IN (  'Auftrag abgeschlossen'  , 'Order completed') and   od.user.id = :userId order by od.dbs_prio  ASC , od.id ASC");
 			}else {
-				sb.append(" and  od.dbs_status NOT IN (  'Auftrag abgeschlosse'  , 'Order completed')  ");
+				sb.append(" and  od.dbs_status NOT IN (  'Auftrag abgeschlossen'  , 'Order completed') order by od.dbs_prio  ASC , od.id ASC ");
 			}
 		} else if(sourceLink.equalsIgnoreCase("Open FA Orders")) {
 			if(isUser) {
-				sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress') and   od.user.id = :userId");
+				sb.append(" and (od.dbs_status!='Auftrag abgeschlossen' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress') and   od.user.id = :userId");
 			}else {
-				sb.append(" and (od.dbs_status!='Auftrag abgeschlosse' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress') order by od.dbs_prio  ASC , od.id ASC");
+				sb.append(" and (od.dbs_status!='Auftrag abgeschlossen' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress') order by od.dbs_prio  ASC , od.id ASC");
 
 			}
 		} else if(sourceLink.equalsIgnoreCase("Evaluation Orders")) {
 
 			if(isUser){
-				sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerte' or od.dbs_status='FA done - please rate the result')  and   od.user.id = :userId order by od.dbs_prio  ASC , od.id ASC");
+				sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerten' or od.dbs_status='FA done - please evaluate the result')  and   od.user.id = :userId order by od.dbs_prio  ASC , od.id ASC");
 			}
 			else{
-				sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerte' or od.dbs_status='FA done - please evaluate the result') order by od.dbs_prio  ASC , od.id ASC");
+				sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerten' or od.dbs_status='FA done - please evaluate the result') order by od.dbs_prio  ASC , od.id ASC");
 			}
 
 		} else if(sourceLink.equalsIgnoreCase("Chemical Preparation")){

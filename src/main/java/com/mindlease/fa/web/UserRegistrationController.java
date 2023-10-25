@@ -1,18 +1,19 @@
 package com.mindlease.fa.web;
 
 import java.security.Principal;
+import java.util.Locale;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.mindlease.fa.config.LocaleConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mindlease.fa.exception.ResourceNotFoundException;
@@ -137,5 +138,18 @@ public class UserRegistrationController {
 		}
 		redirectAttributes.addFlashAttribute("flash_password", "Password updated!");
 		return "redirect:/registration/userManagement";
+	}
+
+	@RequestMapping(path = {"/registration/userManagement/{ln}", "/orderdetails/change/language/{ln}"},method = RequestMethod.GET)
+	public void changeLanguage(@PathVariable("ln") String language, HttpServletRequest httpServletRequest , HttpServletResponse httpServletResponse){
+		log.info("-----------Changing language-----------------");
+		log.info("------------Request---------{}",httpServletRequest.getRequestURL());
+		LocaleConfig localeConfig = new LocaleConfig();
+		if(language.equalsIgnoreCase("de")) {
+			localeConfig.localeResolver().setLocale(httpServletRequest, httpServletResponse, Locale.GERMAN);
+		} else {
+			localeConfig.localeResolver().setLocale(httpServletRequest, httpServletResponse, Locale.US);
+		}
+
 	}
 }
