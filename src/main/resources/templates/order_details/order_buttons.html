@@ -9,25 +9,25 @@
 			<div class="form-group col-md-4"></div>
 			<div class="form-group col-md-4 text-center" style="margin-top:10%">
 				<button type="button" name="print" value="print" class="btn btnbgcolor" onclick="printpage();">
-					<span >Print</span>
+
+					<span  th:text="#{label.print}">Print</span>
 				</button>
 				<button type="submit" name="action" value="previous"
 					th:if="${previousTab!=null}" class="btn btnbgcolor">
 					<span th:text="#{label.previous}">Previous</span>
 				</button>
-				<button type="submit" name="action" value="save" id="savee"
+			<!--	<button type="submit" name="action" value="save" id="savee"
 					class="btn btnbgcolor">
 					<span th:text="#{label.save}">Save</span>
-				</button>
-				<a th:href="@{#}"> <i data-toggle="modal"
-					data-target="#dataLossWarningModalAtCancel"><button
-							type="button" class="btn btnbgcolor">
-							<span th:text="#{label.cancel}">Cancel</span>
-						</button></i></a>
+				</button>-->
 				<button type="submit" name="action" value="continue" id="continue"
 					th:if="${nextTab!=null}" class="btn btnbgcolor">
 					<span th:text="#{label.continue}">Continue</span>
 				</button>
+				<a th:href="@{/orderdetails}"> <button
+						type="button" class="btn btnbgcolor">
+					<span th:text="#{label.cancel}">Close</span>
+				</button></a>
 			</div>
 		</div>
 		<input type="hidden" id="id" th:field="*{id}"></input> <input
