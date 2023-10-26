@@ -188,13 +188,15 @@
 										<option th:each="_p: ${processorList}"
 											th:value="${_p.pers_short}" th:text="${_p.pers_short}"></option>
 									</datalist>-->
+									<input type="text" class="form-control form-control-sm"
+										   th:field="*{dbs_fa_name}" id="inputEmail4"
+										   th:attr="placeholder=#{label.search.placeholder.select_FA_Editor}"></input>
 
-
-									<select th:field="*{dbs_fa_name}" class="select2"
+									<!--<select th:field="*{dbs_fa_name}" class="select2"
 											th:data-placeholder="#{label.search.placeholder.select_FA_Editor}">
 										<option value="" text=""></option>
 										<option th:each="_p: ${processorList}"
-												th:value="${_p.pers_short}" th:text="${_p.pers_short}"></option></select>
+												th:value="${_p.pers_short}" th:text="${_p.pers_short}"></option></select>-->
 								</div>
 							</div>
 							<div class="form-group col-md-4">
