@@ -190,26 +190,30 @@ INSERT INTO users (id, email, password, first_name, last_name, COMPANY_ID,LANGUA
 (1, 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 1, null),
 (3, 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 1,'en'),
 (5, 'admin1@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 2,'en'),
-(6, 'user1@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2,'en');
+(6, 'user1@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2,'en'),
+(7, 'majaffar87656@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Mohd Abdul', 'Jaffar' , 1,'en'),
+(8, 'varshadevgankar@gmail.com', '$2a$12$ZRyY9yV9tY.B55Wn4IfS/OTRAxFzwDoyHz975r16hwuGHubthYj0i', 'Varsha', 'Devgankar' , 1,'en'),
+(9, 'fa@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Abdul', 'Jaffar' , 1,'en');
 
-//(2, 'SUPER-ADMIN'),
-//(4, 'FA-REQUESTOR'),
-//(5, 'FA');
+
+
 INSERT INTO  roles (id, name) VALUES
 (1, 'ADMIN'),
+(2, 'SUPER-ADMIN'),
+(3, 'USER'),
+(4, 'FA-REQUESTOR'),
+(5, 'FA');
 
-(3, 'USER');
 
 
 
-
-INSERT INTO  user_role (user_id, role_id) VALUES (1, 1);
+INSERT INTO  user_role (user_id, role_id) VALUES (1, 2);
 INSERT INTO  user_role (user_id, role_id) VALUES (3, 3);
-INSERT INTO  user_role (user_id, role_id) VALUES (5, 1);
-INSERT INTO  user_role (user_id, role_id) VALUES (6, 3);
-//INSERT INTO  user_role (user_id, role_id) VALUES (7, 3);
-//INSERT INTO  user_role (user_id, role_id) VALUES (8, 4);
-//INSERT INTO  user_role (user_id, role_id) VALUES (9, 5);
+INSERT INTO  user_role (user_id, role_id) VALUES (5, 4);
+INSERT INTO  user_role (user_id, role_id) VALUES (6, 4);
+INSERT INTO  user_role (user_id, role_id) VALUES (7, 3);
+INSERT INTO  user_role (user_id, role_id) VALUES (8, 4);
+INSERT INTO  user_role (user_id, role_id) VALUES (9, 5);
 
 /*
 INSERT INTO  overview_entries (id, argument, comm_option, command, pers_company, description, heading, icon, item_number, switch_board_id, exam) VALUES (1, 'Standard', '-', '0', 'ALL', 1, '2020-03-12 13:03:37', 'Hauptübersicht', 'Hauptübersicht', '', '0', 1, '2020-03-12 13:03:37', '1', 1);
