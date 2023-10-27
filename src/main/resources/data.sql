@@ -80,9 +80,9 @@ INSERT INTO  tbl_company
 
 INSERT INTO  roles (id, name) VALUES
 (1, 'ADMIN'),
-(2, 'SUPER-ADMIN'),
+//(2, 'SUPER-ADMIN'),
 (3, 'USER'),
-(4, 'FA-REQUESTOR'),
+//(4, 'FA-REQUESTOR'),
 (5, 'FA');
 
 
@@ -90,16 +90,16 @@ INSERT INTO  users (id, email, password, first_name, last_name, COMPANY_ID) VALU
 (1, 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 1),
 (3, 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 1),
 (5, 'admin1@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 2),
-(6, 'user1@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2);
-
-
+(6, 'user21@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Varsha', 'Dev' , 2);
+(7, 'user1@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2);
+(8, 'admin1@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Nick', 'Roy' , 2);
 INSERT INTO  into user_role(user_id, role_id) values
-(1,2),
+(8,1),
 (1,1),
 (1,3),
 (3,3),
-(5,2),
-(6,3);
+(5,1),
+(7,3);
 ;
 
 INSERT INTO  user_role (user_id, role_id) VALUES (1, 2);
@@ -179,38 +179,37 @@ INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date
 INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date, modified_by, modified_date, name, version) VALUES (4, 'N', 'Y', 'Company_4', 1, '2019-07-26 11:20:42', 1, '2019-07-26 11:20:42', 'Company_4', 4);
 */
 
-INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date, modified_by, modified_date, name, name_de, version) VALUES (1, 'N', 'Y', 'Company_1',1, '2019-07-26 11:20:42',1, '2019-07-26 11:20:42', 'Company_1', 'Company_1', 0);
-INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date, modified_by, modified_date, name, name_de, version) VALUES (2, 'N', 'Y', 'Company_2',1, '2019-07-26 11:20:42',1, '2019-07-26 11:20:42', 'Company_2', 'Company_2', 1);
-INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date, modified_by, modified_date, name, name_de, version) VALUES (3, 'N', 'Y', 'Company_3',1, '2019-07-26 11:20:42',1, '2019-07-26 11:20:42', 'Company_3', 'Company_3', 2);
-INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date, modified_by, modified_date, name, name_de, version) VALUES (4, 'N', 'Y', 'Company_4',1, '2019-07-26 11:20:42',1, '2019-07-26 11:20:42', 'Company_4', 'Company_4', 4);
+INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date, modified_by, modified_date, name, name_de, version) VALUES (1, 'N', 'Y', 'Company_1',1, '2019-07-26 11:20:42',1, '2019-07-26 11:20:42', 'VSIG, Germany', 'VSIG, Germany', 0);
+INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date, modified_by, modified_date, name, name_de, version) VALUES (2, 'N', 'Y', 'Company_2',1, '2019-07-26 11:20:42',1, '2019-07-26 11:20:42', 'TW, Kaohsiung', 'TW, Kaohsiung', 1);
+INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date, modified_by, modified_date, name, name_de, version) VALUES (3, 'N', 'Y', 'Company_3',1, '2019-07-26 11:20:42',1, '2019-07-26 11:20:42', 'Simconix, Shanghai', 'Simconix, Shanghai', 2);
+INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date, modified_by, modified_date, name, name_de, version) VALUES (4, 'N', 'Y', 'Company_4',1, '2019-07-26 11:20:42',1, '2019-07-26 11:20:42', 'Binan, Philippinen', 'Binan, Philippinen', 4);
+INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date, modified_by, modified_date, name, name_de, version) VALUES (5, 'N', 'Y', 'Company_4',1, '2019-07-26 11:20:42',1, '2019-07-26 11:20:42', 'San José, USA', 'San José, USA', 5);
 
 
 INSERT INTO users (id, email, password, first_name, last_name, COMPANY_ID,LANGUAGE) VALUES
 (1, 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 1, null),
 (3, 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 1,'en'),
 (5, 'admin1@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 2,'en'),
-(6, 'user1@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2,'en'),
-(7, 'majaffar87656@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Mohd Abdul', 'Jaffar' , 1,'en'),
-(8, 'varshadevgankar@gmail.com', '$2a$12$ZRyY9yV9tY.B55Wn4IfS/OTRAxFzwDoyHz975r16hwuGHubthYj0i', 'Varsha', 'Devgankar' , 1,'en'),
-(9, 'fa@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Abdul', 'Jaffar' , 1,'en');
+(6, 'user1@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2,'en');
 
-
+//(2, 'SUPER-ADMIN'),
+//(4, 'FA-REQUESTOR'),
+//(5, 'FA');
 INSERT INTO  roles (id, name) VALUES
 (1, 'ADMIN'),
-(2, 'SUPER-ADMIN'),
-(3, 'USER'),
-(4, 'FA-REQUESTOR'),
-(5, 'FA');
+
+(3, 'USER');
 
 
 
-INSERT INTO  user_role (user_id, role_id) VALUES (1, 2);
+
+INSERT INTO  user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO  user_role (user_id, role_id) VALUES (3, 3);
-INSERT INTO  user_role (user_id, role_id) VALUES (5, 4);
-INSERT INTO  user_role (user_id, role_id) VALUES (6, 4);
-INSERT INTO  user_role (user_id, role_id) VALUES (7, 3);
-INSERT INTO  user_role (user_id, role_id) VALUES (8, 4);
-INSERT INTO  user_role (user_id, role_id) VALUES (9, 5);
+INSERT INTO  user_role (user_id, role_id) VALUES (5, 1);
+INSERT INTO  user_role (user_id, role_id) VALUES (6, 3);
+//INSERT INTO  user_role (user_id, role_id) VALUES (7, 3);
+//INSERT INTO  user_role (user_id, role_id) VALUES (8, 4);
+//INSERT INTO  user_role (user_id, role_id) VALUES (9, 5);
 
 /*
 INSERT INTO  overview_entries (id, argument, comm_option, command, pers_company, description, heading, icon, item_number, switch_board_id, exam) VALUES (1, 'Standard', '-', '0', 'ALL', 1, '2020-03-12 13:03:37', 'Hauptübersicht', 'Hauptübersicht', '', '0', 1, '2020-03-12 13:03:37', '1', 1);
