@@ -303,6 +303,17 @@
 				<div th:insert="modal :: modal"></div>
 			</div>
 			<script type="text/javascript">
+
+
+						  $(document).ready(function() {
+				  $('input').keydown(function(event) {
+					// Check if the pressed key is Enter
+					if (event.key === 'Enter') {
+					  event.preventDefault(); // Prevent default behavior
+					  // Your custom logic here
+					}
+				  });
+				});
 				$(document).ready(function () {   $('.select2').select2({   allowClear: true, width: '100%'});});
 
 		    function sendEmail(){
