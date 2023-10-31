@@ -49,11 +49,28 @@
 								</div>-->
 								<div class="col-md-11"
 									style="border: 0.5px solid gray; background-color: rgb(232, 240, 254) !important;">
-									<p th:text="#{label.editpage.tab6.remaining_characters}">
-										<a style="display: inline" href="#" data-toggle="tooltip" data-placement="top" th:title="#{label.tooltip.remaining_characters}">
+									<!--<p th:text="#{label.editpage.tab6.remaining_characters}"></p>
+										<a  href="#" data-toggle="tooltip" data-placement="top" th:title="#{label.tooltip.remaining_characters}">
 											<i class="fa fa-info-circle ml-1" aria-hidden="true"></i>
-										</a>
+										</a>-->
+
+									<p>
+										<span th:text="#{label.editpage.tab6.remaining_characters}"></span>
+										<a data-toggle="tooltip" data-placement="top"
+										   th:attr="placeholder=#{label.tab1.place.select_rehearse_remaining}"
+										   th:title="#{label.tooltip.remaining_characters}">
+											<i style="color: #007bff;" class="fa fa-info-circle ml-1" aria-hidden="true"></i></a>
 									</p>
+
+
+
+										<!--<a href="#" data-toggle="tooltip"
+										   data-placement="top"
+
+										   th:attr="placeholder=#{label.tab1.place.select_rehearse_remaining}"
+										   th:title="#{label.tooltip.rehearse_remaining}"><i
+												class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a>-->
+
 
 								</div>
 							</div>

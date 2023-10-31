@@ -324,6 +324,16 @@
 		<!--								value="tabclick" style="display: none"></button>-->
 		<script type="text/javascript">
 
+		  $(document).ready(function() {
+      $('input').keydown(function(event) {
+        // Check if the pressed key is Enter
+        if (event.key === 'Enter') {
+          event.preventDefault(); // Prevent default behavior
+          // Your custom logic here
+        }
+      });
+    });
+
     if(window.location.pathname === "/FailureAnalysis/orderdetails/edit"){
 
 			window.onbeforeunload = closingCode;
