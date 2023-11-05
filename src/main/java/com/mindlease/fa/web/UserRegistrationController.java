@@ -3,6 +3,7 @@ package com.mindlease.fa.web;
 import java.security.Principal;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,7 +60,13 @@ public class UserRegistrationController {
 
 		if (result.hasErrors()) {
 			log.info("---------------------hasErrors::{}", result.getAllErrors());
-			model.addAttribute("rolesList", userService.findAllRoles());
+
+			model.addAttribute("rolesList", userService.findAllRoles().stream().filter(role->!(
+					role.getName().equalsIgnoreCase("SUPER-ADMIN")
+							|| role.getName().equalsIgnoreCase("FA") || role.getName().equalsIgnoreCase("FA-REQUESTOR"))).collect(Collectors.toList()));
+			model.addAttribute("companyList", userService.findAllCompanies());
+
+			/*model.addAttribute("rolesList", userService.findAllRoles());*/
 			redirectAttributes.addFlashAttribute("flash_usercreat", "Check Errors!");
 			return "admin/user_register";
 		}
@@ -102,8 +109,12 @@ public class UserRegistrationController {
 			model.addAttribute("mode", "save");
 		}
 
-		model.addAttribute("rolesList", userService.findAllRoles());
+		/*model.addAttribute("rolesList", userService.findAllRoles());*/
+
+		model.addAttribute("rolesList", userService.findAllRoles().stream().filter(role->!(role.getName().equalsIgnoreCase("SUPER-ADMIN")
+				|| role.getName().equalsIgnoreCase("FA") || role.getName().equalsIgnoreCase("FA-REQUESTOR"))).collect(Collectors.toList()));
 		model.addAttribute("companyList", userService.findAllCompanies());
+
 		return "admin/user_register";
 	}
 

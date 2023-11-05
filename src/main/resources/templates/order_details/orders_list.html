@@ -309,21 +309,25 @@
             </div>
             <div class="row mb-3 text-center">
                 <div class=" col-sm-12 col-md-4 text-md-left">
-                    <nav>
+                   <!-- <nav>
                         <ol class="breadcrumb m-0 p-0 bg-white">
-                            <li class="breadcrumb-item"><a th:href="@{/home}"><span
+                           &lt;!&ndash; <li class="breadcrumb-item"><a th:href="@{/home}"><span
                                     th:text="#{label.home}">Home</span></a></li>
                             <li class="breadcrumb-item active" aria-current="page"><span
-                                    th:text="#{label.orders}">Orders</span></li>
+                                    th:text="#{label.orders}">Orders</span></li>&ndash;&gt;
                         </ol>
-                    </nav>
+                    </nav>-->
 
                 </div>
-                <div class="col-sm-12 col-md-4 text-md-center">
-                    <h5>
+
+
+               <div class="col-sm-12 col-md-4 text-md-center">
+                   <!-- <h5>
                         <span th:text="#{label.listpage.orders_list}">Orders List</span>
-                    </h5>
+                    </h5>-->
                 </div>
+
+
 
                 <div class="col-sm-12 col-md-4 text-md-right">
                     <a th:href="@{/orderdetails/create}"><button type="button" class="btn btn-sm btnbgcolor">
@@ -334,7 +338,7 @@
             </div>
 
 
-            <div sec:authorize="hasAuthority('SUPER-ADMIN')" id="div-super-admin"></div>
+            <div sec:authorize="hasAuthority('SUPER-ADMIN') OR hasAuthority('ADMIN')" id="div-super-admin"></div>
             <input type="hidden" id="localeType" th:name="localeType" th:value="${#locale}"></input> <select
                 style="display: none" id="pageSizeSelect">
             <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}" th:value="${pageSize}"
@@ -343,29 +347,30 @@
             <input type="hidden" id="defaultPageSizes" th:name="defaultPageSizes"
                    th:value="${defaultPageSize}"></input>
             <div>
-                <table id="table_order_1" class="table table-striped table-bordered nowrap" style="width: 100%">
+                <table id="table_order_1" class="table table-striped table-bordered " style="width: 100%">
                     <thead>
                     <tr role="row">
-                        <th th:text="#{table.header.action}">Action</th>
-                        <th th:text="#{table.header.order.no}">Order No</th>
-                        <th th:text="#{table.header.date}" class="justify-content-center text-center align-middle">Date</th>
-                        <th th:text="#{table.header.customer}" class="justify-content-center text-center align-middle">Customer</th>
-                        <th th:text="#{table.header.priority}">Priority</th>
+                        <th th:text="#{table.header.action}" style="width:3% !important">Action</th>
+                        <th th:text="#{table.header.order.no}"  class="justify-content-center text-center align-middle text-wrap">Order No</th>
+                        <th th:text="#{table.header.date}" class="justify-content-center text-center align-middle text-wrap">Date</th>
+                        <th th:text="#{table.header.customer}" class="justify-content-center text-center align-middle text-wrap">Customer</th>
+                        <th th:text="#{table.header.priority}" class="justify-content-center text-center align-middle text-wrap">Priority</th>
 <!--                        <th th:text="#{table.header.material}" class="justify-content-center text-center align-middle">Material</th>-->
-                        <th th:text="#{table.header.lot.id}" class="justify-content-center text-center align-middle">Lot-ID</th>
-                        <th th:text="#{table.header.part}" class="justify-content-center text-center align-middle">Part</th>
-                        <th th:text="#{table.header.analysis.reason}" class="justify-content-center text-center align-middle">Analysis Reason</th>
-                      <th th:text="#{table.header.analysis.description}" class="justify-content-center text-center align-middle">Description</th>
-                      <th th:text="#{table.header.analysis.method}" class="justify-content-center text-center align-middle">Methods</th>
+                        <th th:text="#{table.header.lot.id}" class="justify-content-center text-center align-middle text-wrap">Lot-ID</th>
+                        <th th:text="#{table.header.part}" class="justify-content-center text-center align-middle text-wrap">Part</th>
+                        <th th:text="#{table.header.analysis.reason}" class="justify-content-center text-center align-middle text-wrap">Analysis Reason</th>
+                      <th th:text="#{table.header.analysis.description}" class="justify-content-center text-center align-middle text-wrap">Description</th>
+                      <th th:text="#{table.header.analysis.method}" class="justify-content-center text-center align-middle text-wrap">Methods</th>
 <!--                        <th th:text="#{table.header.fa.editor}" class="justify-content-center text-center align-middle">FA Editor</th>-->
                     </tr>
                     </thead>
                 </table>
             </div>
+            <div class="col-sm-12 col-md-4 text-md-right">
             <a th:href="@{/home}"> <button
                     type="button" class="btn btnbgcolor">
                 <span th:text="#{label.close_table}">Close</span>
-            </button></a>
+            </button></a></div>
         </div>
         <input type="hidden" th:value='#{label.button.csv}' id='csvButtonText'> <input type="hidden"
                                                                                        th:value='#{label.button.print}' id='printButtonText'> <input type="hidden"
@@ -489,6 +494,14 @@
                         render: $.fn.dataTable.render.moment('DD/MM/YYYY', 'MM-DD-YYYY', 'en'),
                 	}
                 ], */
+
+                "columnDefs":[
+                	{
+                		targets: [0, 7, 8, 9],
+                		orderable: false
+                	}
+                ],
+
                 "columns": [
                     {
                         /* "title": 'Action', */
@@ -561,10 +574,9 @@
                         "data": "dbs_fa_descr"
                     },
                       {
-                        /* "title": 'description', */
-                        "data": "methx_method"
-                    },
-
+                      /*"title": 'Methods',*/
+                      "data":"dbs_method_temp"
+                    }
                 ],
                 "language": {
                     "paginate": {

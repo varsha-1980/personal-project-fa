@@ -43,10 +43,11 @@
 										<div class="dropdown">
 											<button class="btn btn-sm dropdown-toggle btnbgcolor p-1"
 												type="button" id="dropdownMenuButton" data-toggle="dropdown"
-												sec:authorize="hasAuthority('SUPER-ADMIN')"
+												sec:authorize="hasAuthority('SUPER-ADMIN') OR hasAuthority('ADMIN')"
 												aria-haspopup="true" aria-expanded="false">
 												<span th:text="#{lable.administrative}">Administrative</span>
 											</button>
+
 											<div class="dropdown-menu"
 												aria-labelledby="dropdownMenuButton">
 												<a class="dropdown-item"
@@ -68,7 +69,7 @@
 										<div class="dropdown">
 											<button class="btn btn-sm dropdown-toggle btnbgcolor p-1"
 												type="button" id="dropdownMenuButton" data-toggle="dropdown"
-													sec:authorize="hasAuthority('SUPER-ADMIN')"
+													sec:authorize="hasAuthority('SUPER-ADMIN') OR hasAuthority('ADMIN')"
 												aria-haspopup="true" aria-expanded="false">
 												<span th:text="#{lable.language}">Language</span>
 											</button>

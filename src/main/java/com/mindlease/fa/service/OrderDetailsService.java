@@ -1009,90 +1009,57 @@ public class OrderDetailsService {
 
 		boolean isUser = input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") ;
 
-
 		if(sourceLink.equalsIgnoreCase("All Open Orders")) {
-			if(isUser) {
-				sb.append(" and od.dbs_status NOT IN (  'Auftrag abgeschlossen'  , 'Order completed') and   od.user.id = :userId order by od.dbs_prio  ASC , od.id ASC");
-			}else {
-				sb.append(" and  od.dbs_status NOT IN (  'Auftrag abgeschlossen'  , 'Order completed') order by od.dbs_prio  ASC , od.id ASC ");
-			}
-		} else if(sourceLink.equalsIgnoreCase("Open FA Orders")) {
-			if(isUser) {
-				sb.append(" and (od.dbs_status!='Auftrag abgeschlossen' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress') and   od.user.id = :userId");
-			}else {
-				sb.append(" and (od.dbs_status!='Auftrag abgeschlossen' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress') order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" and  od.dbs_status NOT IN (  'Auftrag abgeschlossen'  , 'Order completed') order by od.dbs_prio  ASC , od.id ASC ");
 
-			}
+		} else if(sourceLink.equalsIgnoreCase("Open FA Orders")) {
+
+			sb.append(" and (od.dbs_status!='Auftrag abgeschlossen' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress') order by od.dbs_prio  ASC , od.id ASC");
+
+
 		} else if(sourceLink.equalsIgnoreCase("Evaluation Orders")) {
 
-			if(isUser){
-				sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerten' or od.dbs_status='FA done - please evaluate the result')  and   od.user.id = :userId order by od.dbs_prio  ASC , od.id ASC");
-			}
-			else{
-				sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerten' or od.dbs_status='FA done - please evaluate the result') order by od.dbs_prio  ASC , od.id ASC");
-			}
+			sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerten' or od.dbs_status='FA done - please evaluate the result') order by od.dbs_prio  ASC , od.id ASC");
+
 
 		} else if(sourceLink.equalsIgnoreCase("Chemical Preparation")){
 
-			if(isUser){
-				sb.append(" and (od.dbs_status='Wartet auf Ätzung' or od.dbs_status='Waiting for Etching')  and   od.user.id = :userId  order by od.dbs_prio  ASC , od.id ASC");
-			}
-			else {
-				sb.append(" and (od.dbs_status='Wartet auf Ätzung' or od.dbs_status='Waiting for Etching') order by od.dbs_prio  ASC , od.id ASC");
-			}
+			sb.append(" and (od.dbs_status='Wartet auf Ätzung' or od.dbs_status='Waiting for Etching') order by od.dbs_prio  ASC , od.id ASC");
+
 		}else if(sourceLink.equalsIgnoreCase("Electrical Measurement")){
 
-			if(isUser) {
-				sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement')  and   od.user.id = :userId  order by od.dbs_prio  ASC , od.id ASC ");
-			}else{
-				sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement') order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement') order by od.dbs_prio  ASC , od.id ASC");
 
-			}
 
 		}
 		else if(sourceLink.equalsIgnoreCase("Hotspot / IR / LC")){
 
-			if(isUser) {
-				sb.append(" and (od.dbs_status='Wartet auf Hotspot IR/LC' or od.dbs_status='Waiting for Hotspot IR/LC') and   od.user.id = :userId  order by od.dbs_prio  ASC , od.id ASC");
-			}else {
-				sb.append(" and (od.dbs_status='Wartet auf Hotspot IR/LC' or od.dbs_status='Waiting for Hotspot IR/LC')  order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" and (od.dbs_status='Wartet auf Hotspot IR/LC' or od.dbs_status='Waiting for Hotspot IR/LC')  order by od.dbs_prio  ASC , od.id ASC");
 
-			}
 		}
 
 
 		else if(sourceLink.equalsIgnoreCase("REM / FIB / EDX")){
 
-			if(isUser) {
-				sb.append(" and (od.dbs_status='Wartet auf REM/FIB/EDX' or od.dbs_status='Waiting for REM/FIB/EDX') and   od.user.id = :userId  order by od.dbs_prio  ASC , od.id ASC");
-			}else{
-				sb.append(" and (od.dbs_status='Wartet auf REM/FIB/EDX' or od.dbs_status='Waiting for REM/FIB/EDX') order by od.dbs_prio  ASC , od.id ASC");
-			}
+			sb.append(" and (od.dbs_status='Wartet auf REM/FIB/EDX' or od.dbs_status='Waiting for REM/FIB/EDX') order by od.dbs_prio  ASC , od.id ASC");
+
 		}
 		else if(sourceLink.equalsIgnoreCase("Cuts")){
 
-			if(isUser) {
-				sb.append(" and (od.dbs_status='Wartet auf Schliff' or od.dbs_status='Waiting for cuts')  and   od.user.id = :userId order by od.dbs_prio  ASC , od.id ASC");
-			}else {
-				sb.append(" and (od.dbs_status='Wartet auf Schliff' or od.dbs_status='Waiting for cuts') order by od.dbs_prio  ASC , od.id ASC");
-			}
+			sb.append(" and (od.dbs_status='Wartet auf Schliff' or od.dbs_status='Waiting for cuts') order by od.dbs_prio  ASC , od.id ASC");
+
 		}
 		else if(sourceLink.equalsIgnoreCase("Orders Material /Info Missing")){
 
-			if(isUser) {
-				sb.append(" and (od.dbs_status='Material/Info fehlt' or od.dbs_status='Material / info missing') and   od.user.id = :userId  order by od.dbs_prio  ASC , od.id ASC");
-			}else {
-				sb.append(" and (od.dbs_status='Material/Info fehlt' or od.dbs_status='Material / info missing') order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" and (od.dbs_status='Material/Info fehlt' or od.dbs_status='Material / info missing') order by od.dbs_prio  ASC , od.id ASC");
 
-			}
 
 		} else if (sourceLink.equalsIgnoreCase("All New Orders")) {
-			if(isUser) {
-				sb.append(" and (od.dbs_status='Neuer Auftrag' or od.dbs_status='New Order') and   od.user.id = :userId order by od.dbs_prio  ASC , od.id ASC");
-			}else {
-				sb.append(" and (od.dbs_status='Neuer Auftrag' or od.dbs_status='New Order') order by od.dbs_prio  ASC , od.id ASC ");
-			}
+
+			sb.append(" and (od.dbs_status='Neuer Auftrag' or od.dbs_status='New Order') order by od.dbs_prio  ASC , od.id ASC ");
+
 		}
+
 
 
 		String[] activeProfiles = environment.getActiveProfiles(); // it will return String Array of all active profile.
@@ -1145,13 +1112,18 @@ public class OrderDetailsService {
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sMaterial", ""))) {
 			sb.append(" and od.dbs_material LIKE :material");
 		}
-		if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search")) ) {
+
+		if(!StringUtils.hasText(sourceLink)  ) {
+			sb.append(" and od.user.id = :userId order by od.id desc");
+		}
+
+		/*if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search")) ) {
 			sb.append(" and od.user.id = :userId ");
 		}
-		/*always execute*/
+		*//*always execute*//*
 		if((!StringUtils.hasText(sourceLink))){
 			sb.append(" order by od.id desc");
-		}
+		}*/
 
 
 		/*if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N")  && !StringUtils.hasText(sourceLink)) {
@@ -1218,9 +1190,14 @@ public class OrderDetailsService {
 //			query.setParameter("userId", Integer.valueOf(input.getExternalFilter().getOrDefault("userId", "0")));
 //		}
 
-		if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N")  ) {
+		if(!StringUtils.hasText(sourceLink) ) {
 			query.setParameter("userId", Integer.valueOf(input.getExternalFilter().getOrDefault("userId", "0")));
 		}
+
+
+		/*if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N")  ) {
+			query.setParameter("userId", Integer.valueOf(input.getExternalFilter().getOrDefault("userId", "0")));
+		}*/
 
 		input.getColumns().stream().forEach(col -> {
 			if (StringUtils.hasText(col.getSearch().getValue()) && !col.getData().contentEquals("id")) {

@@ -12,6 +12,8 @@ import javax.validation.Valid;
 
 import com.mindlease.fa.config.LocaleConfig;
 import com.mindlease.fa.dto.EmailTemplate;
+import com.mindlease.fa.model.*;
+import com.mindlease.fa.repository.MethodXRepository;
 import com.mindlease.fa.repository.OrderDetailsRepository;
 import com.mindlease.fa.repository.UserRepository;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
@@ -38,13 +40,6 @@ import com.mindlease.fa.datatable.DataTableResult;
 import com.mindlease.fa.dto.OrderDetailsDto;
 import com.mindlease.fa.exception.ResourceNotFoundException;
 import com.mindlease.fa.mapstruct.mapper.OrderDetailsMapper;
-import com.mindlease.fa.model.OrderDetails;
-import com.mindlease.fa.model.PagerModel;
-import com.mindlease.fa.model.Part;
-import com.mindlease.fa.model.Personal;
-import com.mindlease.fa.model.Role;
-import com.mindlease.fa.model.SearchParameters;
-import com.mindlease.fa.model.User;
 import com.mindlease.fa.security.CustomUserDetailsService;
 import com.mindlease.fa.service.OrderDetailsService;
 import com.mindlease.fa.util.FailureAnalysisConstants;
@@ -81,6 +76,9 @@ public class OrderDetailsController {
 
 	@Autowired
 	OrderDetailsRepository orderDetailsRepository;
+
+	@Autowired
+	MethodXRepository methodXRepository;
 
 	SearchParameters searchParameters = new SearchParameters();
 
@@ -606,7 +604,20 @@ public class OrderDetailsController {
 		for (OrderDetails o : result.getData()) {
 			orderDetailsDtos.add(orderDetailsMapper.convertOrderDetailsToOrderDetailsDto(o));
 		}
-		
+
+
+
+		orderDetailsDtos.forEach(orderDetailsDto -> {
+
+			List<MethodX> list = methodXRepository.findAllGeneralMethodsByOrderId(orderDetailsDto.getId());
+			StringBuilder methods = new StringBuilder();
+			for(MethodX methodX : list){
+				methods.append(methodX.getName());
+				methods.append("<br>");
+			}
+			orderDetailsDto.setDbs_method_temp(methods.toString());
+
+		});
 		DataTableResult<OrderDetailsDto> response = new DataTableResult<>();
 		response.setRecordsTotal(result.getRecordsTotal());
 		response.setDraw(result.getDraw());

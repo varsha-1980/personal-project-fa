@@ -39,6 +39,9 @@ public interface MethodXRepository extends JpaRepository<MethodX, Long> {
 	
 	@Query("SELECT d FROM MethodX d where d.name=:name and d.wfr=true")
 	MethodX findByName(String name);
+
+	@Query("SELECT d FROM MethodX d  where d.order_id=:orderId")
+	List<MethodX> findAllGeneralMethodsByOrderId(@Param("orderId") Long orderId);
 	
 	
 }
