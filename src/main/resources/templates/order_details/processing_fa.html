@@ -55,6 +55,8 @@
 					return;
 				}
 			}
+
+
 		</script>
 		<form id="procform" th:action="@{/orderdetails/update}" th:object="${orderDetails}"
 			method="post">
@@ -62,7 +64,7 @@
 <!--								th:value="__${#locale}__"></input> -->
 			<input id="dbs_fa_date_id" type="text" th:field="*{dbs_fa_date}"
 				style="display: none;"></input>
-			<div class="row">
+			<div class="row" >
 				<div class="col-md-12">
 					<div th:insert="admin/operations :: operations"></div>
 					<div class="row m-3">
@@ -284,7 +286,7 @@
 								</div>
 							</div>
 
-							<!--<div class="form-group col-md-4" >
+							<div class="form-group col-md-4" >
 								<div class="col-md-12">
 									<label for="inputEmail4"><span
 											th:text="#{label.editpage.tab7.mail_to_client}">Mail to
@@ -296,14 +298,18 @@
 									<img onclick="sendEmail();"
 										 th:src="@{/static/images/outlook-icon.png}"></img>
 								</div>
-							</div>-->
+							</div>
 
 						</div>
 						<div th:insert="order_details/order_buttons :: order_buttons"></div>
 					</div>
 				</div>
+
+
 				<div th:insert="modal :: modal"></div>
+
 			</div>
+
 			<script type="text/javascript">
 
 			  $(document).ready(function() {
@@ -349,11 +355,11 @@
 								        }
 								    });
 		       }
-		
-	
-			
-			
-			
+
+
+
+
+
 				$(document)
 						.ready(
 								function() {
@@ -425,10 +431,13 @@
 				});
 
 
-				
-		
+
+
 			</script>
+
 		</form>
+
 	</div>
+
 </body>
 </html>

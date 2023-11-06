@@ -264,18 +264,20 @@ public class OrderDetailsController {
 
 
 		model.addAttribute("user", user);
-		model.addAttribute("clientName", clientName);
+	//	model.addAttribute("clientName", clientName);
 		OrderDetails entity = null;
 		if (id.isPresent()) {
 			entity = service.findById(id.get()).get();
             // If Order exist display personal phone no from Personal based on Client name
 			Optional<Personal> personal = service.findPersonByShort(entity.getDbs_ag_name());
 			model.addAttribute("personal_phone", personal.isPresent()?personal.get().getPers_phone():"no phone");
+			model.addAttribute("clientName", entity.getDbs_ag_name());
 		} else {
 			entity = new OrderDetails();
 			entity.setDbs_fa_date(new Date());
 			// If Order doesnt exist then  personal phone no will be 'phone no'
 			model.addAttribute("personal_phone", "no phone");
+			model.addAttribute("clientName", clientName);
 		}
 		boolean isFA = AuthorityUtils.authorityListToSet(userDetails.getAuthorities()).contains("FA");
 		boolean isFARequester = AuthorityUtils.authorityListToSet(userDetails.getAuthorities())

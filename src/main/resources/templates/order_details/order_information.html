@@ -8,7 +8,7 @@
 		  th:action="@{/orderdetails/update}" th:object="${orderDetails}"
 		  method="post" style="margin-top : 43px;">
 		<!--			<input type="hidden" id="ln" name="ln" th:value="__${#locale}__"></input>-->
-		<div class="row">
+		<div class="row" style="height:400px;">
 			<div class="col-md-12">
 				<div th:insert="admin/operations :: operations"></div>
 				<div class="row m-3">
@@ -313,13 +313,15 @@
 
 					</div>
 
-					<div th:insert="order_details/order_buttons :: order_buttons"></div>
 
 					<input type="hidden" id="id" th:field="*{id}"></input> <input
 						type="hidden" id="nexttabid" value="geometry" name="nexttabid"></input>
 				</div>
 			</div>
+
+
 		</div>
+		<div th:insert="order_details/order_buttons :: order_buttons"></div>
 		<!--			<button id="formsubmit" type="submit" name="action"-->
 		<!--								value="tabclick" style="display: none"></button>-->
 		<script type="text/javascript">

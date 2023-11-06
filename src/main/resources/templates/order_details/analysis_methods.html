@@ -6,7 +6,7 @@
 			th:object="${orderDetails}" method="post">
 <!--			<input type="hidden" id="ln" name="ln"-->
 <!--								th:value="__${#locale}__"></input> -->
-			<div class="row">
+			<div class="row" style="height:400px;">
 				<div class="col-md-12">
 					<div th:insert="admin/operations :: operations"></div>
 					<div class=" row m-3">
@@ -153,11 +153,12 @@
 								</div>
 							</div>
 						</div>
-						<div th:insert="order_details/order_buttons :: order_buttons"></div>
+
 
 					</div>
 				</div>
 			</div>
+			<div th:insert="order_details/order_buttons :: order_buttons"></div>
 			<script type="text/javascript">
 
 			  $(document).ready(function() {

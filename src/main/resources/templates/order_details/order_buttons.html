@@ -2,18 +2,20 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <body>
-	<div th:fragment="order_buttons">
+	<div th:fragment="order_buttons" class="col-md-12">
 
-		<div class="form-row">
+		<div class="form-row" >
 			<div class="form-group col-md-4"></div>
-			<div class="form-group col-md-4"></div>
+			<div class="form-group col-md-3"></div>
 			<div class="form-group col-md-4 text-center" style="margin-top:10%">
-				<button type="button" name="print" value="print" class="btn btnbgcolor" onclick="printpage();">
+				<button type="button" name="print" value="print" class="btn btnbgcolor" onclick="printpage();" style="margin-right:12%;width: 100px;
+    height: 33px; border-radius: 5px; vertical-align: middle;line-height: 10px;background:#187bcd; font-size:15px;">
 
 					<span  th:text="#{label.print}">Print</span>
 				</button>
 				<button type="submit" name="action" value="previous"
-					th:if="${previousTab!=null}" class="btn btnbgcolor">
+					th:if="${previousTab!=null}" class="btn btnbgcolor" style="margin-right:0px;width: 100px;
+    height: 33px; border-radius: 5px; vertical-align: middle;line-height: 10px;background:#187bcd; font-size:15px;">
 					<span th:text="#{label.previous}">Previous</span>
 				</button>
 			<!--	<button type="submit" name="action" value="save" id="savee"
@@ -21,14 +23,16 @@
 					<span th:text="#{label.save}">Save</span>
 				</button>-->
 				<button type="submit" name="action" value="continue" id="continue"
-					th:if="${nextTab!=null}" class="btn btnbgcolor">
+					th:if="${nextTab!=null}" class="btn btnbgcolor" style="margin-right:12%;width: 100px;
+    height: 33px; border-radius: 5px; vertical-align: middle;line-height: 10px;background:#187bcd; font-size:15px;">
 					<span th:text="#{label.continue}">Continue</span>
 				</button>
 				<a th:href="@{/orderdetails}"> <button
-						type="button" class="btn btnbgcolor">
+						type="button" class="btn btnbgcolor" style="width: 130px;height: 33px; border-radius: 5px; vertical-align: middle;line-height: 10px;background:#187bcd; font-size:15px;">
 					<span th:text="#{label.cancel}">Close</span>
 				</button></a>
 			</div>
+			<div class="form-group col-md-1"></div>
 		</div>
 		<input type="hidden" id="id" th:field="*{id}"></input> <input
 			type="hidden" id="previousTab" th:field="*{previousTab}"
