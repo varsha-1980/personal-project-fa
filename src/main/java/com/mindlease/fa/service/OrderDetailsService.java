@@ -1003,64 +1003,66 @@ public class OrderDetailsService {
 //	}
 
 	private List<OrderDetails> invokeOrderDetails(DataTableRequest input){
-		StringBuilder sb = new StringBuilder("from OrderDetails od where od.id is not null");
+		StringBuilder sb = new StringBuilder("from OrderDetails od where od.id is not null ");
 
 		String sourceLink = input.getExternalFilter().getOrDefault("sourceLink", "search");
 
-		boolean isUser = input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") ;
-
 		if(sourceLink.equalsIgnoreCase("All Open Orders")) {
-			sb.append(" and  od.dbs_status NOT IN (  'Auftrag abgeschlossen'  , 'Order completed') order by od.dbs_prio  ASC , od.id ASC ");
+			sb.append(" and  od.dbs_status NOT IN (  'Auftrag abgeschlossen'  , 'Order completed')  ");
+			// order by od.dbs_prio  ASC , od.id ASC
 
 		} else if(sourceLink.equalsIgnoreCase("Open FA Orders")) {
 
-			sb.append(" and (od.dbs_status!='Auftrag abgeschlossen' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress') order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" and (od.dbs_status!='Auftrag abgeschlossen' or od.dbs_status!='Order completed') and (od.dbs_status='FA in Bearbeitung' or od.dbs_status='FA in progress') ");
 
 
 		} else if(sourceLink.equalsIgnoreCase("Evaluation Orders")) {
 
-			sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerten' or od.dbs_status='FA done - please evaluate the result') order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerten' or od.dbs_status='FA done - please evaluate the result')");
 
 
 		} else if(sourceLink.equalsIgnoreCase("Chemical Preparation")){
 
-			sb.append(" and (od.dbs_status='Wartet auf Ätzung' or od.dbs_status='Waiting for Etching') order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" and (od.dbs_status='Wartet auf Ätzung' or od.dbs_status='Waiting for Etching') ");
 
 		}else if(sourceLink.equalsIgnoreCase("Electrical Measurement")){
 
-			sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement') order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement') ");
 
 
 		}
 		else if(sourceLink.equalsIgnoreCase("Hotspot / IR / LC")){
 
-			sb.append(" and (od.dbs_status='Wartet auf Hotspot IR/LC' or od.dbs_status='Waiting for Hotspot IR/LC')  order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" and (od.dbs_status='Wartet auf Hotspot / IR / LC' or od.dbs_status='Waiting for Hotspot IR/LC')");
 
 		}
 
 
 		else if(sourceLink.equalsIgnoreCase("REM / FIB / EDX")){
 
-			sb.append(" and (od.dbs_status='Wartet auf REM/FIB/EDX' or od.dbs_status='Waiting for REM/FIB/EDX') order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" and (od.dbs_status='Wartet auf REM/FIB/EDX' or od.dbs_status='Waiting for REM/FIB/EDX')");
 
 		}
 		else if(sourceLink.equalsIgnoreCase("Cuts")){
 
-			sb.append(" and (od.dbs_status='Wartet auf Schliff' or od.dbs_status='Waiting for cuts') order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" and (od.dbs_status='Wartet auf Schliff' or od.dbs_status='Waiting for cuts') ");
 
 		}
 		else if(sourceLink.equalsIgnoreCase("Orders Material /Info Missing")){
 
-			sb.append(" and (od.dbs_status='Material/Info fehlt' or od.dbs_status='Material / info missing') order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" and (od.dbs_status='Material/Info fehlt' or od.dbs_status='Material / info missing') ");
 
 
 		} else if (sourceLink.equalsIgnoreCase("All New Orders")) {
 
-			sb.append(" and (od.dbs_status='Neuer Auftrag' or od.dbs_status='New Order') order by od.dbs_prio  ASC , od.id ASC ");
+			sb.append(" and (od.dbs_status='Neuer Auftrag' or od.dbs_status='New Order') ");
 
 		}
+		else if(!StringUtils.hasText(sourceLink)  ) {
+			sb.append(" and od.user.id = :userId ");
+		}
 
-
+		// order by od.id desc
 
 		String[] activeProfiles = environment.getActiveProfiles(); // it will return String Array of all active profile.
 		String profileName = "dev";
@@ -1086,6 +1088,12 @@ public class OrderDetailsService {
 			sb.append(" or lower(od.dbs_fa_name) like lower(:id)");
 			sb.append(" or lower(od.dbs_elee) like :id ");
 			sb.append(" or lower(od.dbs_famo) like :id )");
+			if(!StringUtils.hasText(sourceLink)  ) {
+				sb.append(" order by od.id desc ");
+			}else {
+				sb.append(" order by od.dbs_prio  ASC , od.id ASC ");
+			}
+
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sCustomername", ""))) {
 			sb.append(" and od.dbs_ag_name LIKE :name");
@@ -1112,10 +1120,12 @@ public class OrderDetailsService {
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sMaterial", ""))) {
 			sb.append(" and od.dbs_material LIKE :material");
 		}
-
 		if(!StringUtils.hasText(sourceLink)  ) {
-			sb.append(" and od.user.id = :userId order by od.id desc");
+			sb.append(" order by od.id desc ");
+		}else {
+			sb.append(" order by od.dbs_prio  ASC , od.id ASC");
 		}
+
 
 		/*if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search")) ) {
 			sb.append(" and od.user.id = :userId ");

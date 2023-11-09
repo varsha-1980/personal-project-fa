@@ -329,12 +329,7 @@
 
 
 
-                <div class="col-sm-12 col-md-4 text-md-right">
-                    <a th:href="@{/orderdetails/create}"><button type="button" class="btn btn-sm btnbgcolor">
-                        <i class="fa fa-plus"></i> <span th:text="#{label.menupage.create_new_order}">Create a
-                                    new order </span>
-                    </button></a>
-                </div>
+
             </div>
 
 
@@ -347,11 +342,11 @@
             <input type="hidden" id="defaultPageSizes" th:name="defaultPageSizes"
                    th:value="${defaultPageSize}"></input>
             <div>
-                <table id="table_order_1" class="table table-striped table-bordered " style="width: 100%">
+                <table id="table_order_1" class="table table-striped table-bordered" style="width: 100%">
                     <thead>
                     <tr role="row">
                         <th th:text="#{table.header.action}" style="width:3% !important">Action</th>
-                        <th th:text="#{table.header.order.no}"  class="justify-content-center text-center align-middle text-wrap">Order No</th>
+                        <th th:text="#{table.header.order.no}" class="justify-content-center text-center align-middle text-wrap">Order No</th>
                         <th th:text="#{table.header.date}" class="justify-content-center text-center align-middle text-wrap">Date</th>
                         <th th:text="#{table.header.customer}" class="justify-content-center text-center align-middle text-wrap">Customer</th>
                         <th th:text="#{table.header.priority}" class="justify-content-center text-center align-middle text-wrap">Priority</th>
@@ -366,11 +361,20 @@
                     </thead>
                 </table>
             </div>
-            <div class="col-sm-12 col-md-4 text-md-right">
+
+            <div class="col-sm-12 col-md-4 text-md-right" style = "position: relative; bottom: 34px; right: 165px;">
+                <a th:href="@{/orderdetails/create}" ><button type="button" class="btn btn-sm btnbgcolor">
+                    <i class="fa fa-plus"></i> <span th:text="#{label.menupage.create_new_order}">Create a
+                                    new order </span>
+                </button></a>
+            </div>
+
+            <div class="col-sm-12 col-md-4 text-md-right" style="float: right;">
             <a th:href="@{/home}"> <button
-                    type="button" class="btn btnbgcolor">
+                    type="button" class="btn btnbgcolor" style="position: relative; right: 204px;bottom: 70px; height:37px; z-index:99999999;">
                 <span th:text="#{label.close_table}">Close</span>
             </button></a></div>
+
         </div>
         <input type="hidden" th:value='#{label.button.csv}' id='csvButtonText'> <input type="hidden"
                                                                                        th:value='#{label.button.print}' id='printButtonText'> <input type="hidden"
@@ -381,7 +385,7 @@
     </div>
     <script th:inline="javascript">
 
-            function getUrlParameter(name) {
+          function getUrlParameter(name) {
                 var result = "";
                 if (window.location.search.split('?').length > 1) {
                     var params = window.location.search.split('?')[1].split('&');

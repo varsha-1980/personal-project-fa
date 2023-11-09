@@ -285,8 +285,19 @@ input[type=search]::-webkit-search-cancel-button {
 	border-radius: 0;
 }
 
+.dataTables_wrapper {
+    position: relative;
+    z-index: 99999999;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    text-align: left !important;
+}
+
 .dataTables_filter {
 	display: block;
+    position: absolute !important;
+    bottom: -7px !important;
 }
 
 .dataTables_scrollBody {
