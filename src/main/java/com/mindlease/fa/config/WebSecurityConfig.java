@@ -28,7 +28,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    
+    @Autowired
+    LocaleSettingAuthenticationSuccessHandler localeSettingAuthenticationSuccessHandler;
+
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -64,29 +68,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("ADMIN")                
                 .anyRequest().authenticated()
                 .and()
-            .formLogin()
+                .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/home")
-                .failureUrl("/login?error")
+                .permitAll()
+                .successHandler(localeSettingAuthenticationSuccessHandler).failureUrl("/login?error")
                 .permitAll()
                 .and()
-            .logout()
-             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-             .logoutSuccessUrl("/login?logout")
-             .invalidateHttpSession(true)
-	         .clearAuthentication(true)
-             .deleteCookies("JSESSIONID")
-             .deleteCookies("my-remember-me-cookie")
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
+                .deleteCookies("my-remember-me-cookie")
                 .permitAll()
                 .and()
-             .exceptionHandling().accessDeniedPage("/403").and()
-             .rememberMe()
-              //.key("my-secure-key")
-              .rememberMeCookieName("my-remember-me-cookie")
-              .tokenRepository(persistentTokenRepository())
-              .tokenValiditySeconds(24 * 60 * 60)
-              .and()
-            .exceptionHandling();
+                .exceptionHandling().accessDeniedPage("/403").and()
+                .rememberMe()
+                //.key("my-secure-key")
+                .rememberMeCookieName("my-remember-me-cookie")
+                .tokenRepository(persistentTokenRepository())
+                .tokenValiditySeconds(24 * 60 * 60)
+                .and()
+                .exceptionHandling();
             
     }
 	

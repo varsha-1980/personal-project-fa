@@ -1088,11 +1088,7 @@ public class OrderDetailsService {
 			sb.append(" or lower(od.dbs_fa_name) like lower(:id)");
 			sb.append(" or lower(od.dbs_elee) like :id ");
 			sb.append(" or lower(od.dbs_famo) like :id )");
-			if(!StringUtils.hasText(sourceLink)  ) {
-				sb.append(" order by od.id desc ");
-			}else {
-				sb.append(" order by od.dbs_prio  ASC , od.id ASC ");
-			}
+
 
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sCustomername", ""))) {
@@ -1123,9 +1119,8 @@ public class OrderDetailsService {
 		if(!StringUtils.hasText(sourceLink)  ) {
 			sb.append(" order by od.id desc ");
 		}else {
-			sb.append(" order by od.dbs_prio  ASC , od.id ASC");
+			sb.append(" order by od.dbs_prio  ASC , od.id ASC ");
 		}
-
 
 		/*if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search")) ) {
 			sb.append(" and od.user.id = :userId ");

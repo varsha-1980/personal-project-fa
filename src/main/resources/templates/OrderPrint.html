@@ -132,12 +132,12 @@ button.dt-button, div.dt-button, a.dt-button {
 </head>
 
 <body onload="printPage()">
-<div class ="container">
+<div class ="container" th:object="${orderDetails}">
   <div class = "row">
 
 
-    <div class="col-6">
-      <h3 style="margin-top:50px;"> Analysis report for Order id 2826 </h3>
+    <div class="col-6" >
+      <h3 style="margin-top:50px;"> Analysis report for Order id <span th:text="${id}"></span> </h3>
     </div>
     <div class="col-6" >
       <img src="https://www.vishay.com/images/header/vishay-logo.png" style="float:right"/>
@@ -257,13 +257,11 @@ button.dt-button, div.dt-button, a.dt-button {
         <div class="row">
 
           <div class="col-5">
-            <div id="position_select_div" class="circle_border">
-              <!--<input class="form-check-input-reverse" type="checkbox" id ="1"
-                     style="position: relative; left: 0px; top: 10px;"
-                    ></input>-->
+            <div id="position_select_div" class="circle_border" th:object="${orderDetails}">
+
               <input id ="2"
                      class="form-check-input-reverse" type="checkbox"
-              ></input>
+                     th:field="*{dbs_pos_12}" onclick="return false;"></input>
               <!--<input id ="3"
                   class="form-check-input-reverse" type="checkbox"
                   style="position: relative; left: 0px; top: 10px;"
@@ -271,65 +269,66 @@ button.dt-button, div.dt-button, a.dt-button {
               <input id ="4"
                      class="form-check-input-reverse" type="checkbox"
                      style="position: relative; left: 15px; top: -25px;"
-              ></input>
+                     th:field="*{dbs_pos_01}" onclick="return false;"></input>
               <input id ="5"
                      class="form-check-input-reverse" type="checkbox"
                      style="position: relative; left: 10px; top: 10px;"
-              ></input>
+                     th:field="*{dbs_pos_02}" onclick="return false;"></input>
               <input class="form-check-input-reverse" id ="6"
-                     type="checkbox"></input>
+                     type="checkbox" th:field="*{dbs_pos_11}" onclick="return false;"></input>
               <input id="7"
                      class="form-check-input-reverse" type="checkbox"
                      style="position: relative; left: -10px; top: 10px;"
-              ></input>
+                     th:field="*{dbs_pos_20}" onclick="return false;"></input>
               <input id ="8"
                      class="form-check-input-reverse" type="checkbox"
                      style="position: relative; left: -15px; top: -25px;"
-              ></input> <br></br> <br></br>
+                     th:field="*{dbs_pos_13}" onclick="return false;"></input> <br></br> <br></br>
               <input id ="9"
                      class="form-check-input-reverse"  type="checkbox"
-              ></input>
+                     style="position: relative; right:13px;"
+                     th:field="*{dbs_pos_14}" onclick="return false;"></input>
               <input class="form-check-input-reverse" id ="10"
-                     type="checkbox" ></input> <input
-                    class="form-check-input-reverse" type="checkbox"
-            ></input>
+                     type="checkbox" th:field="*{dbs_pos_15}" onclick="return false;"></input>
+              <input
+                      class="form-check-input-reverse" type="checkbox" style="margin: 13px;" th:field="*{dbs_pos_04}" onclick="return false;">
+              </input>
+
+              </input>
               <input class="form-check-input-reverse" id ="11"
-                     type="checkbox" ></input>
+                     type="checkbox" th:field="*{dbs_pos_18}" onclick="return false;"></input>
               <input
                       class="form-check-input-reverse" type="checkbox" id ="12"
-              ></input> <br></br> <br></br>
+                      style="position: relative; left:13px;"
+                      th:field="*{dbs_pos_17}" onclick="return false;"></input> <br></br> <br></br>
               <input id ="13"
                      class="form-check-input-reverse" type="checkbox"
                      style="position: relative; left: 24px; top: 25px;"
-              ></input>
+                     th:field="*{dbs_pos_05}" onclick="return false;"></input>
               <input id ="14"
                      class="form-check-input-reverse" type="checkbox"
                      style="position: relative; left: 10px; top: -10px;"
-              ></input>
+                     th:field="*{dbs_pos_08}" onclick="return false;"></input>
               <input id ="15"
                      class="form-check-input-reverse" type="checkbox"
-              ></input>
+                     th:field="*{dbs_pos_21}" onclick="return false;"></input>
               <input id ="16"
                      class="form-check-input-reverse" type="checkbox"
                      style="position: relative; left: -10px; top: -10px;"
-              ></input>
+                     th:field="*{dbs_pos_10}" onclick="return false;"></input>
               <input class="form-check-input-reverse" id ="17"
                      type="checkbox" style="position: relative; left: -25px; top: 26px;"
-              ></input> <br></br>
+                     th:field="*{dbs_pos_03}" onclick="return false;"></input> <br></br>
               <!--<input id ="18"
                   class="form-check-input-reverse" type="checkbox"
                   style="position: relative; left: 0px; top: -10px;"
                  ></input>-->
               <input id ="19"
                      class="form-check-input-reverse" type="checkbox"
-              ></input>
-              <!-- <input id ="20"
-                   class="form-check-input-reverse" type="checkbox"
-                   style="position: relative; left: 0px; top: -10px;"
-                  ></input>-->
-
+                     th:field="*{dbs_pos_16}" onclick="return false;"></input>
               <div class="triangle-up"></div>
             </div>
+
           </div>
           <div class="col-5">
             <div class="form-check">
@@ -355,9 +354,9 @@ button.dt-button, div.dt-button, a.dt-button {
 
       <th scope="row">Methoden:</th>
       <td><div class="row">
-        <div class="col-4">
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-
+        <div class="col-4" th:each="method : ${methods}">
+<!--          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.-->
+          <p th:text="${method.name}"></p>
         </div>
       </div>
       </td>
@@ -376,4 +375,3 @@ button.dt-button, div.dt-button, a.dt-button {
 </div>
 </body>
 </html>
-

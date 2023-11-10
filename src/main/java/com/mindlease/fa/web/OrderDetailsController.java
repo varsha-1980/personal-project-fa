@@ -94,17 +94,6 @@ public class OrderDetailsController {
 		if (userOps.isPresent()) /* && principal.equals("admin@gmail.com")) */ {
 			user = userOps.get();
 			//service.findAllPrioritiesById();
-
-			/**  Below code added to set language   **/
-			if(user.getLanguage() != null){
-				if(user.getLanguage().equalsIgnoreCase("de")){
-					LocaleConfig localeConfig = new LocaleConfig();
-					localeConfig.localeResolver().setLocale(httpServletRequest,httpServletResponse, Locale.GERMAN);
-				}else{
-					LocaleConfig localeConfig = new LocaleConfig();
-					localeConfig.localeResolver().setLocale(httpServletRequest,httpServletResponse, Locale.US);
-				}
-			}
 			/**   ------------------------------------------ **/
 			ModelAndView modelAndView = new ModelAndView("order_details/orders_list");
 
@@ -701,9 +690,20 @@ public class OrderDetailsController {
 		return "order_details/SharedFolderStructure.html";
 	}
 	@RequestMapping(path = "/printOrder/{id}",method = RequestMethod.GET)
-	public String printOrder(){
+	public String printOrder(@PathVariable("id") Long id, Model model){
+
+		Optional<OrderDetails> orderDetails = orderDetailsRepository.findById(id);
+
+		System.out.println(orderDetails.get());
+		model.addAttribute("checkedValue",true);
+		model.addAttribute("orderDetails",orderDetails);
+		List<MethodX> methodXList = methodXRepository.findAllGeneralMethodsByOrderId(orderDetails.get().getId());
+		System.out.println(methodXList);
+		model.addAttribute("methods",methodXList);
+
 		return  "OrderPrint.html";
 	}
+
 
 	@PostMapping(path = "/orderdetails/sendEmail")
 	@ResponseBody
