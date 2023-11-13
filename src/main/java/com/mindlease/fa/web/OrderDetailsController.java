@@ -2,6 +2,8 @@ package com.mindlease.fa.web;
 
 import java.io.*;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javax.mail.MessagingException;
@@ -15,6 +17,7 @@ import com.mindlease.fa.dto.EmailTemplate;
 import com.mindlease.fa.model.*;
 import com.mindlease.fa.repository.MethodXRepository;
 import com.mindlease.fa.repository.OrderDetailsRepository;
+import com.mindlease.fa.repository.PartRepository;
 import com.mindlease.fa.repository.UserRepository;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +76,9 @@ public class OrderDetailsController {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private PartRepository partRepository;
 
 	@Autowired
 	OrderDetailsRepository orderDetailsRepository;
@@ -693,13 +699,24 @@ public class OrderDetailsController {
 	public String printOrder(@PathVariable("id") Long id, Model model){
 
 		Optional<OrderDetails> orderDetails = orderDetailsRepository.findById(id);
+		model.addAttribute("orderDetails",orderDetails.get());
 
-		System.out.println(orderDetails.get());
-		model.addAttribute("checkedValue",true);
-		model.addAttribute("orderDetails",orderDetails);
+		Optional<Personal> personal = service.findPersonByShort(orderDetails.get().getDbs_ag_name());
+		model.addAttribute("personal_phone", personal.isPresent()?personal.get().getPers_phone():"no phone");
+		Optional<Part> part = Optional.ofNullable(partRepository.findByName(orderDetails.get().getDbs_part()));
+		if(part.isPresent()){
+			model.addAttribute("part",part.get());
+		}else {
+			model.addAttribute("part",new Part());
+		}
 		List<MethodX> methodXList = methodXRepository.findAllGeneralMethodsByOrderId(orderDetails.get().getId());
-		System.out.println(methodXList);
 		model.addAttribute("methods",methodXList);
+
+		//Print Date
+		LocalDateTime localDateTime = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d MMM yyyy HH:mm:ss");
+		String formattedDateTime = localDateTime.format(formatter);
+		model.addAttribute("printDate",formattedDateTime);
 
 		return  "OrderPrint.html";
 	}

@@ -57,6 +57,22 @@
 	text-align: center;
 }
 
+#position_select_div>input {
+	margin: 13px;
+}
+
+
+.circle_border {
+	text-align: center;
+	border: 2px solid #555;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+	white-space: nowrap;
+	width: 240px;
+	line-height: 6px;
+}
+
 .bs-example {
 	margin: 20px;
 }
@@ -132,14 +148,14 @@ button.dt-button, div.dt-button, a.dt-button {
 </head>
 
 <body onload="printPage()">
-<div class ="container" th:object="${orderDetails}">
+<div class ="container" >
   <div class = "row">
 
 
-    <div class="col-6" >
-      <h3 style="margin-top:50px;"> Analysis report for Order id <span th:text="${id}"></span> </h3>
+    <div class="col-7" >
+      <label style="margin-top:50px;font-weight: bold; font-size: 34px;" th:text="#{label.print.order.title}">  </label> <span style="font-weight: bold; font-size: 34px;" th:text="${orderDetails.id}"></span>
     </div>
-    <div class="col-6" >
+    <div class="col-5" >
       <img src="https://www.vishay.com/images/header/vishay-logo.png" style="float:right"/>
     </div>
 
@@ -150,58 +166,58 @@ button.dt-button, div.dt-button, a.dt-button {
 
   <table class="table table-borderless">
 
-    <tbody>
+    <tbody >
     <tr>
-      <th scope="row">Lot ID:</th>
-      <td>S37D3431</td>
+      <th scope="row" th:text="#{label.editpage.tab1.lot_id}">Lot ID:</th>
+      <td th:text="${orderDetails.dbs_lotid}"></td>
       <td>  </td>
       <td >    </td>
       <td  colspan="3">    </td>
       <th scope="row"></th>
       <td></td>
-      <th scope="row">Geometrie:</th>
-      <td>ANBLU60BDDDSSIZ</td>
+      <th scope="row" th:text="#{label.editpage.tab2.geometry}">Geometry:</th>
+      <td th:text="${orderDetails.dbs_part}"></td>
     </tr>
     <tr>
-      <th scope="row">Wafer Nr:</th>
-      <td>n/a</td>
+      <th scope="row" th:text="#{label.editpage.tab1.wafer_no}">Wafer No:</th>
+      <td th:text="${orderDetails.dbs_wfr}"></td>
       <td> </td>
       <td >    </td>
       <td  colspan="3">    </td>
       <th scope="row"></th>
       <td></td>
-      <th scope="row">Producktinfos:</th>
-      <td>45 M TRENCHMOS</td>
+      <th scope="row" th:text="#{label.print.order.product.information}">Product information:</th>
+      <td> <span th:text="${part.part_cells}"></span> <span> M </span> <span th:text="${part.part_class}"></span> </td>
     </tr>
     <tr>
-      <th scope="row">Auftraggeber:</th>
-      <td>nkobarow</td>
+      <th scope="row" th:text="#{label.sCustomername}">Customer Name:</th>
+      <td th:text="${orderDetails.dbs_ag_name}"></td>
       <td> </td>
       <td >    </td>
       <td  colspan="3">    </td>
       <th scope="row">Tel:</th>
-      <td>1212</td>
-      <th scope="row">Pitch/T-Tiefe:</th>
-      <td>S-3.8   1,6</td>
+      <td th:text="${personal_phone}"></td>
+      <th scope="row" th:text="#{label.editpage.tab2.pitch_gm}">Pitch/T-Tiefe:</th>
+      <td><span th:text="${part.part_pitch}"></span>  <span th:text="${part.part_calc}"></span> </td>
 
     </tr>
 
     <tr>
-      <th scope="row">Auftragsdatum:</th>
-      <td>28.06.2023</td>
+      <th scope="row" th:text="#{label.editpage.tab1.order_date}">Order date:</th>
+      <td th:text="${orderDetails.dbs_fa_date}"></td>
       <td> </td>
       <td >    </td>
       <td  colspan="3">    </td>
       <th scope="row" ></th>
       <td></td>
       <th scope="row" >Metall/Pass/Pack:</th>
-      <td>AC40CH L5N5 BW</td>
+      <td><span th:text="${part.part_metal}"></span> <span th:text="${part.part_pass}"></span> <span th:text="${part.part_pack}"></span></td>
     </tr>
 
 
     <tr>
       <th scope="row">Probenmaterial:</th>
-      <td>Modul</td>
+      <td th:text="${orderDetails.dbs_material}"></td>
       <td> </td>
       <td >    </td>
       <td colspan="3">   </td>
@@ -214,7 +230,7 @@ button.dt-button, div.dt-button, a.dt-button {
 
     <tr>
       <th scope="row">Priotitat:</th>
-      <td>1</td>
+      <td th:text="${orderDetails.dbs_prio}"></td>
       <td> </td>
       <td >    </td>
       <td  colspan="2">    </td>
@@ -239,14 +255,14 @@ button.dt-button, div.dt-button, a.dt-button {
 
     <tr>
       <th scope="row">Analysengrund:</th>
-      <td>GSV35 test fail due to T6072 abnormal</td>
+      <td th:text="${orderDetails.dbs_fa_reason}"></td>
 
 
     </tr>
 
     <tr>
       <th scope="row">Baeschreibung:</th>
-      <td>Bauteil T6072 -> check IGSS</td>
+      <td th:text="${orderDetails.dbs_fa_descr}"></td>
 
     </tr>
 
@@ -335,10 +351,12 @@ button.dt-button, div.dt-button, a.dt-button {
               <label for="customCheck1"><span
               >See X-Check / Die Sort Map</span></label>
               <input class="form-check-input-reverse"
+                     th:field="${orderDetails.dbs_pos_xcmap}"
                      type="checkbox"
+                     onclick="return false;"
                      id="defaultCheck1"/>
-              <label><span
-              >Alternative Position Description</span><a href="#" data-toggle="tooltip"
+              <label><span th:text="${orderDetails.dbs_pos_text}"
+              ></span><a href="#" data-toggle="tooltip"
                                                          data-placement="top" ><i
                       class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
 
@@ -355,7 +373,6 @@ button.dt-button, div.dt-button, a.dt-button {
       <th scope="row">Methoden:</th>
       <td><div class="row">
         <div class="col-4" th:each="method : ${methods}">
-<!--          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.-->
           <p th:text="${method.name}"></p>
         </div>
       </div>
@@ -363,14 +380,16 @@ button.dt-button, div.dt-button, a.dt-button {
     </tr>
     <tr>
 
-      <th scope="row">Baeschreibung:</th>
-      <td>Bauteil T6072 -> check IGSS</td>
+      <th scope="row">Probenverbleib:</th>
+      <td th:text="${orderDetails.dbs_remain}"></td>
     </tr>
     </tbody>
   </table>
 
   <hr/>
-
+ <div>
+   <span th:text="${printDate}" style="float:right;"></span>
+ </div>
 
 </div>
 </body>

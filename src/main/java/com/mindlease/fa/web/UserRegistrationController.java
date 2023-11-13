@@ -1,8 +1,7 @@
 package com.mindlease.fa.web;
 
 import java.security.Principal;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +42,7 @@ public class UserRegistrationController {
 			tosave.setFirstName(userDto.getFirstName());
 			tosave.setLastName(userDto.getLastName());
 			tosave.setRole(userDto.getRole());
+			tosave.setPassword(userDto.getPassword());
 			model.addAttribute("mode", "edit");
 			redirectAttributes.addFlashAttribute("flash_usercreat", "User Suceesfully updated");
 		} else {
@@ -50,22 +50,32 @@ public class UserRegistrationController {
 				result.rejectValue("email", null, "There is already an account registered with that email");
 			}
 			tosave = userDto;
-			if (userDto.getPassword() == null)
+			String trimmedInput =  userDto.getPassword().trim();
+			boolean isPasswordEmpty = trimmedInput.isEmpty();
+			if (userDto.getPassword() == null || isPasswordEmpty)
 				result.rejectValue("password", null, "Password should not be empty.");
 			if (userDto.getPassword() != null && userDto.getPassword().length() < 4)
 				result.rejectValue("password", null, "Password should contain minimum 4 characters");
 			model.addAttribute("mode", "save");
-			redirectAttributes.addFlashAttribute("flash_usercreat", "User Suceesfully Created");
+
+			redirectAttributes.addFlashAttribute("flash_usercreat", "User Successfully Created");
+
 		}
 
 		if (result.hasErrors()) {
+			List<String> errorList = new ArrayList<>();
 			log.info("---------------------hasErrors::{}", result.getAllErrors());
 
 			model.addAttribute("rolesList", userService.findAllRoles().stream().filter(role->!(
 					role.getName().equalsIgnoreCase("SUPER-ADMIN")
 							|| role.getName().equalsIgnoreCase("FA") || role.getName().equalsIgnoreCase("FA-REQUESTOR"))).collect(Collectors.toList()));
 			model.addAttribute("companyList", userService.findAllCompanies());
+			model.addAttribute("isError",true);
 
+			result.getAllErrors().forEach(x->{
+				errorList.add(x.getDefaultMessage());
+			});
+			model.addAttribute("errorMessages",errorList);
 			/*model.addAttribute("rolesList", userService.findAllRoles());*/
 			redirectAttributes.addFlashAttribute("flash_usercreat", "Check Errors!");
 			return "admin/user_register";
@@ -73,7 +83,8 @@ public class UserRegistrationController {
 		tosave.setCompany(userDto.getCompany());
 		tosave.setLanguage(userDto.getLanguage());
 		User saved = userService.save(tosave);
-
+		model.addAttribute("success",true);
+		model.addAttribute("successMessage", "User Successfully Created" );
 		return "redirect:/registration/userManagement";
 	}
 
@@ -111,6 +122,7 @@ public class UserRegistrationController {
 
 		/*model.addAttribute("rolesList", userService.findAllRoles());*/
 
+		model.addAttribute("modalAttribute",true);
 		model.addAttribute("rolesList", userService.findAllRoles().stream().filter(role->!(role.getName().equalsIgnoreCase("SUPER-ADMIN")
 				|| role.getName().equalsIgnoreCase("FA") || role.getName().equalsIgnoreCase("FA-REQUESTOR"))).collect(Collectors.toList()));
 		model.addAttribute("companyList", userService.findAllCompanies());
@@ -127,21 +139,27 @@ public class UserRegistrationController {
 	}
 
 	@RequestMapping("/saveChangePassword")
-	public String saveChangePassword(Model model, @ModelAttribute("user") User userDto, BindingResult bindingResult,
+	public String saveChangePassword(Model model, @ModelAttribute("user") User userDto,
 			RedirectAttributes redirectAttributes) {
+		List<String> errorList = new ArrayList<>();
+
 		User existing = userService.findById(Optional.of(userDto.getId())).get();
 		if (userDto.getPassword() != null && !userService.checkPasswod(userDto.getPassword(), existing)) {
-			bindingResult.rejectValue("password", null, "Old Password doesn't correct");
+			//bindingResult.rejectValue("password", null, "Old Password doesn't correct");
+			errorList.add("Old Password doesn't correct");
 		}
 
 		if (userDto.getNewPassword() != null && userDto.getConfirmPassword() != null
 				&& !userDto.getNewPassword().equals(userDto.getConfirmPassword())) {
-			bindingResult.rejectValue("confirmPassword", null, "New Password should match with Confirm Password");
+			//bindingResult.rejectValue("confirmPassword", null, "New Password should match with Confirm Password");
+			errorList.add("New Password should match with Confirm Password");
 		}
 		existing.setNewPassword(userDto.getNewPassword());
 		existing.setConfirmPassword(userDto.getConfirmPassword());
-		log.info("------------/bindingResult:::{}", bindingResult.getAllErrors());
-		if (bindingResult.hasErrors()) {
+//		log.info("------------/bindingResult:::{}", bindingResult.getAllErrors());
+		if (!errorList.isEmpty()) {
+			model.addAttribute("isError",true);
+			model.addAttribute("errorMessages",errorList);
 			redirectAttributes.addFlashAttribute("flash_password", "Check Errors!");
 			return "admin/change_password";
 		} else {

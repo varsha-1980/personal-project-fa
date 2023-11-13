@@ -64,32 +64,45 @@
 							</div>
 						</div>
 					</div>
-					<div th:if="${param.error} or ${param.logout}  "
-						class="toast text-white w-25" role="alert" aria-atomic="true"
-						data-delay="3000" style="position: absolute; right: 1rem;">
-						<div th:if="${param.error}" class="toast-header">
-							<strong class="mr-auto">Invalid</strong>
-							<button type="button" class="ml-2 mb-1 close"
-								data-dismiss="toast" aria-label="Close">
+
+					<div class="alert alert-danger mt-3 position-fixed" style="top: 10px; right: 10px; display: none;width: 500px;" role="alert" id="myAlert" th:if="${param.error}">
+
+						<h5 class="alert-heading">	Invalid Email and Password.
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div th:if="${param.logout}" class="toast-header">
-							<strong th:if="${param.logout}" class="mr-auto">Logout</strong>
-							<button type="button" class="ml-2 mb-1 close"
-								data-dismiss="toast" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div th:if="${param.error}" class="toast-body bg-danger">
-							<span th:text="#{error.login_failed}">Invalid Email and
-								Password.</span>
-						</div>
-						<div th:if="${param.logout}" class="toast-body bg-success">
-							<span th:text="#{info.logout_success}">You have been
-								logged out.</span>
-						</div>
+							</button></h5>
+
 					</div>
+
+					<div  class="alert alert-success mt-3 position-fixed" style="top: 10px; right: 10px; display: none;width: 500px;" role="alert" id="myAlert2" th:if="${param.logout}">
+						<h5 class="alert-heading">You have been logged out.
+
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</h5>
+
+ 					</div>
+
+
+					<script>
+$(document).ready(function () {
+    // Display alerts
+    $('#myAlert').show();
+    $('#myAlert2').show();
+
+    // Hide the alert after 3 seconds (3000 milliseconds)
+    setTimeout(function () {
+        $('#myAlert').fadeOut();
+    }, 3000);
+
+    // Hide the second alert after 3 seconds (3000 milliseconds)
+    setTimeout(function () {
+        $('#myAlert2').fadeOut();
+    }, 3000);
+});
+
+</script>
 				</div>
 			</div>
 		</div>

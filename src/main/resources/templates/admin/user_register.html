@@ -11,12 +11,12 @@
 				<div class="container mb-3">
 					<div
 						class="col-sm-10 justify-content-center align-items-center container ">
-						<div th:if="${param.success}">
-							<div class="alert alert-info">
-								<span th:text="#{label.successful_register}">You've
-									successfully registered to our awesome app!</span>
-							</div>
-						</div>
+<!--						<div th:if="${param.success}">-->
+<!--							<div class="alert alert-info">-->
+<!--								<span th:text="#{label.successful_register}">You've-->
+<!--									successfully registered to our awesome app!</span>-->
+<!--							</div>-->
+<!--						</div>-->
 						<div class="text-center">
 							<h4 th:if="${mode == 'save'}">
 								<span th:text="#{label.create_user}">Create New User</span>
@@ -28,6 +28,7 @@
 						<p class="alert alert-danger alert-dismissible"
 							th:if="${#fields.hasGlobalErrors()}"
 							th:each="error : ${#fields.errors('global')}" th:text="${error}">
+
 						</p>
 
 						<form th:action="@{/registration}" th:object="${user}"
@@ -57,6 +58,13 @@
 									type="password" th:field="*{password}"
 									placeholder="Enter Password" required="required"/>
 							</div>
+<!--							<div  class="form-group">-->
+<!--								<label for="password" class="control-label"><span-->
+<!--										th:text="#{label.password}">Password</span></label> <input-->
+<!--									id="password" class="form-control form-control-sm"-->
+<!--									type="password" th:field="*{password}"-->
+<!--									placeholder="Enter Password" required="required"/>-->
+<!--							</div>-->
 
 							<div class="form-group">
 								<label for="role" class="control-label"><span
@@ -111,6 +119,50 @@
 				</div>
 
 			</div>
+			<div class="alert alert-danger mt-3 position-fixed" style="top: 10px; right: 10px; display: none;width: 500px;" role="alert" id="myAlert" th:if="${isError}">
+
+				<h5 class="alert-heading">	Invalid .
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button></h5>
+				<hr>
+				<div th:each="error : ${errorMessages}">
+					<p class="mb-0" th:text="${error}"></p>
+
+				</div>
+
+
+			</div>
+
+			<div  class="alert alert-success mt-3 position-fixed" style="top: 10px; right: 10px; display: none;width: 500px;" role="alert" id="myAlert2" th:if="${success}">
+				<h5 class="alert-heading">User successfully created.
+
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</h5>
+
+			</div>
+
+
+			<script>
+			$(document).ready(function () {
+				// Display alerts
+				$('#myAlert').show();
+				$('#myAlert2').show();
+
+				// Hide the alert after 3 seconds (3000 milliseconds)
+				setTimeout(function () {
+					$('#myAlert').fadeOut();
+				}, 3000);
+
+				// Hide the second alert after 3 seconds (3000 milliseconds)
+				setTimeout(function () {
+					$('#myAlert2').fadeOut();
+				}, 3000);
+			});
+
+</script>
 		</div>
 	</div>
 
