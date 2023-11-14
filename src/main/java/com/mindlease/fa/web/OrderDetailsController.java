@@ -756,10 +756,10 @@ public class OrderDetailsController {
 		emailTemplate.setMailTo( recipientDetails!=null ?recipientDetails.getEmail():"");
 
 		if(recipientDetails!=null ) {
-			if(recipientDetails.getLanguage()!=null) {
+			if (recipientDetails.getLanguage() != null) {
 				if (recipientDetails.getLanguage().equals("en")) {
 
-					if(orderDetails!=null ) {
+					if (orderDetails != null) {
 						emailTemplate.setSubject("Order No." + orderDetails.getId() + ": The analysis is finished");
 					}
 					ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -795,11 +795,10 @@ public class OrderDetailsController {
 
 					}
 
-				}
-				else {
+				} else {
 
-					if(orderDetails!=null ) {
-						emailTemplate.setSubject("Auftrag-Nr."+orderDetails.getId()+": Die Analyse ist fertig");
+					if (orderDetails != null) {
+						emailTemplate.setSubject("Auftrag-Nr." + orderDetails.getId() + ": Die Analyse ist fertig");
 					}
 					ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 					InputStream inputStream = classLoader.getResourceAsStream("templates/German_EmailTemplate.txt");
@@ -831,8 +830,45 @@ public class OrderDetailsController {
 					}
 
 				}
-			}else {
-				emailTemplate.setStatus("error");
+			} else {
+				//emailTemplate.setStatus("error");
+
+				if (orderDetails != null) {
+					emailTemplate.setSubject("Order No." + orderDetails.getId() + ": The analysis is finished");
+				}
+				ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+				InputStream inputStream = classLoader.getResourceAsStream("templates/English_EmailTemplate.txt");
+
+				// File file = ResourceUtils.getFile("classpath:static/html/LinkExpired.html");
+				StringBuilder contentBuilder = new StringBuilder();
+				try {
+					BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+					String str;
+					while ((str = in.readLine()) != null) {
+						contentBuilder.append(str);
+					}
+					in.close();
+				} catch (IOException e) {
+					log.error(e.getMessage());
+				}
+				System.out.println(contentBuilder);
+				if (contentBuilder.length() > 0) {
+
+					String content = contentBuilder.toString();
+
+					System.out.println(content);
+
+					for (Map.Entry<String, String> entry : replacementMap.entrySet()) {
+						String key = entry.getKey();
+						String value = entry.getValue();
+						content = content.replaceAll(key, value);
+					}
+
+					emailTemplate.setEmailBody(content);
+
+
+				}
+
 			}
 		}
 

@@ -326,7 +326,12 @@
                         <span th:text="#{label.listpage.orders_list}">Orders List</span>
                     </h5>-->
                 </div>
-
+                <div class="col-sm-12 col-md-4 text-md-right" style = "position: relative;  top: 10px; left: -25px;">
+                    <a th:href="@{/orderdetails/create}" ><button type="button" class="btn btn-sm btnbgcolor">
+                        <i class="fa fa-plus"></i> <span th:text="#{label.menupage.create_new_order}">Create a
+                                    new order </span>
+                    </button></a>
+                </div>
 
 
 
@@ -362,16 +367,11 @@
                 </table>
             </div>
 
-            <div class="col-sm-12 col-md-4 text-md-right" style = "position: relative; bottom: 34px; right: 165px;">
-                <a th:href="@{/orderdetails/create}" ><button type="button" class="btn btn-sm btnbgcolor">
-                    <i class="fa fa-plus"></i> <span th:text="#{label.menupage.create_new_order}">Create a
-                                    new order </span>
-                </button></a>
-            </div>
+
 
             <div class="col-sm-12 col-md-4 text-md-right" style="float: right;">
             <a th:href="@{/home}"> <button
-                    type="button" class="btn btnbgcolor" style="position: relative; right: 204px;bottom: 70px; height:37px; z-index:99999999;">
+                    type="button" class="btn btnbgcolor" style="position: relative; right: 204px;bottom: 40px; height:37px; z-index:99999999;">
                 <span th:text="#{label.close_table}">Close</span>
             </button></a></div>
 
