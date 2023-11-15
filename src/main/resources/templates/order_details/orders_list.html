@@ -7,7 +7,7 @@
 <div layout:fragment="content">
     <div class="card mt-1 p-3 h-100">
 
-        <div class="card-body h-100" th:switch="${orderDetailsList}">
+        <div class="card-body h-100" th:switch="${orderDetailsList}" style="margin-top : -43px;">
             <div th:if="${fromLink == 'search'}">
 
 
@@ -266,18 +266,20 @@
                                        th:value="${#request.getParameter('fromLink')}"></input>
 
 
+
+
                                 <div class="form-group col-md-3"></div>
                                 <div class="form-group col-md-3">
                                     <!--<button type="submit" class="btn btnbgcolor">
                                         <span th:text="#{label.Search}">Search</span>
                                     </button>-->
-                                    <button type="button" class="btn btnbgcolor" id="search-button">
-                                        <span th:text="#{label.Search}">Search</span>
-                                    </button>
+                                    <!-- <button type="button" class="btn btnbgcolor" id="search-button">
+                                         <span th:text="#{label.Search}">Search</span>
+                                     </button>-->
 
                                     <a th:href="@{/orderdetails(fromLink=${'search'})}"><button type="button"
-                                                                                                class="btn btnbgcolor">
-                                        <span th:text="#{label.close_table}">Close Table</span>
+                                                                                                class="btn btnbgcolor" id="search-button">
+                                        <span th:text="#{label.Search}">Search</span>
                                     </button></a>
                                 </div>
 
@@ -326,12 +328,7 @@
                         <span th:text="#{label.listpage.orders_list}">Orders List</span>
                     </h5>-->
                 </div>
-                <div class="col-sm-12 col-md-4 text-md-right" style = "position: relative;  top: 10px; left: -25px;">
-                    <a th:href="@{/orderdetails/create}" ><button type="button" class="btn btn-sm btnbgcolor">
-                        <i class="fa fa-plus"></i> <span th:text="#{label.menupage.create_new_order}">Create a
-                                    new order </span>
-                    </button></a>
-                </div>
+
 
 
 
@@ -369,20 +366,28 @@
 
 
 
-            <div class="col-sm-12 col-md-4 text-md-right" style="float: right;">
-            <a th:href="@{/home}"> <button
-                    type="button" class="btn btnbgcolor" style="position: relative; right: 204px;bottom: 40px; height:37px; z-index:99999999;">
-                <span th:text="#{label.close_table}">Close</span>
-            </button></a></div>
-
         </div>
         <input type="hidden" th:value='#{label.button.csv}' id='csvButtonText'> <input type="hidden"
                                                                                        th:value='#{label.button.print}' id='printButtonText'> <input type="hidden"
                                                                                                                                                      th:value='#{label.button.copy}' id='copyButtonText'>
         <input type="hidden" th:value='#{label.Search}' id='searchBoxText'>
-        <br />
 
+        <div class="tablebelowbtns">
+            <div class="text-md-right new_order" style = "position: relative; bottom:30%;  left: 20px; ">
+                <a th:href="@{/orderdetails/create}" ><button type="button" class="btn btn-sm btnbgcolor" style="margin-left : 60px; margin-top : -22px">
+                    <i class="fa fa-plus"></i> <span th:text="#{label.menupage.create_new_order}">Create a
+                                    new order </span>
+                </button></a>
+            </div>
+
+            <div class="text-md-right close_order" style="float: right;">
+                <a th:href="@{/home}"> <button
+                        type="button" class="btn btnbgcolor" style="position: relative; right: 82px;bottom: 13px; height:36px; z-index:99999999;">
+                    <span th:text="#{label.close_table}">Close</span>
+                </button></a></div>
+        </div>
     </div>
+
     <script th:inline="javascript">
 
           function getUrlParameter(name) {
