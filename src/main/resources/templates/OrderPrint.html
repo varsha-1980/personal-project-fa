@@ -152,10 +152,10 @@ button.dt-button, div.dt-button, a.dt-button {
   <div class = "row">
 
 
-    <div class="col-7" >
-      <label style="margin-top:50px;font-weight: bold; font-size: 34px;" th:text="#{label.print.order.title}">  </label> <span style="font-weight: bold; font-size: 34px;" th:text="${orderDetails.id}"></span>
+    <div class="col-8" >
+      <label style="margin-top:50px;font-weight: bold; font-size: 32px;" th:text="#{label.print.order.title}">  </label> <span style="font-weight: bold; font-size: 32px;" th:text="${orderDetails.id}"></span>
     </div>
-    <div class="col-5" >
+    <div class="col-4" >
       <img src="https://www.vishay.com/images/header/vishay-logo.png" style="float:right"/>
     </div>
 
@@ -210,26 +210,26 @@ button.dt-button, div.dt-button, a.dt-button {
       <td  colspan="3">    </td>
       <th scope="row" ></th>
       <td></td>
-      <th scope="row" >Metall/Pass/Pack:</th>
+      <th scope="row" th:text="#{label.editpage.tab2.geometry1}">Metall/Pass/Pack:</th>
       <td><span th:text="${part.part_metal}"></span> <span th:text="${part.part_pass}"></span> <span th:text="${part.part_pack}"></span></td>
     </tr>
 
 
     <tr>
-      <th scope="row">Probenmaterial:</th>
+      <th scope="row" th:text="#{label.editpage.tab1.type_of_sample_material1}">Probenmaterial:</th>
       <td th:text="${orderDetails.dbs_material}"></td>
       <td> </td>
       <td >    </td>
       <td colspan="3">   </td>
       <th scope="row"></th>
       <td class="break-text"></td>
-      <th scope="row">Hinweis:</th>
-      <td class="break-text">Some quick example text to build on the card text to build on the card .</td>
+      <th scope="row" th:text="#{label.editpage.tab2.editing_indication}">Hinweis:</th>
+      <td th:text="${part.part_note}"></td>
 
     </tr>
 
     <tr>
-      <th scope="row">Priotitat:</th>
+      <th scope="row" th:text="#{label.editpage.tab1.Priority}">Priotitat:</th>
       <td th:text="${orderDetails.dbs_prio}"></td>
       <td> </td>
       <td >    </td>
@@ -247,21 +247,21 @@ button.dt-button, div.dt-button, a.dt-button {
     <tbody>
 
     <tr>
-      <th scope="row">Prozesschritt:</th>
-      <td>Vitesco</td>
+      <th scope="row" th:text="#{label.editpage.tab1.current_processing_step1}">Prozesschritt:</th>
+      <td th:text="${orderDetails.dbs_step}"></td>
 
 
     </tr>
 
     <tr>
-      <th scope="row">Analysengrund:</th>
+      <th scope="row" th:text="#{label.editpage.tab3.analysis_basic}">Analysengrund:</th>
       <td th:text="${orderDetails.dbs_fa_reason}"></td>
 
 
     </tr>
 
     <tr>
-      <th scope="row">Baeschreibung:</th>
+      <th scope="row" th:text="#{label.editpage.tab3.order_description}">Baeschreibung:</th>
       <td th:text="${orderDetails.dbs_fa_descr}"></td>
 
     </tr>
@@ -356,9 +356,7 @@ button.dt-button, div.dt-button, a.dt-button {
                      onclick="return false;"
                      id="defaultCheck1"/>
               <label><span th:text="${orderDetails.dbs_pos_text}"
-              ></span><a href="#" data-toggle="tooltip"
-                                                         data-placement="top" ><i
-                      class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
+              ></span></label>
 
             </div>
 
@@ -370,7 +368,7 @@ button.dt-button, div.dt-button, a.dt-button {
 
     <tr>
 
-      <th scope="row">Methoden:</th>
+      <th scope="row" th:text="#{table.header.analysis.method}">Methoden:</th>
       <td><div class="row">
         <div class="col-4" th:each="method : ${methods}">
           <p th:text="${method.name}"></p>
@@ -380,7 +378,7 @@ button.dt-button, div.dt-button, a.dt-button {
     </tr>
     <tr>
 
-      <th scope="row">Probenverbleib:</th>
+      <th scope="row" th:text="#{label.editpage.tab6.samplestorage}">Probenverbleib:</th>
       <td th:text="${orderDetails.dbs_remain}"></td>
     </tr>
     </tbody>
