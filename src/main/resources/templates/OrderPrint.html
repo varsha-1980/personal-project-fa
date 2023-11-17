@@ -59,6 +59,7 @@
 
 #position_select_div>input {
 	margin: 13px;
+
 }
 
 
@@ -70,7 +71,8 @@
     -moz-border-radius: 50%;
 	white-space: nowrap;
 	width: 240px;
-	line-height: 6px;
+	line-height: 0px;
+	margin-top : 70px;
 }
 
 .bs-example {
@@ -129,7 +131,12 @@
     -moz-border-radius: 50%;
 	white-space: nowrap;
 	width: 240px;
-	line-height: 6px;
+	line-height: 0px;
+}
+
+.table td, .table th {
+  padding: 0.5rem;
+  vertical-align: top;
 }
 
 button.dt-button, div.dt-button, a.dt-button {
@@ -254,7 +261,7 @@ button.dt-button, div.dt-button, a.dt-button {
     </tr>
 
     <tr>
-      <th scope="row" th:text="#{label.editpage.tab3.analysis_basic}">Analysengrund:</th>
+      <th scope="row" th:text="#{label.editpage.tab3.analysis_basic}" style="width : 168px;">Analysengrund:</th>
       <td th:text="${orderDetails.dbs_fa_reason}"></td>
 
 
@@ -267,12 +274,12 @@ button.dt-button, div.dt-button, a.dt-button {
     </tr>
 
 
-    <tr style="margin-top:50px;">
+    <tr style="margin-top:150px;">
       <th scope="row">Position:</th>
       <td>
         <div class="row">
 
-          <div class="col-5">
+          <div class="col-5" style="padding-left:31px;padding-top:3px;padding-bottom:11px;">
             <div id="position_select_div" class="circle_border" th:object="${orderDetails}">
 
               <input id ="2"
@@ -347,14 +354,15 @@ button.dt-button, div.dt-button, a.dt-button {
 
           </div>
           <div class="col-5">
-            <div class="form-check">
-              <label for="customCheck1"><span
-              >See X-Check / Die Sort Map</span></label>
+            <div class="form-check" style="padding-top:6.25rem;">
               <input class="form-check-input-reverse"
                      th:field="${orderDetails.dbs_pos_xcmap}"
                      type="checkbox"
                      onclick="return false;"
                      id="defaultCheck1"/>
+              <label for="customCheck1"><span
+              >See X-Check / Die Sort Map</span></label>
+
               <label><span th:text="${orderDetails.dbs_pos_text}"
               ></span></label>
 
