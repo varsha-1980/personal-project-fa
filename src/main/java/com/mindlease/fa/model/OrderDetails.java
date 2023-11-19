@@ -291,4 +291,7 @@ public class OrderDetails implements java.io.Serializable {
 
 	@Transient
 	private String dbs_method_temp;
+
+	@Transient
+	private String createOrEdit;
 }

@@ -229,29 +229,129 @@ public class OrderDetailsController {
 		return "order_details/order_success";
 	}
 
-	@RequestMapping(path = { "/create", "/edit" })
-	public String editById(Model model, @ModelAttribute OrderDetails orderDetailsDto,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws ResourceNotFoundException {
+	@RequestMapping(path = { "/create" })
+	public String createMode(Model model, @ModelAttribute OrderDetails orderDetailsDto,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,Principal principal) throws ResourceNotFoundException {
+		String createOrEdit = "create";
 		Locale currentLocale = localeResolver.resolveLocale(httpServletRequest);
 		String language = localeResolver.resolveLocale(httpServletRequest).getLanguage();
-		System.out.println("----------------------------------Locale-------------------------------------");
-		System.out.println(currentLocale);
-		System.out.println(language
-		);
+		log.info("----------------------------------Locale-------------------------------------");
+		log.info(String.valueOf(currentLocale));
+		log.info(language);
+		log.info(orderDetailsDto.getCreateOrEdit());
 
+		log.info("-----------create------------------------------");
+		log.info(String.valueOf(orderDetailsDto));
 		log.info("------------id:::{}", orderDetailsDto.getId());
 		log.info("------------tab:::{}", orderDetailsDto.getTab());
 
-		edit(model, Optional.ofNullable(orderDetailsDto.getId()), Optional.ofNullable(orderDetailsDto.getTab()));
+		User user = null;
+		Optional<User> userOps = service.findByEmail(principal.getName());
+		if (userOps.isPresent())
+			user = userOps.get();
+		if(orderDetailsDto.getId() == null && orderDetailsDto.getTab()!=null){
+
+
+			User oldUser=null;
+			boolean isUpdate=false;
+			if(orderDetailsDto.getId() != null) {
+				isUpdate=true;
+				oldUser=orderDetailsDto.getUser();
+
+			}
+
+			OrderDetails orderDetails = service.setData(new OrderDetails(), orderDetailsDto, orderDetailsDto.getTab());
+			if(!isUpdate)//means creating not updating
+				orderDetails.setUser(user);
+			else
+				orderDetails.setUser(oldUser);
+
+			String firstName=user.getFirstName();
+			String lastName=user.getLastName();
+
+			String clientNameToSave=(firstName.substring(0, 1)+lastName).toLowerCase();
+
+			String clientName=orderDetails.getDbs_ag_name();
+			if(clientName==null||clientName.isEmpty() || clientName.trim().isEmpty()) {
+				orderDetails.setDbs_ag_name(clientNameToSave);
+			}
+			orderDetails.setDbs_fa_date(new Date());
+			OrderDetails newOrderDetails = service.create(orderDetails);
+			edit(model, Optional.ofNullable(newOrderDetails.getId()), Optional.ofNullable(orderDetailsDto.getTab()),createOrEdit);
+
+		}else {
+			edit(model, Optional.ofNullable(orderDetailsDto.getId()), Optional.ofNullable(orderDetailsDto.getTab()),createOrEdit);
+
+		}
+		return "order_details/order_create";
+	}
+
+	@RequestMapping(path = {  "/edit" })
+	public String editById(Model model, @ModelAttribute OrderDetails orderDetailsDto,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,Principal principal) throws ResourceNotFoundException {
+
+		String createOrEdit = "edit";
+		Locale currentLocale = localeResolver.resolveLocale(httpServletRequest);
+		String language = localeResolver.resolveLocale(httpServletRequest).getLanguage();
+		log.info("----------------------------------Locale-------------------------------------");
+		log.info(String.valueOf(currentLocale));
+		log.info(language);
+		log.info(orderDetailsDto.getCreateOrEdit());
+		log.info("-----------edit------------------------------");
+		log.info(String.valueOf(orderDetailsDto));
+		log.info("------------id:::{}", orderDetailsDto.getId());
+		log.info("------------tab:::{}", orderDetailsDto.getTab());
+
+//		User user = null;
+//		Optional<User> userOps = service.findByEmail(principal.getName());
+//		if (userOps.isPresent())
+//			user = userOps.get();
+//		if(orderDetailsDto.getId() == null && orderDetailsDto.getTab()!=null){
+//
+//
+//			User oldUser=null;
+//			boolean isUpdate=false;
+//			if(orderDetailsDto.getId() != null) {
+//				isUpdate=true;
+//				oldUser=orderDetailsDto.getUser();
+//
+//			}
+//
+//			OrderDetails orderDetails = service.setData(new OrderDetails(), orderDetailsDto, orderDetailsDto.getTab());
+//			if(!isUpdate)//means creating not updating
+//				orderDetails.setUser(user);
+//			else
+//				orderDetails.setUser(oldUser);
+//
+//			String firstName=user.getFirstName();
+//			String lastName=user.getLastName();
+//
+//			String clientNameToSave=(firstName.substring(0, 1)+lastName).toLowerCase();
+//
+//			String clientName=orderDetails.getDbs_ag_name();
+//			if(clientName==null||clientName.isEmpty() || clientName.trim().isEmpty()) {
+//				orderDetails.setDbs_ag_name(clientNameToSave);
+//			}
+//			orderDetails.setDbs_fa_date(new Date());
+//            OrderDetails newOrderDetails = service.create(orderDetails);
+//			edit(model, Optional.ofNullable(newOrderDetails.getId()), Optional.ofNullable(orderDetailsDto.getTab()),orderDetailsDto.getCreateOrEdit());
+//
+//		}else {
+		edit(model, Optional.ofNullable(orderDetailsDto.getId()), Optional.ofNullable(orderDetailsDto.getTab()),createOrEdit);
+//
+//		}
+
+//		if(orderDetailsDto.getCreateOrEdit().equals("create")) {
+//			return "order_details/order_create";
+//		}
 		return "order_details/order_edit";
 	}
 
-	private void edit(Model model, Optional<Long> id, Optional<TabValues> tab) {
+	private void edit(Model model, Optional<Long> id, Optional<TabValues> tab,String createOrEdit) {
 
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		System.out.println("User has authorities: " + userDetails.getAuthorities());
+		log.info("User has authorities: " + userDetails.getAuthorities());
 		User user = userService.findByEmail(currentPrincipalName);
 		String firstName=user.getFirstName();
 		String lastName=user.getLastName();
@@ -259,11 +359,11 @@ public class OrderDetailsController {
 
 
 		model.addAttribute("user", user);
-	//	model.addAttribute("clientName", clientName);
+		//	model.addAttribute("clientName", clientName);
 		OrderDetails entity = null;
 		if (id.isPresent()) {
 			entity = service.findById(id.get()).get();
-            // If Order exist display personal phone no from Personal based on Client name
+			// If Order exist display personal phone no from Personal based on Client name
 			Optional<Personal> personal = service.findPersonByShort(entity.getDbs_ag_name());
 			model.addAttribute("personal_phone", personal.isPresent()?personal.get().getPers_phone():"no phone");
 			model.addAttribute("clientName", entity.getDbs_ag_name());
@@ -282,14 +382,27 @@ public class OrderDetailsController {
 			TabValues currentTab = TabValues.values()[0];
 
 			if (currentTab != null) {
-				model.addAttribute(FailureAnalysisConstants.CURRENT_TAB, currentTab);
-				model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
-						(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
-				model.addAttribute(FailureAnalysisConstants.NEXT_TAB, currentTab.getNext());
-				entity.setCurrentTab(currentTab);
-				entity.setPreviousTab(currentTab.getPrevious());
-				entity.setNextTab((isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null
-						: currentTab.getNext());
+				if(createOrEdit.equals("create")){
+					model.addAttribute(FailureAnalysisConstants.CURRENT_TAB, currentTab);
+					model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
+							(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getCreatePagePreviousTab());
+					model.addAttribute(FailureAnalysisConstants.NEXT_TAB, currentTab.getCreatePageNextTab());
+					entity.setCurrentTab(currentTab);
+					entity.setPreviousTab(currentTab.getCreatePagePreviousTab());
+					entity.setNextTab((isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null
+							: currentTab.getCreatePageNextTab());
+				}else {
+					model.addAttribute(FailureAnalysisConstants.CURRENT_TAB, currentTab);
+					model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
+							(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
+					model.addAttribute(FailureAnalysisConstants.NEXT_TAB, currentTab.getNext());
+					entity.setCurrentTab(currentTab);
+					entity.setPreviousTab(currentTab.getPrevious());
+					entity.setNextTab((isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null
+							: currentTab.getNext());
+
+					System.out.println(entity);
+				}
 			}
 			model.addAttribute("userName", currentPrincipalName);
 			model.addAttribute("userDetails", userDetails);
@@ -303,14 +416,27 @@ public class OrderDetailsController {
 		}
 		else {
 			TabValues currentTab = tab.get();
-			model.addAttribute(FailureAnalysisConstants.CURRENT_TAB, currentTab);
-			model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
-					(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
-			model.addAttribute(FailureAnalysisConstants.NEXT_TAB,
-					(isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null : currentTab.getNext());
-			entity.setCurrentTab(currentTab);
-			entity.setPreviousTab(currentTab.getPrevious());
-			entity.setNextTab(currentTab.getNext());
+			if(createOrEdit.equals("create")){
+				model.addAttribute(FailureAnalysisConstants.CURRENT_TAB, currentTab);
+				model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
+						(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getCreatePagePreviousTab());
+				model.addAttribute(FailureAnalysisConstants.NEXT_TAB,
+						(isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null : currentTab.getCreatePageNextTab());
+				entity.setCurrentTab(currentTab);
+				entity.setPreviousTab(currentTab.getCreatePagePreviousTab());
+				entity.setNextTab(currentTab.getCreatePageNextTab());
+			}
+			else {
+				model.addAttribute(FailureAnalysisConstants.CURRENT_TAB, currentTab);
+				model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
+						(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
+				model.addAttribute(FailureAnalysisConstants.NEXT_TAB,
+						(isFARequester && currentTab.ordinal() == TabValues.TAB6.ordinal()) ? null : currentTab.getNext());
+				entity.setCurrentTab(currentTab);
+				entity.setPreviousTab(currentTab.getPrevious());
+				entity.setNextTab(currentTab.getNext());
+			}
+			System.out.println(entity);
 			model.addAttribute("userName", currentPrincipalName);
 			model.addAttribute("userDetails", userDetails);
 			model.addAttribute(FailureAnalysisConstants.ORDER_DETAILS, entity);
@@ -362,7 +488,7 @@ public class OrderDetailsController {
 				model.addAttribute("processStatusList", service.findAllStatuses());
 			}
 
-	}
+		}
 
 	}
 
@@ -374,11 +500,13 @@ public class OrderDetailsController {
 
 	@RequestMapping(path = "/update", method = RequestMethod.POST)
 	public String createOrUpdate(Model model, @ModelAttribute OrderDetails orderDetailsDto, BindingResult bindingResult,
-			RedirectAttributes redirectAttributes, Principal principal) {
+								 RedirectAttributes redirectAttributes, Principal principal) {
 		log.info("--------update----id:::{}", orderDetailsDto.getId());
 		log.info("--------update----tab:::{}", orderDetailsDto.getTab());
-		log.info("--------update----tab:::{}", orderDetailsDto.getCurrentTab());	
+		log.info("--------update----tab:::{}", orderDetailsDto.getCurrentTab());
 
+		log.info(orderDetailsDto.getCreateOrEdit());
+		log.info("-----------Update------------------------------");
 		log.info(String.valueOf(orderDetailsDto));
 		TabValues currentTab = orderDetailsDto.getCurrentTab();
 		if (orderDetailsDto.getAction().equalsIgnoreCase("previous")) {
@@ -388,7 +516,10 @@ public class OrderDetailsController {
 			if (currentTab == null) {
 				currentTab = TabValues.values()[0];
 			}
-			edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab));
+			edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
+			if(orderDetailsDto.getCreateOrEdit().equals("create")) {
+				return "order_details/order_create";
+			}
 			return "order_details/order_edit";
 		}
 
@@ -398,13 +529,19 @@ public class OrderDetailsController {
 			user = userOps.get();
 		else {
 			redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH, "Please login and try");
-			edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab));
+			edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
+			if(orderDetailsDto.getCreateOrEdit().equals("create")) {
+				return "order_details/order_create";
+			}
 			return "order_details/order_edit";
 		}
 		if (bindingResult.hasErrors()) {
 			log.info("------------/bindingResult.hasErrors():::{}", bindingResult.getAllErrors());
 			redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH, "Check Errors!");
-			edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab));
+			edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
+			if(orderDetailsDto.getCreateOrEdit().equals("create")) {
+				return "order_details/order_create";
+			}
 			return "order_details/order_edit";
 		} else {
 			OrderDetails orderDetails = orderDetailsDto.getId() != null
@@ -416,28 +553,28 @@ public class OrderDetailsController {
 			if(orderDetails.getId() != null) {
 				isUpdate=true;
 				oldUser=orderDetails.getUser();
-				
+
 			}
-			
+
 			orderDetails = service.setData(orderDetails, orderDetailsDto, orderDetailsDto.getCurrentTab());
 			if(!isUpdate)//means creating not updating
 				orderDetails.setUser(user);
 			else
 				orderDetails.setUser(oldUser);
-			
+
 			String firstName=user.getFirstName();
 			String lastName=user.getLastName();
-			
+
 			String clientNameToSave=(firstName.substring(0, 1)+lastName).toLowerCase();
-			
+
 			String clientName=orderDetails.getDbs_ag_name();
 			if(clientName==null||clientName.isEmpty() || clientName.trim().isEmpty()) {
 				orderDetails.setDbs_ag_name(clientNameToSave);
 			}
-			
-			
+
+
 			orderDetails = service.create(orderDetails);
-			
+
 			if (!orderDetailsDto.getAction().equalsIgnoreCase("continue"))
 				redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH,
 						FailureAnalysisConstants.ORDER_UPDATE);
@@ -449,9 +586,11 @@ public class OrderDetailsController {
 						FailureAnalysisConstants.ORDER_SUCCESSFULLY_COMPLETED);
 				return "redirect:/orderdetails/orderSuccess";
 			}
+
 			if (currentTab != null && orderDetailsDto.getAction().equalsIgnoreCase("continue")) {
 				currentTab = currentTab.getNext();
 			}
+
 			if (currentTab == null) {
 				currentTab = TabValues.values()[0];
 			}
@@ -461,11 +600,13 @@ public class OrderDetailsController {
 				model.addAttribute(FailureAnalysisConstants.FLASH, FailureAnalysisConstants.ORDER_UPDATE);
 			}
 
-			edit(model, Optional.of(entity.getId()), Optional.of(currentTab));
+			edit(model, Optional.of(entity.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
+			if(orderDetailsDto.getCreateOrEdit().equals("create")) {
+				return "order_details/order_create";
+			}
 			return "order_details/order_edit";
 		}
 	}
-
 	@RequestMapping(path = "/orderdetails/autosave", method = RequestMethod.POST)
 	public void autoSaveForm(Model model, @ModelAttribute OrderDetails orderDetailsDto, Principal principal) {
 
@@ -515,7 +656,7 @@ public class OrderDetailsController {
 		log.info(String.valueOf(model));
 
 
-		edit(model, Optional.ofNullable(orderDetails.getId()), Optional.ofNullable(orderDetails.getCurrentTab()));
+		edit(model, Optional.ofNullable(orderDetails.getId()), Optional.ofNullable(orderDetails.getCurrentTab()),orderDetailsDto.getCreateOrEdit());
 		//Commented below line to add orderDetails
 //		orderDetails = service.create(orderDetails);
 

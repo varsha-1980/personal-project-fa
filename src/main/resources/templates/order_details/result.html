@@ -56,6 +56,7 @@
 				th:field="*{dbs_fa_date}"
 				style="display: none;"></input>
 			<div class="row" style="height:435px;">
+				<input type="hidden" id="createOrEdit" name="createOrEdit" th:value="${createOrEdit}"/>
 				<div class="col-md-12">
 					<div th:insert="admin/operations :: operations"></div>
 					<div class="row m-3">

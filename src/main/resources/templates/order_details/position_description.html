@@ -6,6 +6,7 @@
 		<form id="posform" name="posform" th:action="@{/orderdetails/update}" th:object="${orderDetails}"
 			method="post">
 			<div class="row" style="height:435px;">
+				<input type="hidden" id="createOrEdit" name="createOrEdit" th:value="${createOrEdit}"/>
 				<div class="col-md-12">
 					<div th:insert="admin/operations :: operations"></div>
 					<div class="row m-3">
