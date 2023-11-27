@@ -53,6 +53,7 @@ import java.awt.Desktop;
 
 import lombok.extern.slf4j.Slf4j;
 
+
 @Controller
 @RequestMapping("/orderdetails")
 @Slf4j
@@ -111,7 +112,7 @@ public class OrderDetailsController {
 			modelAndView.addObject("electricErrorList", service.findAllElectricErrors());
 			modelAndView.addObject("failureModeList", service.findAllFailureModes());
 			modelAndView.addObject("archiveList", service.findAllArchives());
-			
+
 			modelAndView.addObject("searchParameters", searchParameters);
 			modelAndView.addObject("pageSizes", FailureAnalysisConstants.PAGE_SIZES);
 			modelAndView.addObject("defaultPageSize", FailureAnalysisConstants.INITIAL_PAGE_SIZE);
@@ -130,9 +131,9 @@ public class OrderDetailsController {
 	// @GetMapping
 	@RequestMapping(path = "/search", method = RequestMethod.POST)
 	public ModelAndView search(Model model, @ModelAttribute SearchParameters searchParameters,
-			BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal,
-			@RequestParam("pageSize") Optional<Integer> pageSize, @RequestParam("page") Optional<Integer> page,
-			@RequestParam("fromLink") Optional<String> fromLink)
+							   BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal,
+							   @RequestParam("pageSize") Optional<Integer> pageSize, @RequestParam("page") Optional<Integer> page,
+							   @RequestParam("fromLink") Optional<String> fromLink)
 	// (Principal principal, RedirectAttributes redirectAttributes,
 	// @RequestParam("pageSize") Optional<Integer> pageSize, @RequestParam("page")
 	// Optional<Integer> page,@RequestParam("fromLink") Optional<String> fromLink)
@@ -154,17 +155,17 @@ public class OrderDetailsController {
 			if (searchParameters != null && ((searchParameters.getSCustomername() != null
 					&& searchParameters.getSCustomername().length() > 0)
 					|| (searchParameters.getSElectricalError() != null
-							&& searchParameters.getSElectricalError().length() > 0)
+					&& searchParameters.getSElectricalError().length() > 0)
 					|| (searchParameters.getSFailureMode() != null && searchParameters.getSFailureMode().length() > 0)
 					|| (searchParameters.getSArchWaferBox() != null && searchParameters.getSArchWaferBox().length() > 0)
 					|| (searchParameters.getSArchPolyBox() != null && searchParameters.getSArchPolyBox().length() > 0)
 					|| (searchParameters.getSMaterial() != null && searchParameters.getSMaterial().length() > 0)
 					|| (searchParameters.getSPriority() != null && searchParameters.getSPriority().length() > 0)
 					|| (searchParameters.getSStatus() != null && searchParameters.getSStatus().length() > 0))) {
-				
-						clientlist = service.searchBy(searchParameters.getSMaterial(), searchParameters.getSCustomername(),
+
+				clientlist = service.searchBy(searchParameters.getSMaterial(), searchParameters.getSCustomername(),
 						searchParameters.getSPriority(), searchParameters.getSStatus(),
-						searchParameters.getSElectricalError(), searchParameters.getSFailureMode(), 
+						searchParameters.getSElectricalError(), searchParameters.getSFailureMode(),
 						searchParameters.getSArchWaferBox(), searchParameters.getSArchPolyBox(), pageRequest);
 			} else {
 				clientlist = new PageImpl<>(new ArrayList<OrderDetails>(0));
@@ -225,7 +226,7 @@ public class OrderDetailsController {
 	}
 
 	@RequestMapping(path = { "/orderSuccess" })
-	public String orderSuccess(Model modell, RedirectAttributes redirectAttributes) throws ResourceNotFoundException {
+	public String orderSuccess(Model modell, RedirectAttributes redirectAttributes) {
 		return "order_details/order_success";
 	}
 
@@ -244,44 +245,8 @@ public class OrderDetailsController {
 		log.info("------------id:::{}", orderDetailsDto.getId());
 		log.info("------------tab:::{}", orderDetailsDto.getTab());
 
-		User user = null;
-		Optional<User> userOps = service.findByEmail(principal.getName());
-		if (userOps.isPresent())
-			user = userOps.get();
-		if(orderDetailsDto.getId() == null && orderDetailsDto.getTab()!=null){
+		edit(model, Optional.ofNullable(orderDetailsDto.getId()), Optional.ofNullable(orderDetailsDto.getTab()),createOrEdit);
 
-
-			User oldUser=null;
-			boolean isUpdate=false;
-			if(orderDetailsDto.getId() != null) {
-				isUpdate=true;
-				oldUser=orderDetailsDto.getUser();
-
-			}
-
-			OrderDetails orderDetails = service.setData(new OrderDetails(), orderDetailsDto, orderDetailsDto.getTab());
-			if(!isUpdate)//means creating not updating
-				orderDetails.setUser(user);
-			else
-				orderDetails.setUser(oldUser);
-
-			String firstName=user.getFirstName();
-			String lastName=user.getLastName();
-
-			String clientNameToSave=(firstName.substring(0, 1)+lastName).toLowerCase();
-
-			String clientName=orderDetails.getDbs_ag_name();
-			if(clientName==null||clientName.isEmpty() || clientName.trim().isEmpty()) {
-				orderDetails.setDbs_ag_name(clientNameToSave);
-			}
-			orderDetails.setDbs_fa_date(new Date());
-			OrderDetails newOrderDetails = service.create(orderDetails);
-			edit(model, Optional.ofNullable(newOrderDetails.getId()), Optional.ofNullable(orderDetailsDto.getTab()),createOrEdit);
-
-		}else {
-			edit(model, Optional.ofNullable(orderDetailsDto.getId()), Optional.ofNullable(orderDetailsDto.getTab()),createOrEdit);
-
-		}
 		return "order_details/order_create";
 	}
 
@@ -300,48 +265,8 @@ public class OrderDetailsController {
 		log.info("------------id:::{}", orderDetailsDto.getId());
 		log.info("------------tab:::{}", orderDetailsDto.getTab());
 
-//		User user = null;
-//		Optional<User> userOps = service.findByEmail(principal.getName());
-//		if (userOps.isPresent())
-//			user = userOps.get();
-//		if(orderDetailsDto.getId() == null && orderDetailsDto.getTab()!=null){
-//
-//
-//			User oldUser=null;
-//			boolean isUpdate=false;
-//			if(orderDetailsDto.getId() != null) {
-//				isUpdate=true;
-//				oldUser=orderDetailsDto.getUser();
-//
-//			}
-//
-//			OrderDetails orderDetails = service.setData(new OrderDetails(), orderDetailsDto, orderDetailsDto.getTab());
-//			if(!isUpdate)//means creating not updating
-//				orderDetails.setUser(user);
-//			else
-//				orderDetails.setUser(oldUser);
-//
-//			String firstName=user.getFirstName();
-//			String lastName=user.getLastName();
-//
-//			String clientNameToSave=(firstName.substring(0, 1)+lastName).toLowerCase();
-//
-//			String clientName=orderDetails.getDbs_ag_name();
-//			if(clientName==null||clientName.isEmpty() || clientName.trim().isEmpty()) {
-//				orderDetails.setDbs_ag_name(clientNameToSave);
-//			}
-//			orderDetails.setDbs_fa_date(new Date());
-//            OrderDetails newOrderDetails = service.create(orderDetails);
-//			edit(model, Optional.ofNullable(newOrderDetails.getId()), Optional.ofNullable(orderDetailsDto.getTab()),orderDetailsDto.getCreateOrEdit());
-//
-//		}else {
 		edit(model, Optional.ofNullable(orderDetailsDto.getId()), Optional.ofNullable(orderDetailsDto.getTab()),createOrEdit);
-//
-//		}
 
-//		if(orderDetailsDto.getCreateOrEdit().equals("create")) {
-//			return "order_details/order_create";
-//		}
 		return "order_details/order_edit";
 	}
 
@@ -508,45 +433,21 @@ public class OrderDetailsController {
 		log.info(orderDetailsDto.getCreateOrEdit());
 		log.info("-----------Update------------------------------");
 		log.info(String.valueOf(orderDetailsDto));
-		TabValues currentTab = orderDetailsDto.getCurrentTab();
-		if (orderDetailsDto.getAction().equalsIgnoreCase("previous")) {
-			if (currentTab != null) {
-				currentTab = currentTab.getPrevious();
-			}
-			if (currentTab == null) {
-				currentTab = TabValues.values()[0];
-			}
-			edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
-			if(orderDetailsDto.getCreateOrEdit().equals("create")) {
-				return "order_details/order_create";
-			}
-			return "order_details/order_edit";
-		}
 
-		User user = null;
-		Optional<User> userOps = service.findByEmail(principal.getName());
-		if (userOps.isPresent())
-			user = userOps.get();
-		else {
-			redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH, "Please login and try");
-			edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
-			if(orderDetailsDto.getCreateOrEdit().equals("create")) {
-				return "order_details/order_create";
-			}
-			return "order_details/order_edit";
-		}
-		if (bindingResult.hasErrors()) {
-			log.info("------------/bindingResult.hasErrors():::{}", bindingResult.getAllErrors());
-			redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH, "Check Errors!");
-			edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
-			if(orderDetailsDto.getCreateOrEdit().equals("create")) {
-				return "order_details/order_create";
-			}
-			return "order_details/order_edit";
-		} else {
+
+		if(orderDetailsDto.getId() == null && orderDetailsDto.getCurrentTab()!=null && orderDetailsDto.getCreateOrEdit().equals("create") && orderDetailsDto.getTab()!=null){
+
+			User user = null;
+			Optional<User> userOps = service.findByEmail(principal.getName());
+			if (userOps.isPresent())
+				user = userOps.get();
+
+
 			OrderDetails orderDetails = orderDetailsDto.getId() != null
 					? service.findById(orderDetailsDto.getId()).orElse(new OrderDetails())
 					: new OrderDetails();
+
+
 
 			User oldUser=null;
 			boolean isUpdate=false;
@@ -572,41 +473,119 @@ public class OrderDetailsController {
 				orderDetails.setDbs_ag_name(clientNameToSave);
 			}
 
-
 			orderDetails = service.create(orderDetails);
-
-			if (!orderDetailsDto.getAction().equalsIgnoreCase("continue"))
-				redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH,
-						FailureAnalysisConstants.ORDER_UPDATE);
-
-			OrderDetails entity = service.findById(orderDetails.getId()).get();
-			if (currentTab.ordinal() == TabValues.TAB10.ordinal()) {
-				log.info("------------bindingResult.hasErrors():::{}", bindingResult.getAllErrors());
-				redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH,
-						FailureAnalysisConstants.ORDER_SUCCESSFULLY_COMPLETED);
-				return "redirect:/orderdetails/orderSuccess";
-			}
-
-			if (currentTab != null && orderDetailsDto.getAction().equalsIgnoreCase("continue")) {
-				currentTab = currentTab.getNext();
-			}
-
-			if (currentTab == null) {
-				currentTab = TabValues.values()[0];
-			}
-			if (!orderDetailsDto.getAction().equalsIgnoreCase("continue")) {
-				redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH,
-						FailureAnalysisConstants.ORDER_UPDATE);
-				model.addAttribute(FailureAnalysisConstants.FLASH, FailureAnalysisConstants.ORDER_UPDATE);
-			}
-
-			edit(model, Optional.of(entity.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
-			if(orderDetailsDto.getCreateOrEdit().equals("create")) {
+			System.out.println(orderDetails.getId());
+			System.out.println(orderDetailsDto.getTab());
+			System.out.println(orderDetailsDto.getCurrentTab());
+			System.out.println(orderDetailsDto.getCreateOrEdit());
+			edit(model, Optional.of(orderDetails.getId()), Optional.of(orderDetailsDto.getTab()), orderDetailsDto.getCreateOrEdit());
+			if (orderDetailsDto.getCreateOrEdit().equals("create")) {
 				return "order_details/order_create";
 			}
 			return "order_details/order_edit";
 		}
+		else {
+			TabValues currentTab = orderDetailsDto.getCurrentTab();
+			if (orderDetailsDto.getAction().equalsIgnoreCase("previous")) {
+				if (currentTab != null) {
+					currentTab = currentTab.getPrevious();
+				}
+				if (currentTab == null) {
+					currentTab = TabValues.values()[0];
+				}
+				edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
+				if(orderDetailsDto.getCreateOrEdit().equals("create")) {
+					return "order_details/order_create";
+				}
+				return "order_details/order_edit";
+			}
+
+			User user = null;
+			Optional<User> userOps = service.findByEmail(principal.getName());
+			if (userOps.isPresent())
+				user = userOps.get();
+			else {
+				redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH, "Please login and try");
+				edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
+				if(orderDetailsDto.getCreateOrEdit().equals("create")) {
+					return "order_details/order_create";
+				}
+				return "order_details/order_edit";
+			}
+			if (bindingResult.hasErrors()) {
+				log.info("------------/bindingResult.hasErrors():::{}", bindingResult.getAllErrors());
+				redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH, "Check Errors!");
+				edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
+				if(orderDetailsDto.getCreateOrEdit().equals("create")) {
+					return "order_details/order_create";
+				}
+				return "order_details/order_edit";
+			} else {
+				OrderDetails orderDetails = orderDetailsDto.getId() != null
+						? service.findById(orderDetailsDto.getId()).orElse(new OrderDetails())
+						: new OrderDetails();
+
+				User oldUser = null;
+				boolean isUpdate = false;
+				if (orderDetails.getId() != null) {
+					isUpdate = true;
+					oldUser = orderDetails.getUser();
+
+				}
+
+				orderDetails = service.setData(orderDetails, orderDetailsDto, orderDetailsDto.getCurrentTab());
+				if (!isUpdate)//means creating not updating
+					orderDetails.setUser(user);
+				else
+					orderDetails.setUser(oldUser);
+
+				String firstName = user.getFirstName();
+				String lastName = user.getLastName();
+
+				String clientNameToSave = (firstName.substring(0, 1) + lastName).toLowerCase();
+
+				String clientName = orderDetails.getDbs_ag_name();
+				if (clientName == null || clientName.isEmpty() || clientName.trim().isEmpty()) {
+					orderDetails.setDbs_ag_name(clientNameToSave);
+				}
+
+
+				orderDetails = service.create(orderDetails);
+
+				if (!orderDetailsDto.getAction().equalsIgnoreCase("continue"))
+					redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH,
+							FailureAnalysisConstants.ORDER_UPDATE);
+
+				OrderDetails entity = service.findById(orderDetails.getId()).get();
+				if (currentTab.ordinal() == TabValues.TAB10.ordinal()) {
+					log.info("------------bindingResult.hasErrors():::{}", bindingResult.getAllErrors());
+					redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH,
+							FailureAnalysisConstants.ORDER_SUCCESSFULLY_COMPLETED);
+					return "redirect:/orderdetails/orderSuccess";
+				}
+
+				if (currentTab != null && orderDetailsDto.getAction().equalsIgnoreCase("continue")) {
+					currentTab = currentTab.getNext();
+				}
+
+				if (currentTab == null) {
+					currentTab = TabValues.values()[0];
+				}
+				if (!orderDetailsDto.getAction().equalsIgnoreCase("continue")) {
+					redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH,
+							FailureAnalysisConstants.ORDER_UPDATE);
+					model.addAttribute(FailureAnalysisConstants.FLASH, FailureAnalysisConstants.ORDER_UPDATE);
+				}
+
+				edit(model, Optional.of(entity.getId()), Optional.of(currentTab), orderDetailsDto.getCreateOrEdit());
+				if (orderDetailsDto.getCreateOrEdit().equals("create")) {
+					return "order_details/order_create";
+				}
+				return "order_details/order_edit";
+			}
+		}
 	}
+
 	@RequestMapping(path = "/orderdetails/autosave", method = RequestMethod.POST)
 	public void autoSaveForm(Model model, @ModelAttribute OrderDetails orderDetailsDto, Principal principal) {
 
@@ -615,7 +594,7 @@ public class OrderDetailsController {
 		log.info("--------autosave----tab:::{}", orderDetailsDto.getTab());
 		log.info("--------autosave----tab:::{}", orderDetailsDto.getCurrentTab());
 
-		log.info(String.valueOf(orderDetailsDto));
+
 
 		User user = null;
 		Optional<User> userOps = service.findByEmail(principal.getName());
@@ -627,7 +606,7 @@ public class OrderDetailsController {
 				? service.findById(orderDetailsDto.getId()).orElse(new OrderDetails())
 				: new OrderDetails();
 
-		log.info(String.valueOf(orderDetails));
+
 
 		User oldUser=null;
 		boolean isUpdate=false;
@@ -652,9 +631,8 @@ public class OrderDetailsController {
 		if(clientName==null||clientName.isEmpty() || clientName.trim().isEmpty()) {
 			orderDetails.setDbs_ag_name(clientNameToSave);
 		}
-        log.info("--------------------Model---------------------");
-		log.info(String.valueOf(model));
 
+		System.out.println(orderDetails.getCurrentTab());
 
 		edit(model, Optional.ofNullable(orderDetails.getId()), Optional.ofNullable(orderDetails.getCurrentTab()),orderDetailsDto.getCreateOrEdit());
 		//Commented below line to add orderDetails
@@ -688,7 +666,7 @@ public class OrderDetailsController {
 
 	@RequestMapping(path = "/onAnalysisMethodsChange", method = RequestMethod.POST)
 	public String onAnalysisMethodsChange(Model model, @ModelAttribute OrderDetails orderDetailsDto,
-			BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) {
+										  BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) {
 
 		log.info("------------------getGeneralInvestigationMethods::::::::::{}",
 				orderDetailsDto.getGeneralInvestigationMethods());
@@ -705,7 +683,7 @@ public class OrderDetailsController {
 
 	@RequestMapping(path = "/onAnalysisMethodsDelete", method = RequestMethod.POST)
 	public String onAnalysisMethodsChangeDelete(Model model, @ModelAttribute OrderDetails orderDetailsDto,
-			BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) {
+												BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) {
 
 		log.info("------------------getGeneralInvestigationMethods::::::::::{}",
 				orderDetailsDto.getGeneralInvestigationMethods());
@@ -719,7 +697,7 @@ public class OrderDetailsController {
 
 		return "order_details/analysis_methods.html :: analysisMethodDetails";
 	}
-	
+
 	@RequestMapping(value = "/orders")
 	@ResponseBody
 	public Object getOrderList(@Valid @RequestBody DataTableRequest input, Principal principal) {
@@ -761,7 +739,7 @@ public class OrderDetailsController {
 		response.setDraw(result.getDraw());
 		response.setRecordsFiltered(result.getRecordsFiltered());
 		response.setData(orderDetailsDtos);
-		
+
 		return response;
 	}
 
@@ -820,14 +798,14 @@ public class OrderDetailsController {
 
 	@RequestMapping(path = {"/print/order/details"} , method = RequestMethod.GET)
 	public void printOrderDetails() throws IOException {
-		    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		    InputStream inputStream = classLoader.getResourceAsStream("static/html/insurance.html");
-		    OutputStream os = new FileOutputStream("Test.pdf");
-		    PdfRendererBuilder builder = new PdfRendererBuilder();
-			builder.useFastMode();
-			builder.withUri("file:///Users/me/Documents/pdf/in.htm");
-			builder.toStream(os);
-			builder.run();
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream inputStream = classLoader.getResourceAsStream("static/html/insurance.html");
+		OutputStream os = new FileOutputStream("Test.pdf");
+		PdfRendererBuilder builder = new PdfRendererBuilder();
+		builder.useFastMode();
+		builder.withUri("file:///Users/me/Documents/pdf/in.htm");
+		builder.toStream(os);
+		builder.run();
 
 	}
 
@@ -873,7 +851,7 @@ public class OrderDetailsController {
 
 		OrderDetails orderDetails = orderDetailsRepository.findById(orderDetailsDto.getId()).get();
 
-		System.out.println(orderDetails);
+
 
 		User recipientDetails = orderDetails.getUser();
 		User senderDetails = userRepository.findByEmail(principal.getName()).get();

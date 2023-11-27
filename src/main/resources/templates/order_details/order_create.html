@@ -80,16 +80,29 @@
                     value="tabclick" style="display: none"></button>
 
             <!-- Include the clipboard.js library -->
-            <script  type="text/javascript">
-
+            <script  th:inline="javascript">
+                 /*<![CDATA[*/
 							function ontabclick(tab) {
 
-									console.log(tab);
 									document.getElementById('tab')
 											.setAttribute("value", tab);
+									document.getElementById('tab1')
+									           .setAttribute("value",tab);
 
 
-							document.getElementById('tabclicksubmit').click();
+
+
+                      var orderId = /*[[${orderDetails.id}]]*/ null;
+                     // alert(orderId);
+                      if(orderId == null){
+                      	document.getElementById('continue').click();
+
+                      }else{
+
+                         document.getElementById('tabclicksubmit').click();
+                      }
+
+
 
 
 
@@ -116,8 +129,8 @@
 					  window.open(fileExplorerUrl);
 					}
 
-
-					</script>
+                /*]]>*/
+		</script>
 
 
 
