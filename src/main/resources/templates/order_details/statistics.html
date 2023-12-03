@@ -116,7 +116,7 @@
 												</div>
 												<div class="col-sm-4 pl-0">
 													<input type="text" class="form-control form-control-sm"
-														th:field="*{dbs_cost}" id="cost"></input>
+														th:field="*{dbs_cost_temp}" id="cost"></input>
 
 												</div>
 												<label for="inputEmail3"
@@ -140,27 +140,27 @@
 
 			$(document).ready(function() {
 
-                   var textContent = $("#cost").val();
+<!--                   var textContent = $("#cost").val();-->
 
 
-                  console.log(textContent);
-                 const bigDecimalValue = textContent;
+<!--                  console.log(textContent);-->
+<!--                 const bigDecimalValue = textContent;-->
 
 
-				   // Create a NumberFormat for Euro-style formatting
-				   const euroFormatter = new Intl.NumberFormat('de-DE');
+<!--				   // Create a NumberFormat for Euro-style formatting-->
+<!--				   const euroFormatter = new Intl.NumberFormat('de-DE');-->
 
-				   // Format the BigDecimal as a Euro-style string
-				   const euroString = euroFormatter.format(bigDecimalValue);
+<!--				   // Format the BigDecimal as a Euro-style string-->
+<!--				   const euroString = euroFormatter.format(bigDecimalValue);-->
 
-				   // Replace dots with commas
-				   const euroFormattedString = euroString.replace(/\./g, ',');
+<!--				   // Replace dots with commas-->
+<!--				   const euroFormattedString = euroString.replace(/\./g, ',');-->
 
-				   // Add the Euro symbol manually
+<!--				   // Add the Euro symbol manually-->
 
-				   console.log(euroFormattedString);
+<!--				   console.log(euroFormattedString);-->
 
-								 $("#cost").val(euroFormattedString);
+<!--								 $("#cost").val(euroFormattedString);-->
 
 
 				});
@@ -182,25 +182,25 @@
 
 					console.log('closing code...');
 					var form = $(document.getElementById('statform'));
-					var serialiseForm = form.serialize();
+<!--					var serialiseForm = form.serialize();-->
 
-                var formData = new URLSearchParams(serialiseForm);
-                let costs = formData.get("dbs_cost");
+<!--                var formData = new URLSearchParams(serialiseForm);-->
+<!--                let costs = formData.get("dbs_cost");-->
 
 
-				// Remove commas and convert it to a regular number
-				const regularNumber = parseFloat(costs.replace(/,/g, ''));
+<!--				// Remove commas and convert it to a regular number-->
+<!--				const regularNumber = parseFloat(costs.replace(/,/g, ''));-->
 
-				console.log(regularNumber);
-				formData.set("dbs_cost", regularNumber);
+<!--				console.log(regularNumber);-->
+<!--				formData.set("dbs_cost", regularNumber);-->
 
-				// Serialize the form data back to a string
-				var updatedData = formData.toString();
+<!--				// Serialize the form data back to a string-->
+<!--				var updatedData = formData.toString();-->
 
 								    $.ajax({
 								        type: "POST",
 								        url: 'orderdetails/autosave',
-								        data: updatedData, // serializes the form's elements.
+								        data: form.serialize(), // serializes the form's elements.
 								        success: function(data)
 								        {
 								          alert(data); // show response from the php script.

@@ -380,7 +380,7 @@ button.dt-button, div.dt-button, a.dt-button {
       <th scope="row" th:text="#{table.header.analysis.method}">Methoden:</th>
       <td><div class="row">
         <div class="col-4" th:each="method : ${methods}">
-          <p th:text="${method.name}"></p>
+          <p th:text="${method}"></p>
         </div>
       </div>
       </td>

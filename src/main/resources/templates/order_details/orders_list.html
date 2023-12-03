@@ -277,10 +277,13 @@
                                          <span th:text="#{label.Search}">Search</span>
                                      </button>-->
 
-                                    <a th:href="@{/orderdetails(fromLink=${'search'})}"><button type="button"
-                                                                                                class="btn btnbgcolor" id="search-button">
+                                    <button type="button" class="btn btnbgcolor" id="search-button">
                                         <span th:text="#{label.Search}">Search</span>
-                                    </button></a>
+                                    </button>
+<!--                                    <a th:href="@{/orderdetails(fromLink=${'search'})}"><button type="button"-->
+<!--                                                                                                class="btn btnbgcolor" id="search-button">-->
+<!--                                        <span th:text="#{label.Search}">Search</span>-->
+<!--                                    </button></a>-->
                                 </div>
 
 
@@ -622,14 +625,31 @@
                             var title = $(cell).text();
                             if (colIdx == 1) {
                             	$(cell).html('<input type="number" style="width: 100px;" placeholder="' + title + '" />');
-                            }else if(colIdx == 7){
-                            	$(cell).html('<input type="text" style="width: 220px;" placeholder="' + title + '" />');
-                            }else if(colIdx == 8){
-                            	$(cell).html('<input type="text" style="width: 220px;" placeholder="' + title + '" />');
-                            }else if(colIdx == 9){
-                            	$(cell).html('<input type="text" style="width: 220px;" placeholder="' + title + '" />');
-                            }else{
-                                $(cell).html('<input type="number" style="width: 100px;" placeholder="' + title + '" />');
+                            }else  if (colIdx == 4) {
+                            	$(cell).html('<input type="number" style="width: 100px;" placeholder="' + title + '" />');
+                            }
+                            else  if (colIdx == 2) {
+                            	$(cell).html('<input type="text" style="width: 100px;" placeholder="' + title + '" />');
+                            }else  if (colIdx == 3) {
+                            	$(cell).html('<input type="text" style="width: 100px;" placeholder="' + title + '" />');
+                            }
+                            else  if (colIdx == 5) {
+                            	$(cell).html('<input type="text" style="width: 100px;" placeholder="' + title + '" />');
+                            }
+                              else  if (colIdx == 6) {
+                            	$(cell).html('<input type="text" style="width: 100px;" placeholder="' + title + '" />');
+                            }
+
+
+<!--                            else if(colIdx == 7){-->
+<!--                            	$(cell).html('<input type="text" style="width: 220px;" placeholder="' + title + '" />');-->
+<!--                            }else if(colIdx == 8){-->
+<!--                            	$(cell).html('<input type="text" style="width: 220px;" placeholder="' + title + '" />');-->
+<!--                            }else if(colIdx == 9){-->
+<!--                            	$(cell).html('<input type="text" style="width: 220px;" placeholder="' + title + '" />');-->
+<!--                            }-->
+                            else{
+                                $(cell).html('<input type="text" style="width: 150px;" placeholder="' + title + '" />');
                             }
 
                             // On every keypress in this input

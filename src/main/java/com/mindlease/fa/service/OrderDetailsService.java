@@ -1,15 +1,11 @@
 package com.mindlease.fa.service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
@@ -573,16 +569,24 @@ public class OrderDetailsService {
 			List<MethodX> generalInvestigationMethods_delete = new ArrayList<>();
 			List<MethodX> housedExaminationMethods_delete = new ArrayList<>();
 			List<MethodX> wafersExaminationMethods_delete = new ArrayList<>();
+
 			List<Method> generalInvestigationMethods_new = new ArrayList<>();
 			List<Method> housedExaminationMethods_new = new ArrayList<>();
 			List<Method> wafersExaminationMethods_new = new ArrayList<>();
+
 			List<MethodX> generalInvestigationMethods_update = new ArrayList<>();
 			List<MethodX> housedExaminationMethods_update = new ArrayList<>();
 			List<MethodX> wafersExaminationMethods_update = new ArrayList<>();
+
 			List<MethodX> generalInvestigationMethods = methodXRepository
 					.findAllGeneralMethods(orderDetailsDto.getId());
 			List<MethodX> housedExaminationMethods = methodXRepository.findAllHouseMethods(orderDetailsDto.getId());
 			List<MethodX> wafersExaminationMethods = methodXRepository.findAllWaferMethods(orderDetailsDto.getId());
+
+			System.out.println(orderDetailsDto.getGeneralInvestigationMethods());
+			System.out.println(orderDetailsDto.getHousedExaminationMethods());
+			System.out.println(orderDetailsDto.getWafersExaminationMethods());
+
 			for (MethodX mx : generalInvestigationMethods) {
 				boolean found = false;
 				for (Method m : orderDetailsDto.getGeneralInvestigationMethods()) {
@@ -597,6 +601,11 @@ public class OrderDetailsService {
 					generalInvestigationMethods_delete.add(mx);
 				}
 			}
+
+			System.out.println("----------Update and delete--------------");
+			System.out.println(generalInvestigationMethods_update);
+			System.out.println(generalInvestigationMethods_delete);
+
 			for (Method m : orderDetailsDto.getGeneralInvestigationMethods()) {
 				boolean found = false;
 				for (MethodX mx : generalInvestigationMethods) {
@@ -608,13 +617,21 @@ public class OrderDetailsService {
 					generalInvestigationMethods_new.add(m);
 				}
 			}
+			System.out.println("----------Add --------------");
+			System.out.println(generalInvestigationMethods_new);
+
+
 			for (MethodX mx : generalInvestigationMethods_delete) {
+				System.out.println(methodXRepository.findAll());
 				methodXRepository.delete(mx);
 			}
 
 			for (MethodX mx : generalInvestigationMethods_update) {
 				methodXRepository.save(mx);
 			}
+
+
+
 			for (Method m : generalInvestigationMethods_new) {
 				MethodX mx = new MethodX();
 				mx.setOrder_id(orderDetailsDto.getId());
@@ -626,6 +643,10 @@ public class OrderDetailsService {
 				methodXRepository.save(mx);
 			}
 
+
+
+
+			/*              House Examination             */
 			for (MethodX mx : housedExaminationMethods) {
 				boolean found = false;
 				for (Method m : orderDetailsDto.getHousedExaminationMethods()) {
@@ -669,6 +690,8 @@ public class OrderDetailsService {
 				methodXRepository.save(mx);
 			}
 
+
+			/*              Wafer Examination             */
 			for (MethodX mx : wafersExaminationMethods) {
 				boolean found = false;
 				for (Method m : orderDetailsDto.getWafersExaminationMethods()) {
@@ -753,7 +776,14 @@ public class OrderDetailsService {
 
 		}
 		if (currentTab.getValue().equalsIgnoreCase(FailureAnalysisConstants.COSTS)) {
-			orderDetails.setDbs_cost(orderDetailsDto.getDbs_cost());
+			if(orderDetailsDto.getDbs_cost_temp() == null || Objects.equals(orderDetailsDto.getDbs_cost_temp(),"")) {
+				orderDetails.setDbs_cost(new BigDecimal(0));
+			}
+			else {
+
+				Long costValue = convertToActualInteger(orderDetailsDto.getDbs_cost_temp());
+				orderDetails.setDbs_cost(new BigDecimal(costValue));
+			}
 		}
 		if (currentTab.getValue().equalsIgnoreCase(FailureAnalysisConstants.RESULT)) {
 			orderDetails.setDbs_res_name(orderDetailsDto.getDbs_res_name());
@@ -768,7 +798,14 @@ public class OrderDetailsService {
 			orderDetails.setDbs_wait_time2(orderDetailsDto.getDbs_wait_time2());
 			orderDetails.setDbs_res_time(orderDetailsDto.getDbs_res_time());
 			orderDetails.setDbs_cpl_time(orderDetailsDto.getDbs_cpl_time());
-			orderDetails.setDbs_cost(orderDetailsDto.getDbs_cost());
+			if(orderDetailsDto.getDbs_cost_temp() == null || Objects.equals(orderDetailsDto.getDbs_cost_temp(),"")) {
+				orderDetails.setDbs_cost(new BigDecimal(0));
+			}
+			else {
+
+				Long costValue = convertToActualInteger(orderDetailsDto.getDbs_cost_temp());
+				orderDetails.setDbs_cost(new BigDecimal(costValue));
+			}
 		}
 		return orderDetails;
 	}
@@ -1116,11 +1153,6 @@ public class OrderDetailsService {
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sMaterial", ""))) {
 			sb.append(" and od.dbs_material LIKE :material");
 		}
-		if(!StringUtils.hasText(sourceLink)  ) {
-			sb.append(" order by od.id desc ");
-		}else {
-			sb.append(" order by od.dbs_prio  ASC , od.id ASC ");
-		}
 
 		/*if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search")) ) {
 			sb.append(" and od.user.id = :userId ");
@@ -1141,22 +1173,30 @@ public class OrderDetailsService {
 			if (StringUtils.hasText(col.getSearch().getValue())) {
 				//System.out.println(col.getData()+"===Column=========="+col.getSearch().getValue());
 
-				switch (col.getData()) {
-					case "id":
-						columnVal = col.getSearch().getValue();
-						break;
-					case "dbs_fa_date":
-						//System.out.println("===dbs_fa_date==========");
-						if(profileName.equalsIgnoreCase("dev")) {
-							sb.append(" and TO_CHAR(dbs_fa_date, 'MM-dd-yyyy') like :" + col.getData());
-						}else {
-							sb.append(" and CONVERT(VARCHAR(10), dbs_fa_date, 110) like :" + col.getData());
-						}
-						break;
-					default:
-						sb.append(" and lower(od." + col.getData() + ") LIKE :" + col.getData());
+				if(!col.getData().equals("dbs_method_temp")) {
+					switch (col.getData()) {
+						case "id":
+							columnVal = col.getSearch().getValue();
+							break;
+						case "dbs_fa_date":
+							//System.out.println("===dbs_fa_date==========");
+							if (profileName.equalsIgnoreCase("dev")) {
+								sb.append(" and TO_CHAR(dbs_fa_date, 'MM-dd-yyyy') like :" + col.getData());
+							} else {
+								sb.append(" and CONVERT(VARCHAR(10), dbs_fa_date, 110) like :" + col.getData());
+							}
+							break;
+						default:
+							sb.append(" and lower(od." + col.getData() + ") LIKE :" + col.getData());
+					}
 				}
 			}
+		}
+
+		if(!StringUtils.hasText(sourceLink)  ) {
+			sb.append(" order by od.id desc ");
+		}else {
+			sb.append(" order by od.dbs_prio  ASC , od.id ASC ");
 		}
 
 		System.out.println("===sb.toString()=========="+sb.toString());
@@ -1205,8 +1245,10 @@ public class OrderDetailsService {
 		}*/
 
 		input.getColumns().stream().forEach(col -> {
-			if (StringUtils.hasText(col.getSearch().getValue()) && !col.getData().contentEquals("id")) {
-				query.setParameter(col.getData(), "%" + col.getSearch().getValue().trim().toLowerCase() + "%");
+			if(col.getData()!=null && !col.getData().equals("dbs_method_temp")) {
+				if (StringUtils.hasText(col.getSearch().getValue()) && !col.getData().contentEquals("id")) {
+					query.setParameter(col.getData(), "%" + col.getSearch().getValue().trim().toLowerCase() + "%");
+				}
 			}
 		});
 
@@ -1342,5 +1384,32 @@ public class OrderDetailsService {
 
 	public Optional<Personal> findPersonByShort(String name) {
 		return personalRepository.findByPERS_SHORT(name);
+	}
+
+
+
+	public  String convertToInternationalNumber(BigDecimal number) {
+		// Create an International Locale
+		Locale internationalLocale = Locale.getDefault();
+
+		// Create a NumberFormat for the default number format
+		NumberFormat internationalFormat = NumberFormat.getInstance(internationalLocale);
+		return internationalFormat.format(number);
+	}
+
+	public  Long convertToActualInteger(String bigDecimal) {
+		try {
+			// Create an International Locale
+			Locale internationalLocale = Locale.getDefault();
+
+			// Create a NumberFormat for the default number format
+			NumberFormat internationalFormat = NumberFormat.getInstance(internationalLocale);
+
+			// Parse the International number string back to an integer number
+			return internationalFormat.parse(String.valueOf(bigDecimal)).longValue();
+		} catch (ParseException e) {
+			System.err.println("Error parsing International number system: " + e.getMessage());
+			return 0L; // Handle the error accordingly
+		}
 	}
 }

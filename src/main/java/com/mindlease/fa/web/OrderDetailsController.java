@@ -1,7 +1,10 @@
 package com.mindlease.fa.web;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.security.Principal;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -13,12 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.mindlease.fa.config.LocaleConfig;
+import com.mindlease.fa.datatable.Column;
 import com.mindlease.fa.dto.EmailTemplate;
 import com.mindlease.fa.model.*;
-import com.mindlease.fa.repository.MethodXRepository;
-import com.mindlease.fa.repository.OrderDetailsRepository;
-import com.mindlease.fa.repository.PartRepository;
-import com.mindlease.fa.repository.UserRepository;
+import com.mindlease.fa.repository.*;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +34,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
@@ -50,6 +52,7 @@ import com.mindlease.fa.util.TabValues;
 
 import java.io.File;
 import java.awt.Desktop;
+import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -86,6 +89,12 @@ public class OrderDetailsController {
 
 	@Autowired
 	MethodXRepository methodXRepository;
+
+	@Autowired
+	MethodRepository methodRepository;
+
+	@Autowired
+	MaterialRepository materialRepository;
 
 	SearchParameters searchParameters = new SearchParameters();
 
@@ -329,6 +338,12 @@ public class OrderDetailsController {
 					System.out.println(entity);
 				}
 			}
+			if(entity.getDbs_cost() == null || entity.getDbs_cost().equals(new BigDecimal(0))){
+				entity.setDbs_cost_temp("");
+			}else{
+			   entity.setDbs_cost_temp(service.convertToInternationalNumber(entity.getDbs_cost()));
+			}
+
 			model.addAttribute("userName", currentPrincipalName);
 			model.addAttribute("userDetails", userDetails);
 			model.addAttribute(FailureAnalysisConstants.ORDER_DETAILS, entity);
@@ -362,6 +377,12 @@ public class OrderDetailsController {
 				entity.setNextTab(currentTab.getNext());
 			}
 			System.out.println(entity);
+			if(entity.getDbs_cost() == null || entity.getDbs_cost().equals(new BigDecimal(0))){
+				entity.setDbs_cost_temp("");
+			}else{
+				entity.setDbs_cost_temp(service.convertToInternationalNumber(entity.getDbs_cost()));
+			}
+
 			model.addAttribute("userName", currentPrincipalName);
 			model.addAttribute("userDetails", userDetails);
 			model.addAttribute(FailureAnalysisConstants.ORDER_DETAILS, entity);
@@ -593,6 +614,7 @@ public class OrderDetailsController {
 		log.info("--------autosave----id:::{}", orderDetailsDto.getId());
 		log.info("--------autosave----tab:::{}", orderDetailsDto.getTab());
 		log.info("--------autosave----tab:::{}", orderDetailsDto.getCurrentTab());
+		log.info("--------auotsave-----------{}",orderDetailsDto.getAction());
 
 
 
@@ -731,9 +753,28 @@ public class OrderDetailsController {
 				methods.append(methodX.getName());
 				methods.append("<br>");
 			}
+			System.out.println(methods);
 			orderDetailsDto.setDbs_method_temp(methods.toString());
 
 		});
+
+		String searchValue = null;
+		for(Column col : input.getColumns()){
+			if(col.getData()!=null && col.getData().equals("dbs_method_temp")){
+				if (StringUtils.hasText(col.getSearch().getValue())) {
+                     searchValue = col.getSearch().getValue();
+				}
+		}
+
+		}
+
+		System.out.println(orderDetailsDtos);
+		if(searchValue!=null){
+
+			String finalSearchValue = searchValue;
+			orderDetailsDtos = orderDetailsDtos.stream().filter(orderDetailsDto -> orderDetailsDto.getDbs_method_temp()!=null && orderDetailsDto.getDbs_method_temp().contains(finalSearchValue)).collect(Collectors.toList());
+
+		}
 		DataTableResult<OrderDetailsDto> response = new DataTableResult<>();
 		response.setRecordsTotal(result.getRecordsTotal());
 		response.setDraw(result.getDraw());
@@ -815,10 +856,11 @@ public class OrderDetailsController {
 		return "order_details/SharedFolderStructure.html";
 	}
 	@RequestMapping(path = "/printOrder/{id}",method = RequestMethod.GET)
-	public String printOrder(@PathVariable("id") Long id, Model model){
+	public String printOrder(@PathVariable("id") Long id, Model model,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse){
 
+		String language = localeResolver.resolveLocale(httpServletRequest).getLanguage();
 		Optional<OrderDetails> orderDetails = orderDetailsRepository.findById(id);
-		model.addAttribute("orderDetails",orderDetails.get());
+
 
 		Optional<Personal> personal = service.findPersonByShort(orderDetails.get().getDbs_ag_name());
 		model.addAttribute("personal_phone", personal.isPresent()?personal.get().getPers_phone():"no phone");
@@ -828,8 +870,45 @@ public class OrderDetailsController {
 		}else {
 			model.addAttribute("part",new Part());
 		}
-		List<MethodX> methodXList = methodXRepository.findAllGeneralMethodsByOrderId(orderDetails.get().getId());
-		model.addAttribute("methods",methodXList);
+
+		List<String> list = new ArrayList<>();
+		if(language.equals("de")){
+			List<MethodX> methodXList = methodXRepository.findAllGeneralMethodsByOrderId(orderDetails.get().getId());
+			methodXList.forEach(methodX -> {
+				Optional<Method> method = methodRepository.findById(methodX.getMethodId());
+				method.ifPresent(value -> list.add(value.getNameDe()));
+			});
+
+
+		}else {
+			List<MethodX> methodXList = methodXRepository.findAllGeneralMethodsByOrderId(orderDetails.get().getId());
+			methodXList.forEach(methodX -> {
+				Optional<Method> method = methodRepository.findById(methodX.getMethodId());
+				method.ifPresent(value -> list.add(value.getName()));
+			});
+		}
+
+		if(language.equals("de")){
+			if(orderDetails.get().getDbs_material()!=null && !orderDetails.get().getDbs_material().equals("")){
+			Optional<Material>  material = Optional.ofNullable(materialRepository.getByNameDe(orderDetails.get().getDbs_material()));
+			if(!material.isPresent()){
+				Optional<Material>  material1 = Optional.ofNullable(materialRepository.getByName(orderDetails.get().getDbs_material()));
+				material1.ifPresent(value -> orderDetails.get().setDbs_material(value.getNameDe()));
+			}
+
+			}
+		}else{
+
+			if(orderDetails.get().getDbs_material()!=null && !orderDetails.get().getDbs_material().equals("")) {
+				Optional<Material> material = Optional.ofNullable(materialRepository.getByName(orderDetails.get().getDbs_material()));
+				if (!material.isPresent()) {
+					Optional<Material> material1 = Optional.ofNullable(materialRepository.getByNameDe(orderDetails.get().getDbs_material()));
+					material1.ifPresent(value -> orderDetails.get().setDbs_material(value.getName()));
+				}
+			}
+		}
+		model.addAttribute("orderDetails",orderDetails.get());
+		model.addAttribute("methods",list);
 
 		//Print Date
 		LocalDateTime localDateTime = LocalDateTime.now();
@@ -994,6 +1073,7 @@ public class OrderDetailsController {
 		System.out.println(emailTemplate);
 		return  emailTemplate;
 	}
+
 
 
 

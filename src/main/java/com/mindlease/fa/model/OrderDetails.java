@@ -294,4 +294,7 @@ public class OrderDetails implements java.io.Serializable {
 
 	@Transient
 	private String createOrEdit;
+
+	@Transient
+	private String dbs_cost_temp;
 }
