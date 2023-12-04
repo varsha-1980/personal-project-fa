@@ -176,68 +176,68 @@ button.dt-button, div.dt-button, a.dt-button {
 
     <tbody >
     <tr>
-      <th scope="row" th:text="#{label.editpage.tab1.lot_id}">Lot ID:</th>
+      <th scope="row" th:text="#{label.editpage.tab1.lot_id}+':'">Lot ID:</th>
       <td th:text="${orderDetails.dbs_lotid}"></td>
       <td>  </td>
       <td >    </td>
       <td  colspan="3">    </td>
       <th scope="row"></th>
       <td></td>
-      <th scope="row" th:text="#{label.editpage.tab2.geometry}">Geometry:</th>
+      <th scope="row" th:text="#{label.editpage.tab2.geometry}+':'">Geometry:</th>
       <td th:text="${orderDetails.dbs_part}"></td>
     </tr>
     <tr>
-      <th scope="row" th:text="#{label.editpage.tab1.wafer_no}">Wafer No:</th>
+      <th scope="row" th:text="#{label.editpage.tab1.wafer_no}+':'">Wafer No:</th>
       <td th:text="${orderDetails.dbs_wfr}"></td>
       <td> </td>
       <td >    </td>
       <td  colspan="3">    </td>
       <th scope="row"></th>
       <td></td>
-      <th scope="row" th:text="#{label.print.order.product.information}">Product information:</th>
-      <td> <span th:text="${part.part_cells}"></span> <span> M </span> <span th:text="${part.part_class}"></span> </td>
+      <th scope="row" th:text="#{label.print.order.product.information}+':'">Product information: </th>
+      <td> <span th:text="  ${part.part_cells}" ></span> <span> &nbsp;&nbsp;&nbsp;&nbsp; M </span> <span th:text="'&nbsp;&nbsp;'+${part.part_class}"></span> </td>
     </tr>
     <tr>
-      <th scope="row" th:text="#{label.sCustomername}">Customer Name:</th>
-      <td th:text="${orderDetails.dbs_ag_name}"></td>
+      <th scope="row" th:text="#{label.sCustomername}+':'">Customer Name:</th>
+      <td th:text="${orderDetails.dbs_ag_name}+':'"></td>
       <td> </td>
       <td >    </td>
       <td  colspan="3">    </td>
       <th scope="row">Tel:</th>
-      <td th:text="${personal_phone}"></td>
-      <th scope="row" th:text="#{label.editpage.tab2.pitch_gm}">Pitch/T-Tiefe:</th>
+      <td th:text="${personal_phone}+':'"></td>
+      <th scope="row" th:text="#{label.editpage.tab2.pitch_gm}+':'">Pitch/T-Tiefe:</th>
       <td><span th:text="${part.part_pitch}"></span>  <span th:text="${part.part_calc}"></span> </td>
 
     </tr>
 
     <tr>
-      <th scope="row" th:text="#{label.editpage.tab1.order_date}">Order date:</th>
+      <th scope="row" th:text="#{label.editpage.tab1.order_date}+':'">Order date:</th>
       <td th:text="${orderDetails.dbs_fa_date}"></td>
       <td> </td>
       <td >    </td>
       <td  colspan="3">    </td>
       <th scope="row" ></th>
       <td></td>
-      <th scope="row" th:text="#{label.editpage.tab2.geometry1}">Metall/Pass/Pack:</th>
-      <td><span th:text="${part.part_metal}"></span> <span th:text="${part.part_pass}"></span> <span th:text="${part.part_pack}"></span></td>
+      <th scope="row" th:text="#{label.editpage.tab2.geometry1}+':'">Metall/Pass/Pack:</th>
+      <td><span th:text="${part.part_metal}"></span> <span th:text="'&nbsp;&nbsp;'+${part.part_pass}"></span> <span th:text="'&nbsp;&nbsp;'+ ${part.part_pack}"></span></td>
     </tr>
 
 
     <tr>
-      <th scope="row" th:text="#{label.editpage.tab1.type_of_sample_material1}">Probenmaterial:</th>
+      <th scope="row" th:text="#{label.editpage.tab1.type_of_sample_material1}+':'">Probenmaterial:</th>
       <td th:text="${orderDetails.dbs_material}"></td>
       <td> </td>
       <td >    </td>
       <td colspan="3">   </td>
       <th scope="row"></th>
       <td class="break-text"></td>
-      <th scope="row" th:text="#{label.editpage.tab2.editing_indication}">Hinweis:</th>
+      <th scope="row" th:text="#{label.editpage.tab2.editing_indication}+':'">Hinweis:</th>
       <td th:text="${part.part_note}"></td>
 
     </tr>
 
     <tr>
-      <th scope="row" th:text="#{label.editpage.tab1.Priority}">Priotitat:</th>
+      <th scope="row" th:text="#{label.editpage.tab1.Priority}+':'">Priotitat:</th>
       <td th:text="${orderDetails.dbs_prio}"></td>
       <td> </td>
       <td >    </td>
@@ -255,21 +255,21 @@ button.dt-button, div.dt-button, a.dt-button {
     <tbody>
 
     <tr>
-      <th scope="row" th:text="#{label.editpage.tab1.current_processing_step1}">Prozesschritt:</th>
+      <th scope="row" th:text="#{label.editpage.tab1.current_processing_step1}+':'">Prozesschritt:</th>
       <td th:text="${orderDetails.dbs_step}"></td>
 
 
     </tr>
 
     <tr>
-      <th scope="row" th:text="#{label.editpage.tab3.analysis_basic}" style="width : 168px;">Analysengrund:</th>
+      <th scope="row" th:text="#{label.editpage.tab3.analysis_basic}+':'" style="width : 168px;">Analysengrund:</th>
       <td th:text="${orderDetails.dbs_fa_reason}"></td>
 
 
     </tr>
 
     <tr>
-      <th scope="row" th:text="#{label.editpage.tab3.order_description}">Baeschreibung:</th>
+      <th scope="row" th:text="#{label.editpage.tab3.order_description}+':'">Baeschreibung:</th>
       <td th:text="${orderDetails.dbs_fa_descr}"></td>
 
     </tr>
@@ -377,7 +377,7 @@ button.dt-button, div.dt-button, a.dt-button {
 
     <tr>
 
-      <th scope="row" th:text="#{table.header.analysis.method}">Methoden:</th>
+      <th scope="row" th:text="#{table.header.analysis.method}+':'">Methoden:</th>
       <td><div class="row">
         <div class="col-4" th:each="method : ${methods}">
           <p th:text="${method}"></p>
@@ -387,7 +387,7 @@ button.dt-button, div.dt-button, a.dt-button {
     </tr>
     <tr>
 
-      <th scope="row" th:text="#{label.editpage.tab6.samplestorage}">Probenverbleib:</th>
+      <th scope="row" th:text="#{label.editpage.tab6.samplestorage}+':'">Probenverbleib:</th>
       <td th:text="${orderDetails.dbs_remain}"></td>
     </tr>
     </tbody>
