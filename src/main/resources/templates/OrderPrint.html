@@ -199,12 +199,12 @@ button.dt-button, div.dt-button, a.dt-button {
     </tr>
     <tr>
       <th scope="row" th:text="#{label.sCustomername}+':'">Customer Name:</th>
-      <td th:text="${orderDetails.dbs_ag_name}+':'"></td>
+      <td th:text="${orderDetails.dbs_ag_name}"></td>
       <td> </td>
       <td >    </td>
       <td  colspan="3">    </td>
       <th scope="row">Tel:</th>
-      <td th:text="${personal_phone}+':'"></td>
+      <td th:text="${personal_phone}"></td>
       <th scope="row" th:text="#{label.editpage.tab2.pitch_gm}+':'">Pitch/T-Tiefe:</th>
       <td><span th:text="${part.part_pitch}"></span>  <span th:text="${part.part_calc}"></span> </td>
 
@@ -361,8 +361,8 @@ button.dt-button, div.dt-button, a.dt-button {
                      type="checkbox"
                      onclick="return false;"
                      id="defaultCheck1"/>
-              <label for="customCheck1"><span
-              >See X-Check / Die Sort Map</span></label>
+              <label for="customCheck1"><span th:text="#{label.editpage.tab5.x_check}">
+                See X-Check / Die Sort Map</span></label>
 
               <label><span th:text="${orderDetails.dbs_pos_text}"
               ></span></label>

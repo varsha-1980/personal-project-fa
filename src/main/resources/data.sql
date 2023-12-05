@@ -93,6 +93,8 @@ INSERT INTO  users (id, email, password, first_name, last_name, COMPANY_ID) VALU
 (6, 'user21@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Varsha', 'Dev' , 2);
 (7, 'user1@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2);
 (8, 'admin1@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Nick', 'Roy' , 2);
+
+
 INSERT INTO  into user_role(user_id, role_id) values
 (8,1),
 (1,1),
@@ -149,6 +151,14 @@ DELETE FROM tbl_methode;
 
 DELETE FROM tbl_failure_mode;
 
+
+
+
+
+
+
+
+
 DELETE FROM tbl_electric_error;
 
 DELETE FROM tbl_personal;
@@ -188,6 +198,7 @@ INSERT INTO  tbl_company (id, f_cancel, f_active, code, created_by, created_date
 
 INSERT INTO users (id, email, password, first_name, last_name, COMPANY_ID,LANGUAGE) VALUES
 (1, 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 1, 'en'),
+(2, 'varsha@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'varshaa', 'Dev' ,1, 'en'),
 (3, 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 1,'en'),
 (5, 'admin1@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Ajay' ,'Devagan' , 2,'en'),
 (6, 'user1@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Supratha', 'Roy' , 2,'en'),
@@ -208,6 +219,7 @@ INSERT INTO  roles (id, name) VALUES
 
 
 INSERT INTO  user_role (user_id, role_id) VALUES (1, 1);
+INSERT INTO  user_role (user_id, role_id) VALUES (2, 1);
 INSERT INTO  user_role (user_id, role_id) VALUES (3, 3);
 INSERT INTO  user_role (user_id, role_id) VALUES (5, 4);
 INSERT INTO  user_role (user_id, role_id) VALUES (6, 4);
@@ -782,6 +794,7 @@ INSERT INTO  tbl_personal (id, pers_active, pers_company, pers_firstname, pers_s
 INSERT INTO  tbl_personal (id, pers_active, pers_company, pers_firstname, pers_surname, pers_short, pers_speech, pers_admin, pers_order, pers_mail, pers_editor, pers_phone, exam) VALUES (91,1, 'VSIG', 'Volkert', 'Ehlers', 'vehlers', 'Volkert',FALSE,1, 'volkert.ehlers@vishay.com',TRUE, '1187', ' ');
 INSERT INTO  tbl_personal (id, pers_active, pers_company, pers_firstname, pers_surname, pers_short, pers_speech, pers_admin, pers_order, pers_mail, pers_editor, pers_phone, exam) VALUES (92,1, 'VSIG', 'Wiebke', 'Plath', 'wplath', 'Wiebke',FALSE,0, 'Wiebke.Plath@vishay.com',FALSE, '0', ' ');
 INSERT INTO  tbl_personal (id, pers_active, pers_company, pers_firstname, pers_surname, pers_short, pers_speech, pers_admin, pers_order, pers_mail, pers_editor, pers_phone, exam) VALUES (93,1, 'VSIG', 'Yves', 'Ritterhaus', 'yritterhaus', 'Yves',FALSE,0, 'yves.ritterhaus@vishay.com',FALSE, '1355', ' ');
+INSERT INTO  tbl_personal (id, pers_active, pers_company, pers_firstname, pers_surname, pers_short, pers_speech, pers_admin, pers_order, pers_mail, pers_editor, pers_phone, exam) VALUES (94,1, 'VSIG', 'varshaa', 'Dev', 'vdev', 'Yves',FALSE,0, 'varsha@gmail.com',FALSE, '1356', ' ');
 
 /*
 INSERT INTO  tbl_priority (PRIO_ID, PRIO_TEXT, exam) VALUES (1, 'NOTFALL - sofortige Bearbeitung', ' ');

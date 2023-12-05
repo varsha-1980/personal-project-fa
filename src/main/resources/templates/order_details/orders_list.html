@@ -72,14 +72,13 @@
                                                                                                                                                 aria-hidden="true"></i> </a></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input class="form-control form-control-sm custom-select custom-select-sm"
-                                               type="text" th:field="*{sCustomername}" list="client"
-                                               th:placeholder="#{label.search.placeholder.select.client}"></input>
-                                        <datalist id="client">
+                                        <select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+                                                th:field="*{sCustomername}"  list="client">
+                                            <option value="" th:value="${clientName}" th:text="#{label.search.placeholder.select.client}" ></option>
                                             <option th:each="_customer: ${customersList}"
                                                     th:value="${_customer.pers_short}"
                                                     th:text="${_customer.pers_short}"></option>
-                                        </datalist>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4">
@@ -92,7 +91,7 @@
                                         </a></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input class="form-control form-control-sm custom-select custom-select-sm"
+                                       <!-- <input class="form-control form-control-sm custom-select custom-select-sm"
                                                type="text" th:field="*{sStatus}" list="p_status"
                                                th:placeholder="#{label.search.placeholder.select.status}"></input>
                                         <datalist id="p_status">
@@ -100,7 +99,15 @@
                                                     th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
                                                     th:text="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}">
                                             </option>
-                                        </datalist>
+                                        </datalist>-->
+
+                                        <select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+                                                th:field="*{sStatus}"   th:label="#{label.search.placeholder.select.status}">
+                                            <option value="" th:label="#{label.search.placeholder.select.status}" ></option>
+                                            <option th:each="_st: ${processStatusList}"
+                                                    th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
+                                                    th:text="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"></option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4">
@@ -113,16 +120,13 @@
                                         </label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input
-                                                class="form-control form-control-sm custom-select custom-select-sm"
-                                                type="text" th:field="*{sPriority}" list="priority"
-                                                th:placeholder="#{label.search.placeholder.select.priority}"></input>
-                                        <datalist id="priority">
+                                        <select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+                                                th:field="*{sPriority}" th:label="#{label.search.placeholder.select.priority}">
+                                            <option value="" th:label="#{label.search.placeholder.select.priority}" ></option>
                                             <option th:each="_prio: ${priorityList}"
                                                     th:value="${_prio.id}"
-                                                    th:text="__${#locale}__ == 'de'? ${_prio.nameDe} : ${_prio.name}"
-                                            ></option>
-                                        </datalist>
+                                                    th:text="__${#locale}__ == 'de'? ${_prio.nameDe} : ${_prio.name}"></option>
+                                        </select>
                                     </div>
                                     <!-- style="width: 370px;" -->
                                     <!-- <div> -->
@@ -155,15 +159,13 @@
                                         </a></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input class="form-control form-control-sm custom-select custom-select-sm"
-                                               type="text" th:field="*{sMaterial}" list="material"
-                                               th:placeholder="#{label.search.placeholder.select.material.type}"></input>
-                                        <datalist id="material">
+                                        <select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+                                                th:field="*{sMaterial}"  th:label="#{label.search.placeholder.select.material.type}">
+                                            <option value="" th:label="#{label.search.placeholder.select.material.type}"    ></option>
                                             <option th:each="_material: ${materialsList}"
                                                     th:value="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"
-                                                    th:text="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}">
-                                            </option>
-                                        </datalist>
+                                                    th:text="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"></option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -177,15 +179,13 @@
                                         </a></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input class="form-control form-control-sm custom-select custom-select-sm"
-                                               type="text" th:field="*{sElectricalError}" list="e_error"
-                                               th:placeholder="#{label.search.placeholder.select.electric_error}"></input>
-                                        <datalist id="e_error">
+                                        <select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+                                                th:field="*{sElectricalError}"   th:label="#{label.search.placeholder.select.electric_error}">
+                                            <option value="" th:label="#{label.search.placeholder.select.electric_error}" ></option>
                                             <option th:each="_err: ${electricErrorList}"
-                                                    th:value="__${#locale}__ == 'de' ? ${_err.nameDe}  : ${_err.name}"
-                                                    th:text="__${#locale}__ == 'de' ? ${_err.nameDe}  : ${_err.name}">
-                                            </option>
-                                        </datalist>
+                                                    th:value="__${#locale}__ == 'de' ? ${_err.nameDe} : ${_err.name}"
+                                                    th:text="__${#locale}__ == 'de' ? ${_err.nameDe} : ${_err.name}"></option>
+                                        </select>
                                     </div>
 
                                 </div>
@@ -200,15 +200,14 @@
                                         </a></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input class="form-control form-control-sm custom-select custom-select-sm"
-                                               type="text" th:field="*{sFailureMode}" list="e_mode"
-                                               th:placeholder="#{label.search.placeholder.select.e.mode}"></input>
-                                        <datalist id="e_mode">
-                                            <option th:each="_errorMode: ${failureModeList}"
+                                        <select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+                                                th:field="*{sFailureMode}"  th:label="#{label.search.placeholder.select.e.mode}">
+                                            <option value="" th:label="#{label.search.placeholder.select.e.mode}" ></option>
+                                            <option th:each="_errorMode: ${failureModeList}
+"
                                                     th:value="__${#locale}__ == 'de' ? ${_errorMode.nameDe} : ${_errorMode.name}"
-                                                    th:text="__${#locale}__ == 'de' ? ${_errorMode.nameDe} : ${_errorMode.name}">
-                                            </option>
-                                        </datalist>
+                                                    th:text="__${#locale}__ == 'de' ? ${_errorMode.nameDe} : ${_errorMode.name}"></option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -222,14 +221,13 @@
                                                 class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input class="form-control form-control-sm custom-select custom-select-sm" type="text"
-                                               th:field="*{sArchWaferBox}" list="archive_wf"
-                                               placeholder="Select Archive Wf.box"></input>
-                                        <datalist id="archive_wf">
+                                        <select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+                                                th:field="*{sArchWaferBox}"   th:label="#{label.search.placeholder.select.wafer.box.number}">
+                                            <option value="" th:label="#{label.search.placeholder.select.wafer.box.number}" ></option>
                                             <option th:each="_arch: ${archiveList}"
                                                     th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
                                                     th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>
-                                        </datalist>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4">
@@ -242,14 +240,13 @@
                                                 class="fa fa-info-circle ml-1" aria-hidden="true"></i> </a></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input class="form-control form-control-sm custom-select custom-select-sm" type="text"
-                                               th:field="*{sArchPolyBox}" list="archive_poly"
-                                               placeholder="Select Archive P.box"></input>
-                                        <datalist id="archive_poly">
+                                        <select class="form-control form-control-sm custom-select custom-select-sm" type="text"
+                                                th:field="*{sArchPolyBox}"   th:label="#{label.search.placeholder.select.polysterene.box.number}">
+                                            <option value="" th:label="#{label.search.placeholder.select.polysterene.box.number}" ></option>
                                             <option th:each="_arch: ${archiveList}"
                                                     th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
                                                     th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>
-                                        </datalist>
+                                        </select>
                                     </div>
                                 </div>
 
