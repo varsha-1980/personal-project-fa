@@ -195,13 +195,13 @@ button.dt-button, div.dt-button, a.dt-button {
       <th scope="row"></th>
       <td></td>
       <th scope="row" th:text="#{label.print.order.product.information}+':'">Product information: </th>
-      <td> <span th:text="  ${part.part_cells}" ></span> <span> &nbsp;&nbsp;&nbsp;&nbsp; M </span> <span th:text="'&nbsp;&nbsp;'+${part.part_class}"></span> </td>
+      <td> <span th:text="  ${part.part_cells}" ></span> <span> &nbsp;&nbsp;&nbsp;&nbsp; M </span> <span th:text="${part.part_class}"></span> </td>
     </tr>
     <tr>
       <th scope="row" th:text="#{label.sCustomername}+':'">Customer Name:</th>
       <td th:text="${orderDetails.dbs_ag_name}"></td>
       <td> </td>
-      <td >    </td>
+      <td>    </td>
       <td  colspan="3">    </td>
       <th scope="row">Tel:</th>
       <td th:text="${personal_phone}"></td>
@@ -218,8 +218,8 @@ button.dt-button, div.dt-button, a.dt-button {
       <td  colspan="3">    </td>
       <th scope="row" ></th>
       <td></td>
-      <th scope="row" th:text="#{label.editpage.tab2.geometry1}+':'">Metall/Pass/Pack:</th>
-      <td><span th:text="${part.part_metal}"></span> <span th:text="'&nbsp;&nbsp;'+${part.part_pass}"></span> <span th:text="'&nbsp;&nbsp;'+ ${part.part_pack}"></span></td>
+      <th scope="row" th:text="#{label.editpage.tab2.geometry1}+':'">Metall/Pass/Pack</th>
+      <td><span th:text="${part.part_metal}"></span> <span th:text="${part.part_pass}"></span> <span th:text="${part.part_pack}"></span></td>
     </tr>
 
 
