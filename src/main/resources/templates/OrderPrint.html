@@ -146,6 +146,13 @@ button.dt-button, div.dt-button, a.dt-button {
 	background-image: none;
 }
 
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 2px solid rgba(60,60,60) !important;
+}
+
     </style>
   <script type="text/javascript">
         function printPage() {
@@ -169,7 +176,7 @@ button.dt-button, div.dt-button, a.dt-button {
 
 
   </div>
-  <hr/>
+  <hr />
 
 
   <table class="table table-borderless">
@@ -183,7 +190,7 @@ button.dt-button, div.dt-button, a.dt-button {
       <td  colspan="3">    </td>
       <th scope="row"></th>
       <td></td>
-      <th scope="row" th:text="#{label.editpage.tab2.geometry}+':'">Geometry:</th>
+      <th scope="row" th:text="#{label.editpage.tab2.geometry}+':'" style="width : 19%;">Geometry:</th>
       <td th:text="${orderDetails.dbs_part}"></td>
     </tr>
     <tr>
@@ -200,11 +207,13 @@ button.dt-button, div.dt-button, a.dt-button {
     <tr>
       <th scope="row" th:text="#{label.sCustomername}+':'">Customer Name:</th>
       <td th:text="${orderDetails.dbs_ag_name}"></td>
-      <td> </td>
-      <td>    </td>
+
+
       <td  colspan="3">    </td>
       <th scope="row">Tel:</th>
       <td th:text="${personal_phone}"></td>
+      <td> </td>
+      <td> </td>
       <th scope="row" th:text="#{label.editpage.tab2.pitch_gm}+':'">Pitch/T-Tiefe:</th>
       <td><span th:text="${part.part_pitch}"></span>  <span th:text="${part.part_calc}"></span> </td>
 
@@ -394,9 +403,9 @@ button.dt-button, div.dt-button, a.dt-button {
   </table>
 
   <hr/>
- <div>
-   <span th:text="${printDate}" style="float:right;"></span>
- </div>
+  <div>
+    <span th:text="${printDate}" style="float:right;"></span>
+  </div>
 
 </div>
 </body>
