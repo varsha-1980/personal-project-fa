@@ -17,7 +17,7 @@
                           method="post">
 
                         <div class="ml-md-3">
-                            <div class="form-row p-3">
+                            <div class="form-row" style="padding-top:10px">
 
                                 <p class="alert alert-danger alert-dismissible" th:if="${#fields.hasGlobalErrors()}"
                                    th:each="error : ${#fields.errors('global')}" th:text="${error}"></p>
@@ -211,7 +211,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4" style="margin-bottom:none !important">
                                     <div class="col-md-12">
                                         <label for="inputEmail4"><span
                                                 th:text="#{label.editpage.tab7.archive_wafer_box}">Archive
@@ -230,7 +230,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4"  style="margin-bottom:none !important">
                                     <div class="col-md-12">
                                         <label for="inputEmail4"><span
                                                 th:text="#{label.editpage.tab7.archive_polystyrene_box}">Archive
@@ -265,23 +265,23 @@
 
 
 
-                                <div class="form-group col-md-3"></div>
-                                <div class="form-group col-md-3">
-                                    <!--<button type="submit" class="btn btnbgcolor">
+                                <div class="form-group col-md-3" style="padding: 12px 27px;  margin-bottom:none !important;"><button type="button" class="btn btnbgcolor" id="search-button">
+                                    <span th:text="#{label.Search}">Search</span>
+                                </button></div>
+                                <!--<div class="form-group col-md-3">
+                                    &lt;!&ndash;<button type="submit" class="btn btnbgcolor">
                                         <span th:text="#{label.Search}">Search</span>
-                                    </button>-->
-                                    <!-- <button type="button" class="btn btnbgcolor" id="search-button">
+                                    </button>&ndash;&gt;
+                                    &lt;!&ndash; <button type="button" class="btn btnbgcolor" id="search-button">
                                          <span th:text="#{label.Search}">Search</span>
-                                     </button>-->
+                                     </button>&ndash;&gt;
 
-                                    <button type="button" class="btn btnbgcolor" id="search-button">
-                                        <span th:text="#{label.Search}">Search</span>
-                                    </button>
-                                    <!--                                    <a th:href="@{/orderdetails(fromLink=${'search'})}"><button type="button"-->
-                                    <!--                                                                                                class="btn btnbgcolor" id="search-button">-->
-                                    <!--                                        <span th:text="#{label.Search}">Search</span>-->
-                                    <!--                                    </button></a>-->
-                                </div>
+
+                                    &lt;!&ndash;                                    <a th:href="@{/orderdetails(fromLink=${'search'})}"><button type="button"&ndash;&gt;
+                                    &lt;!&ndash;                                                                                                class="btn btnbgcolor" id="search-button">&ndash;&gt;
+                                    &lt;!&ndash;                                        <span th:text="#{label.Search}">Search</span>&ndash;&gt;
+                                    &lt;!&ndash;                                    </button></a>&ndash;&gt;
+                                </div>-->
 
 
                             </div>
