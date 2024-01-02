@@ -444,6 +444,19 @@ public class OrderDetailsController {
 		return "redirect:/orderdetails";
 	}
 
+	@RequestMapping(path = "/orderdetails/add/geometry/{geometryId}", method = RequestMethod.POST)
+	@ResponseBody
+	public void addGeometry( Principal principal,@PathVariable("geometryId") String geometryId) {
+
+		System.out.println("--------------------------------GeometryId----------------------");
+		System.out.println(geometryId);
+
+		Part part = new Part();
+		part.setName(geometryId);
+		partRepository.save(part);
+
+	}
+
 	@RequestMapping(path = "/update", method = RequestMethod.POST)
 	public String createOrUpdate(Model model, @ModelAttribute OrderDetails orderDetailsDto, BindingResult bindingResult,
 								 RedirectAttributes redirectAttributes, Principal principal) {
@@ -722,7 +735,8 @@ public class OrderDetailsController {
 
 	@RequestMapping(value = "/orders")
 	@ResponseBody
-	public Object getOrderList(@Valid @RequestBody DataTableRequest input, Principal principal) {
+	public Object getOrderList(@Valid @RequestBody DataTableRequest input, Principal principal,HttpServletRequest httpServletRequest) {
+		String language = localeResolver.resolveLocale(httpServletRequest).getLanguage();
 		Optional<User> userOps = service.findByEmail(principal.getName());
 		if(userOps.isPresent()) {
 			User user = userOps.get();
@@ -827,7 +841,7 @@ public class OrderDetailsController {
 	@RequestMapping(path = {"/change/language/{ln}", "/orderdetails/change/language/{ln}"},method = RequestMethod.GET)
 	public void changeLanguage(@PathVariable("ln") String language, HttpServletRequest httpServletRequest , HttpServletResponse httpServletResponse){
 		log.info("-----------Changing language-----------------");
-		log.info("------------Reuqest---------{}",httpServletRequest.getRequestURL());
+		log.info("------------Request---------{}",httpServletRequest.getRequestURL());
 		LocaleConfig localeConfig = new LocaleConfig();
 		if(language.equalsIgnoreCase("de")) {
 			localeConfig.localeResolver().setLocale(httpServletRequest, httpServletResponse, Locale.GERMAN);

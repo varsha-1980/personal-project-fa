@@ -4,7 +4,7 @@
 <body>
 <div th:fragment="geometry" class="mt-3 mb-3">
 	<form id="geoform" th:action="@{/orderdetails/update}" th:object="${orderDetails}"
-		  method="post" style="margin-top : 54px">
+		  method="post" >
 		<!--			<input type="hidden" id="ln" name="ln"-->
 		<!--								th:value="__${#locale}__"></input> -->
 		<div class="row" style="height:400px;">
@@ -41,9 +41,15 @@
 									th:data-placeholder="#{label.search.placeholder.Select_Part}"
 									onchange="onPartChangePost(this);">
 								<option value="" text=""></option>
+								<option value = "Other">Other</option>
 								<option th:each="_part: ${partList}"
 										th:value="${_part.name}" th:text="${_part.name}"></option>
 							</select>
+
+							<div id="text_input" style="display : none;">
+								<input type="text" style = "width : 100%; margin-top : 20px;" id="other_input"/>
+								<span   class="btn btnbgcolor" style="margin-top : 10px; margin-left : 85%" onclick="addData()">Add</span>
+							</div>
 
 							<!--<select class="form-control select1"
                                th:field="*{dbs_part}" onchange="onPartChangePost(this);" required="required">
@@ -241,6 +247,33 @@
 									$("#partDetails").html(data);
 								}
 							});
+							if(ele.value === "Other") {
+								document.getElementById("text_input").style.display = "block";
+							}
+							else {
+								document.getElementById("text_input").style.display = "none";
+							}
+				}
+
+				function addData () {
+					var inputElement = document.getElementById("other_input").value;
+
+					if (/^[a-zA-Z0-9]+$/.test(inputElement)) {
+
+								    $.ajax({
+								        type: "POST",
+								        url: 'orderdetails/add/geometry/'+inputElement,
+
+								        success: function(data)
+								        {
+								        window.location.reload();
+								        //  alert(data); // show response from the php script.
+								        }
+								    });
+
+					} else {
+						alert('Input is not alphanumeric. Please enter alphanumeric characters.');
+					}
 				}
 
         </script>
