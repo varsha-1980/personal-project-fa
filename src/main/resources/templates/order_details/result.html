@@ -185,7 +185,7 @@
 											th:field="*{dbs_status}" th:label="#{label.search.placeholder.select.status}">
 										<option value="" th:label="#{label.search.placeholder.select.status}" ></option>
 										<option th:each="_st: ${processStatusList}"
-												th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
+												th:value="${_st.id}"
 												th:text="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"></option>
 									</select>
 

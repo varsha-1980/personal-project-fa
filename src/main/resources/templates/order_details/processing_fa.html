@@ -168,7 +168,7 @@
 											th:field="*{dbs_fa_archiv_wf}" th:label="#{label.search.placeholder.select.wafer.box.number}">
 										<option value="" th:label="#{label.search.placeholder.select.wafer.box.number}" ></option>
 										<option th:each="_arch: ${archiveList}"
-												th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
+												th:value="${_arch.id}"
 												th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>
 									</select>
 
@@ -228,7 +228,7 @@
 											th:field="*{dbs_status}" th:label="#{label.search.placeholder.select.status}">
 										<option value="" th:label="#{label.search.placeholder.select.status}" ></option>
 										<option th:each="_st: ${processStatusList}"
-												th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
+												th:value="${_st.id}"
 												th:text="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"></option>
 									</select>
 
@@ -262,7 +262,7 @@
 											th:field="*{dbs_fa_archiv_ps}" th:label="#{label.search.placeholder.select.polysterene.box.number}">
 										<option value="" th:label="#{label.search.placeholder.select.polysterene.box.number}" ></option>
 										<option th:each="_arch: ${archiveList}"
-												th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
+												th:value="${_arch.id}"
 												th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>
 									</select>
 
@@ -339,6 +339,8 @@
 								        type: "POST",
 								        url: 'orderdetails/sendEmail',
 								        data: form.serialize(), // serializes the form's elements.
+								        crossDomain: true,
+
 								        success: function(data)
 								        {
 								        console.log(data);
