@@ -762,12 +762,27 @@ public class OrderDetailsController {
 		orderDetailsDtos.forEach(orderDetailsDto -> {
 
 			List<MethodX> list = methodXRepository.findAllGeneralMethodsByOrderId(orderDetailsDto.getId());
+			System.out.println(list);
+			List<Method> methodList = methodRepository.findAll();
+			System.out.println(methodList);
+
+			List<Method> methodList1 = new ArrayList<>();
+
+			list.forEach(methodX -> {
+				methodList1.add(methodList.stream().filter(method -> method.getId().equals(methodX.getMethodId())).findFirst().get());
+
+			});
+
 			StringBuilder methods = new StringBuilder();
-			for(MethodX methodX : list){
-				methods.append(methodX.getName());
+			for(Method method : methodList1){
+				if(language.equals("de")) {
+					methods.append(method.getNameDe());
+				}else {
+					methods.append(method.getName());
+				}
 				methods.append("<br>");
 			}
-			System.out.println(methods);
+
 			orderDetailsDto.setDbs_method_temp(methods.toString());
 
 		});
@@ -776,9 +791,9 @@ public class OrderDetailsController {
 		for(Column col : input.getColumns()){
 			if(col.getData()!=null && col.getData().equals("dbs_method_temp")){
 				if (StringUtils.hasText(col.getSearch().getValue())) {
-                     searchValue = col.getSearch().getValue();
+					searchValue = col.getSearch().getValue();
 				}
-		}
+			}
 
 		}
 
@@ -797,7 +812,6 @@ public class OrderDetailsController {
 
 		return response;
 	}
-
 //	@RequestMapping(value = "/sharedAccess/{orderDetails}")
 //	public ModelAndView connectFtpServer(@PathVariable("orderDetails") String orderDetails) throws IOException, ResourceNotFoundException {
 ////

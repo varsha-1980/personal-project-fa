@@ -58,8 +58,8 @@
 								<select class="form-control form-control-sm custom-select custom-select-sm" type="text"
 										th:field="*{dbs_material}" th:label="#{label.search.placeholder.select.material.type}">
 									<option value="" th:label="#{label.search.placeholder.select.material.type}"    ></option>
-									<option th:each="_material: ${materialsList}"
-											th:value="${_material.id}"
+									<option th:each="_material: ${materialsList}
+											"th:value="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"
 											th:text="__${#locale}__ == 'de' ? ${_material.nameDe} : ${_material.name}"></option>
 								</select>
 							</div>
@@ -163,7 +163,7 @@
 										th:field="*{dbs_location}" th:label="#{label.tab1.place.select_location}">
 									<option value="" th:label="#{label.tab1.place.select_location}"    ></option>
 									<option th:each="_loc: ${locationsList}"
-											th:value="${_loc.id}"
+											th:value="__${#locale}__ == 'de' ? ${_loc.nameDe} : ${_loc.name}"
 											th:text="__${#locale}__ == 'de' ? ${_loc.nameDe} : ${_loc.name}"></option>
 								</select>
 							</div>
@@ -246,7 +246,7 @@
 										th:field="*{dbs_status}" th:label="#{label.search.placeholder.select.status}">
 									<!--<option value="" th:label="#{label.search.placeholder.select.status}" ></option>-->
 									<option th:each="_st: ${processStatusList}"
-											th:value="${_st.id}"
+											th:value="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"
 											th:text="__${#locale}__ == 'de' ? ${_st.nameDe} : ${_st.name}"></option>
 								</select>
 							</div>

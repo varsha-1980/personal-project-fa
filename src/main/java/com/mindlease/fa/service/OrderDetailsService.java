@@ -1045,7 +1045,7 @@ public class OrderDetailsService {
 		String sourceLink = input.getExternalFilter().getOrDefault("sourceLink", "search");
 
 		if(sourceLink.equalsIgnoreCase("All Open Orders")) {
-			sb.append(" and  od.dbs_status NOT IN (  'Auftrag abgeschlossen'  , 'Order completed')  ");
+			sb.append(" and  od.dbs_status NOT IN (  'Auftrag abgeschlossen'  , 'Order completed' , '6' )  ");
 			// order by od.dbs_prio  ASC , od.id ASC
 
 		} else if(sourceLink.equalsIgnoreCase("Open FA Orders")) {
@@ -1055,44 +1055,44 @@ public class OrderDetailsService {
 
 		} else if(sourceLink.equalsIgnoreCase("Evaluation Orders")) {
 
-			sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerten' or od.dbs_status='FA done - please evaluate the result')");
+			sb.append(" and (od.dbs_status='FA erledigt - Bitte Ergebnis bewerten' or od.dbs_status='FA done - please evaluate the result' or od.dbs_status = '6' )");
 
 
 		} else if(sourceLink.equalsIgnoreCase("Chemical Preparation")){
 
-			sb.append(" and (od.dbs_status='Wartet auf Ätzung' or od.dbs_status='Waiting for Etching') ");
+			sb.append(" and (od.dbs_status='Wartet auf Ätzung' or od.dbs_status='Waiting for Etching' or od.dbs_status = '8' ) ");
 
 		}else if(sourceLink.equalsIgnoreCase("Electrical Measurement")){
 
-			sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement') ");
+			sb.append(" and (od.dbs_status='Wartet auf elektr. Messung' or od.dbs_status='Waiting for electr. Measurement' or od.dbs_status = '9' ) ");
 
 
 		}
 		else if(sourceLink.equalsIgnoreCase("Hotspot / IR / LC")){
 
-			sb.append(" and (od.dbs_status='Wartet auf Hotspot / IR / LC' or od.dbs_status='Waiting for Hotspot IR/LC')");
+			sb.append(" and (od.dbs_status='Wartet auf Hotspot / IR / LC' or od.dbs_status='Waiting for Hotspot IR/LC' or od.dbs_status = '10' )");
 
 		}
 
 
 		else if(sourceLink.equalsIgnoreCase("REM / FIB / EDX")){
 
-			sb.append(" and (od.dbs_status='Wartet auf REM/FIB/EDX' or od.dbs_status='Waiting for REM/FIB/EDX')");
+			sb.append(" and (od.dbs_status='Wartet auf REM/FIB/EDX' or od.dbs_status='Waiting for REM/FIB/EDX' or od.dbs_status = '13' )");
 
 		}
 		else if(sourceLink.equalsIgnoreCase("Cuts")){
 
-			sb.append(" and (od.dbs_status='Wartet auf Schliff' or od.dbs_status='Waiting for cuts') ");
+			sb.append(" and (od.dbs_status='Wartet auf Schliff' or od.dbs_status='Waiting for cuts' or od.dbs_status = '12' ) ");
 
 		}
 		else if(sourceLink.equalsIgnoreCase("Orders Material /Info Missing")){
 
-			sb.append(" and (od.dbs_status='Material/Info fehlt' or od.dbs_status='Material / info missing') ");
+			sb.append(" and (od.dbs_status='Material/Info fehlt' or od.dbs_status='Material / info missing' or od.dbs_status = '2' ) ");
 
 
 		} else if (sourceLink.equalsIgnoreCase("All New Orders")) {
 
-			sb.append(" and (od.dbs_status='Neuer Auftrag' or od.dbs_status='New Order') ");
+			sb.append(" and (od.dbs_status='Neuer Auftrag' or od.dbs_status='New Order' or od.dbs_status = '1' ) ");
 
 		}
 		else if(!StringUtils.hasText(sourceLink)  ) {

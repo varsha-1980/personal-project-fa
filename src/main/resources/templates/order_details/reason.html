@@ -41,7 +41,7 @@
 											th:field="*{dbs_elee}" th:label="#{label.search.placeholder.select.electric_error}">
 										<option value="" th:label="#{label.search.placeholder.select.electric_error}" ></option>
 										<option th:each="_err: ${electricErrorList}"
-												th:value="${_err.id}"
+												th:value="__${#locale}__ == 'de' ? ${_err.nameDe} : ${_err.name}"
 												th:text="__${#locale}__ == 'de' ? ${_err.nameDe} : ${_err.name}"></option>
 									</select>
 
@@ -72,7 +72,7 @@
 										<option value="" th:label="#{label.search.placeholder.select.e.mode}" ></option>
 										<option th:each="_errorMode: ${failureModeList}
 "
-												th:value="${_errorMode.id}"
+												th:value="__${#locale}__ == 'de' ? ${_errorMode.nameDe} : ${_errorMode.name}"
 												th:text="__${#locale}__ == 'de' ? ${_errorMode.nameDe} : ${_errorMode.name}"></option>
 									</select>
 

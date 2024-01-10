@@ -34,7 +34,7 @@
 										th:field="*{dbs_remain}" th:label="#{label.tab1.place.select_rehearse_remaining}">
 										<option value="" th:label="#{label.tab1.place.select_rehearse_remaining}"    ></option>
 										<option th:each="_arch: ${samplesRemainList}"
-											th:value="${_arch .id}"
+											th:value="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"
 											th:text="__${#locale}__ == 'de' ? ${_arch.nameDe} : ${_arch.name}"></option>
 									</select>
 									
