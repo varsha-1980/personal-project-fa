@@ -72,6 +72,9 @@ public class OrderDetailsController {
 	@Autowired
 	private LocaleResolver localeResolver;
 
+	@Autowired
+	private PersonalRepository personalRepository;
+
 	@Value("${sharedFolderPath}")
 	private String sharedFolderPath;
 
@@ -341,7 +344,7 @@ public class OrderDetailsController {
 			if(entity.getDbs_cost() == null || entity.getDbs_cost().equals(new BigDecimal(0))){
 				entity.setDbs_cost_temp("");
 			}else{
-			   entity.setDbs_cost_temp(service.convertToInternationalNumber(entity.getDbs_cost()));
+				entity.setDbs_cost_temp(service.convertToInternationalNumber(entity.getDbs_cost()));
 			}
 
 			model.addAttribute("userName", currentPrincipalName);
@@ -353,8 +356,7 @@ public class OrderDetailsController {
 			model.addAttribute(FailureAnalysisConstants.MATERIALS_LIST, service.findAllMaterials());
 			model.addAttribute(FailureAnalysisConstants.PROCESS_STATUS_LIST, service.findAllStatuses());
 
-		}
-		else {
+		} else {
 			TabValues currentTab = tab.get();
 			if(createOrEdit.equals("create")){
 				model.addAttribute(FailureAnalysisConstants.CURRENT_TAB, currentTab);
@@ -365,8 +367,7 @@ public class OrderDetailsController {
 				entity.setCurrentTab(currentTab);
 				entity.setPreviousTab(currentTab.getCreatePagePreviousTab());
 				entity.setNextTab(currentTab.getCreatePageNextTab());
-			}
-			else {
+			} else {
 				model.addAttribute(FailureAnalysisConstants.CURRENT_TAB, currentTab);
 				model.addAttribute(FailureAnalysisConstants.PREVIOUS_TAB,
 						(isFA && currentTab.ordinal() == TabValues.TAB7.ordinal()) ? null : currentTab.getPrevious());
@@ -482,7 +483,6 @@ public class OrderDetailsController {
 					: new OrderDetails();
 
 
-
 			User oldUser=null;
 			boolean isUpdate=false;
 			if(orderDetails.getId() != null) {
@@ -500,11 +500,20 @@ public class OrderDetailsController {
 			String firstName=user.getFirstName();
 			String lastName=user.getLastName();
 
-			String clientNameToSave=(firstName.substring(0, 1)+lastName).toLowerCase();
+			String userLoggedInName=(firstName.substring(0, 1)+lastName).toLowerCase();
 
 			String clientName=orderDetails.getDbs_ag_name();
 			if(clientName==null||clientName.isEmpty() || clientName.trim().isEmpty()) {
-				orderDetails.setDbs_ag_name(clientNameToSave);
+				orderDetails.setDbs_ag_name(userLoggedInName);
+			}else if(!userLoggedInName.equals(clientName)){
+				Optional<Personal> change_client_name	= personalRepository.findByPERS_SHORT(clientName);
+				if(change_client_name.isPresent()) {
+					String pers_mail = change_client_name.get().getPers_mail();
+					Optional<User> userObject = userRepository.findByEmail(pers_mail);
+					if(userObject.isPresent()){
+						orderDetails.setUser(userObject.get());
+					}
+				}
 			}
 
 			orderDetails = service.create(orderDetails);
@@ -517,8 +526,7 @@ public class OrderDetailsController {
 				return "order_details/order_create";
 			}
 			return "order_details/order_edit";
-		}
-		else {
+		} else {
 			TabValues currentTab = orderDetailsDto.getCurrentTab();
 			if (orderDetailsDto.getAction().equalsIgnoreCase("previous")) {
 				if (currentTab != null) {
@@ -576,11 +584,20 @@ public class OrderDetailsController {
 				String firstName = user.getFirstName();
 				String lastName = user.getLastName();
 
-				String clientNameToSave = (firstName.substring(0, 1) + lastName).toLowerCase();
+				String userLoggedInName = (firstName.substring(0, 1) + lastName).toLowerCase();
 
 				String clientName = orderDetails.getDbs_ag_name();
 				if (clientName == null || clientName.isEmpty() || clientName.trim().isEmpty()) {
-					orderDetails.setDbs_ag_name(clientNameToSave);
+					orderDetails.setDbs_ag_name(userLoggedInName);
+				}else if(!userLoggedInName.equals(clientName)){
+					Optional<Personal> change_client_name	= personalRepository.findByPERS_SHORT(clientName);
+					if(change_client_name.isPresent()) {
+						String pers_mail = change_client_name.get().getPers_mail();
+						Optional<User> userObject = userRepository.findByEmail(pers_mail);
+						if(userObject.isPresent()){
+							orderDetails.setUser(userObject.get());
+						}
+					}
 				}
 
 
@@ -630,7 +647,6 @@ public class OrderDetailsController {
 		log.info("--------auotsave-----------{}",orderDetailsDto.getAction());
 
 
-
 		User user = null;
 		Optional<User> userOps = service.findByEmail(principal.getName());
 		if (userOps.isPresent())
@@ -640,7 +656,6 @@ public class OrderDetailsController {
 		OrderDetails orderDetails = orderDetailsDto.getId() != null
 				? service.findById(orderDetailsDto.getId()).orElse(new OrderDetails())
 				: new OrderDetails();
-
 
 
 		User oldUser=null;
@@ -660,13 +675,21 @@ public class OrderDetailsController {
 		String firstName=user.getFirstName();
 		String lastName=user.getLastName();
 
-		String clientNameToSave=(firstName.substring(0, 1)+lastName).toLowerCase();
+		String userLoggedInName = (firstName.substring(0, 1)+lastName).toLowerCase();
 
 		String clientName=orderDetails.getDbs_ag_name();
 		if(clientName==null||clientName.isEmpty() || clientName.trim().isEmpty()) {
-			orderDetails.setDbs_ag_name(clientNameToSave);
+			orderDetails.setDbs_ag_name(userLoggedInName);
+		} else if(!userLoggedInName.equals(clientName)){
+			Optional<Personal> change_client_name	= personalRepository.findByPERS_SHORT(clientName);
+			if(change_client_name.isPresent()) {
+				String pers_mail = change_client_name.get().getPers_mail();
+				Optional<User> userObject = userRepository.findByEmail(pers_mail);
+				if(userObject.isPresent()){
+					orderDetails.setUser(userObject.get());
+				}
+			}
 		}
-
 		System.out.println(orderDetails.getCurrentTab());
 
 		edit(model, Optional.ofNullable(orderDetails.getId()), Optional.ofNullable(orderDetails.getCurrentTab()),orderDetailsDto.getCreateOrEdit());
@@ -756,7 +779,6 @@ public class OrderDetailsController {
 		for (OrderDetails o : result.getData()) {
 			orderDetailsDtos.add(orderDetailsMapper.convertOrderDetailsToOrderDetailsDto(o));
 		}
-
 
 
 		orderDetailsDtos.forEach(orderDetailsDto -> {
@@ -851,7 +873,6 @@ public class OrderDetailsController {
 //
 
 
-
 	@RequestMapping(path = {"/change/language/{ln}", "/orderdetails/change/language/{ln}"},method = RequestMethod.GET)
 	public void changeLanguage(@PathVariable("ln") String language, HttpServletRequest httpServletRequest , HttpServletResponse httpServletResponse){
 		log.info("-----------Changing language-----------------");
@@ -883,6 +904,7 @@ public class OrderDetailsController {
 
 		return "order_details/SharedFolderStructure.html";
 	}
+
 	@RequestMapping(path = "/printOrder/{id}",method = RequestMethod.GET)
 	public String printOrder(@PathVariable("id") Long id, Model model,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse){
 
@@ -918,11 +940,11 @@ public class OrderDetailsController {
 
 		if(language.equals("de")){
 			if(orderDetails.get().getDbs_material()!=null && !orderDetails.get().getDbs_material().equals("")){
-			Optional<Material>  material = Optional.ofNullable(materialRepository.getByNameDe(orderDetails.get().getDbs_material()));
-			if(!material.isPresent()){
-				Optional<Material>  material1 = Optional.ofNullable(materialRepository.getByName(orderDetails.get().getDbs_material()));
-				material1.ifPresent(value -> orderDetails.get().setDbs_material(value.getNameDe()));
-			}
+				Optional<Material>  material = Optional.ofNullable(materialRepository.getByNameDe(orderDetails.get().getDbs_material()));
+				if(!material.isPresent()){
+					Optional<Material>  material1 = Optional.ofNullable(materialRepository.getByName(orderDetails.get().getDbs_material()));
+					material1.ifPresent(value -> orderDetails.get().setDbs_material(value.getNameDe()));
+				}
 
 			}
 		}else{
@@ -957,7 +979,6 @@ public class OrderDetailsController {
 		Map<String,String> replacementMap = new HashMap<>();
 
 		OrderDetails orderDetails = orderDetailsRepository.findById(orderDetailsDto.getId()).get();
-
 
 
 		User recipientDetails = orderDetails.getUser();

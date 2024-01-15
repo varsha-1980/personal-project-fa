@@ -206,8 +206,9 @@ INSERT INTO users (id, email, password, first_name, last_name, COMPANY_ID,LANGUA
 (8, 'varshadevgankar@gmail.com', '$2a$12$ZRyY9yV9tY.B55Wn4IfS/OTRAxFzwDoyHz975r16hwuGHubthYj0i', 'Varsha', 'Devgankar' , 1,'en'),
 (9, 'fa@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Abdul', 'Jaffar' , 1,'en'),
 (10, 'english@gmail.com', '$2a$10$U7hEFQsC7vQtqrfOckmlhuVr6aD6F4JP3SQ3dUBnNBBEpTfLuxkxu', 'English', 'English' , 1,'en'),
-(11, 'german@gmail.com', '$2a$10$U7hEFQsC7vQtqrfOckmlhuVr6aD6F4JP3SQ3dUBnNBBEpTfLuxkxu', 'german', 'german' , 1,'en');
-
+(11, 'german@gmail.com', '$2a$10$U7hEFQsC7vQtqrfOckmlhuVr6aD6F4JP3SQ3dUBnNBBEpTfLuxkxu', 'german', 'german' , 1,'en'),
+(12, 'alexander.albrecht@vishay.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Alexander', 'Albrecht' , 1,'en'),
+(13, 'andreas.beckel@vishay.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'Andreas', 'Beckel' , 1,'en');
 
 
 
@@ -232,6 +233,8 @@ INSERT INTO  user_role (user_id, role_id) VALUES (8, 4);
 INSERT INTO  user_role (user_id, role_id) VALUES (9, 5);
 INSERT INTO  user_role (user_id, role_id) VALUES (10,3);
 INSERT INTO  user_role (user_id, role_id) VALUES (11,3);
+INSERT INTO  user_role (user_id, role_id) VALUES (12,3);
+INSERT INTO  user_role (user_id, role_id) VALUES (13,3);
 
 
 /*

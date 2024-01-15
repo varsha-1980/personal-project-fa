@@ -42,7 +42,8 @@ public class UserRegistrationController {
 			tosave.setFirstName(userDto.getFirstName());
 			tosave.setLastName(userDto.getLastName());
 			tosave.setRole(userDto.getRole());
-			tosave.setPassword(userDto.getPassword());
+			tosave.setPassword(existing.getPassword());
+
 			model.addAttribute("mode", "edit");
 			redirectAttributes.addFlashAttribute("flash_usercreat", "User Suceesfully updated");
 		} else {
