@@ -1040,6 +1040,15 @@ public class OrderDetailsService {
 //	}
 
 	private List<OrderDetails> invokeOrderDetails(DataTableRequest input){
+		int userId = Integer.parseInt(input.getExternalFilter().getOrDefault("userId", "0"));
+		String userName = null;
+
+		Optional<User> user = userRepository.findById(userId);
+		if(user.isPresent()) {
+			String firstName = user.get().getFirstName();
+			String lastName = user.get().getLastName();
+			userName = (firstName.substring(0, 1)+lastName).toLowerCase();
+		}
 		StringBuilder sb = new StringBuilder("from OrderDetails od where od.id is not null ");
 
 		String sourceLink = input.getExternalFilter().getOrDefault("sourceLink", "search");
@@ -1096,7 +1105,7 @@ public class OrderDetailsService {
 
 		}
 		else if(!StringUtils.hasText(sourceLink)  ) {
-			sb.append(" and od.user.id = :userId ");
+			sb.append(" and (od.user.id = :userId or od.dbs_ag_name = :uname ) ");
 		}
 
 		// order by od.id desc
@@ -1237,7 +1246,9 @@ public class OrderDetailsService {
 
 		if(!StringUtils.hasText(sourceLink) ) {
 			query.setParameter("userId", Integer.valueOf(input.getExternalFilter().getOrDefault("userId", "0")));
+			query.setParameter("uname",userName);
 		}
+
 
 
 		/*if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N")  ) {
