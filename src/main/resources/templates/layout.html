@@ -43,7 +43,7 @@
 										<div class="dropdown">
 											<button class="btn btn-sm dropdown-toggle btnbgcolor p-1"
 												type="button" id="dropdownMenuButton" data-toggle="dropdown"
-												sec:authorize="hasAuthority('SUPER-ADMIN') OR hasAuthority('ADMIN')"
+													sec:authorize="isAuthenticated()"
 												aria-haspopup="true" aria-expanded="false">
 												<span th:text="#{lable.administrative}">Administrative</span>
 											</button>
@@ -51,6 +51,7 @@
 											<div class="dropdown-menu"
 												aria-labelledby="dropdownMenuButton">
 												<a class="dropdown-item"
+												   sec:authorize="hasAuthority('SUPER-ADMIN') OR hasAuthority('ADMIN')"
 													th:href="@{/registration/userManagement}"><span
 													th:text="#{label.user_management}">User Management</span></a>
 												<!--  <a

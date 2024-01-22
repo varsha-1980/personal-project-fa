@@ -36,12 +36,12 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "FIRST_NAME", nullable = false)
-	@NotEmpty
+	@Column(name = "FIRST_NAME", nullable = true)
+	//@NotEmpty
 	private String firstName;
 
-	@Column(name = "LAST_NAME", nullable = false)
-	@NotEmpty
+	@Column(name = "LAST_NAME", nullable = true)
+	//@NotEmpty
 	private String lastName;
 
 	@Column(name = "EMAIL", nullable = false, unique = true)

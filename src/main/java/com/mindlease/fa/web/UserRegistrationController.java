@@ -145,10 +145,10 @@ public class UserRegistrationController {
 		List<String> errorList = new ArrayList<>();
 
 		User existing = userService.findById(Optional.of(userDto.getId())).get();
-		if (userDto.getPassword() != null && !userService.checkPasswod(userDto.getPassword(), existing)) {
+		/*if (userDto.getPassword() != null && !userService.checkPasswod(userDto.getPassword(), existing)) {
 			//bindingResult.rejectValue("password", null, "Old Password doesn't correct");
 			errorList.add("Old Password doesn't correct");
-		}
+		}*/
 
 		if (userDto.getNewPassword() != null && userDto.getConfirmPassword() != null
 				&& !userDto.getNewPassword().equals(userDto.getConfirmPassword())) {

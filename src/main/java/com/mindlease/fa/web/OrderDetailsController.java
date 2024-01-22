@@ -290,10 +290,11 @@ public class OrderDetailsController {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		log.info("User has authorities: " + userDetails.getAuthorities());
 		User user = userService.findByEmail(currentPrincipalName);
-		String firstName=user.getFirstName();
+        /*String firstName=user.getFirstName();
 		String lastName=user.getLastName();
 		String clientName=(firstName.substring(0, 1)+lastName).toLowerCase();
-
+*/
+		Optional<Personal> personal1 =personalRepository.findByPERS_MAIL(user.getEmail());
 
 		model.addAttribute("user", user);
 		//	model.addAttribute("clientName", clientName);
@@ -302,14 +303,14 @@ public class OrderDetailsController {
 			entity = service.findById(id.get()).get();
 			// If Order exist display personal phone no from Personal based on Client name
 			Optional<Personal> personal = service.findPersonByShort(entity.getDbs_ag_name());
-			model.addAttribute("personal_phone", personal.isPresent()?personal.get().getPers_phone():"no phone");
-			model.addAttribute("clientName", entity.getDbs_ag_name());
+			model.addAttribute("personal_phone", personal1.isPresent()?personal1.get().getPers_phone():"no phone");
+			model.addAttribute("clientName",personal1.isPresent()?personal1.get().getPers_short():null);
 		} else {
 			entity = new OrderDetails();
 			entity.setDbs_fa_date(new Date());
 			// If Order doesnt exist then  personal phone no will be 'phone no'
 			model.addAttribute("personal_phone", "no phone");
-			model.addAttribute("clientName", clientName);
+			model.addAttribute("clientName", personal1.isPresent()?personal1.get().getPers_short():null);
 		}
 		boolean isFA = AuthorityUtils.authorityListToSet(userDetails.getAuthorities()).contains("FA");
 		boolean isFARequester = AuthorityUtils.authorityListToSet(userDetails.getAuthorities())
@@ -500,13 +501,12 @@ public class OrderDetailsController {
 			String firstName=user.getFirstName();
 			String lastName=user.getLastName();
 
-			String userLoggedInName=(firstName.substring(0, 1)+lastName).toLowerCase();
-
+			Optional< Personal> userPersonalDetail  =personalRepository.findByPERS_MAIL(user.getEmail());
 			String clientName=orderDetails.getDbs_ag_name();
 			if(clientName==null||clientName.isEmpty() || clientName.trim().isEmpty()) {
-				orderDetails.setDbs_ag_name(userLoggedInName);
-			}else if(!userLoggedInName.equals(clientName)){
-				Optional<Personal> change_client_name	= personalRepository.findByPERS_SHORT(clientName);
+				orderDetails.setDbs_ag_name(clientName);
+			}else if(!userPersonalDetail.get().getPers_short().equals(clientName)){
+				Optional<Personal> change_client_name = personalRepository.findByPERS_SHORT(clientName);
 				if(change_client_name.isPresent()) {
 					String pers_mail = change_client_name.get().getPers_mail();
 					Optional<User> userObject = userRepository.findByEmail(pers_mail);
@@ -584,13 +584,13 @@ public class OrderDetailsController {
 				String firstName = user.getFirstName();
 				String lastName = user.getLastName();
 
-				String userLoggedInName = (firstName.substring(0, 1) + lastName).toLowerCase();
+				Optional< Personal> userPersonalDetail  =personalRepository.findByPERS_MAIL(user.getEmail());
 
 				String clientName = orderDetails.getDbs_ag_name();
 				if (clientName == null || clientName.isEmpty() || clientName.trim().isEmpty()) {
-					orderDetails.setDbs_ag_name(userLoggedInName);
-				}else if(!userLoggedInName.equals(clientName)){
-					Optional<Personal> change_client_name	= personalRepository.findByPERS_SHORT(clientName);
+					orderDetails.setDbs_ag_name(clientName);
+				}else if(!userPersonalDetail.get().getPers_short().equals(clientName)){
+					Optional<Personal> change_client_name = personalRepository.findByPERS_SHORT(clientName);
 					if(change_client_name.isPresent()) {
 						String pers_mail = change_client_name.get().getPers_mail();
 						Optional<User> userObject = userRepository.findByEmail(pers_mail);
@@ -675,13 +675,13 @@ public class OrderDetailsController {
 		String firstName=user.getFirstName();
 		String lastName=user.getLastName();
 
-		String userLoggedInName = (firstName.substring(0, 1)+lastName).toLowerCase();
+		Optional< Personal> userPersonalDetail  =personalRepository.findByPERS_MAIL(user.getEmail());
 
 		String clientName=orderDetails.getDbs_ag_name();
 		if(clientName==null||clientName.isEmpty() || clientName.trim().isEmpty()) {
-			orderDetails.setDbs_ag_name(userLoggedInName);
-		} else if(!userLoggedInName.equals(clientName)){
-			Optional<Personal> change_client_name	= personalRepository.findByPERS_SHORT(clientName);
+			orderDetails.setDbs_ag_name(clientName);
+		} else if(!userPersonalDetail.get().getPers_short().equals(clientName)){
+			Optional<Personal> change_client_name = personalRepository.findByPERS_SHORT(clientName);
 			if(change_client_name.isPresent()) {
 				String pers_mail = change_client_name.get().getPers_mail();
 				Optional<User> userObject = userRepository.findByEmail(pers_mail);

@@ -18,6 +18,12 @@
 <!--							</div>-->
 <!--						</div>-->
 						<div class="text-center">
+
+							<p class="alert alert-warning alert-dismissible"
+							   th:if="${mode == 'save'}"><img style="width:25px; height:25px;" th:if="${mode == 'save'}"
+															  th:src="@{/static/images/warning.png}"></img>
+								&nbsp<b>New user creation allowed only for personal table data</b>
+							</p>
 							<h4 th:if="${mode == 'save'}">
 								<span th:text="#{label.create_user}">Create New User</span>
 							</h4>
@@ -33,7 +39,7 @@
 
 						<form th:action="@{/registration}" th:object="${user}"
 							method="post">
-							<div class="form-group">
+							<!--<div class="form-group">
 								<label for="firstName" class="control-label"><span
 									th:text="#{label.first_name}">First name</span></label> <input
 									id="firstName" class="form-control form-control-sm"
@@ -44,7 +50,7 @@
 									th:text="#{label.last_name}">Last name</span></label> <input
 									id="lastName" class="form-control form-control-sm"
 									th:field="*{lastName}" placeholder="Enter Last Name" required="required"/>
-							</div>
+							</div>-->
 							<div class="form-group">
 								<label for="email" class="control-label"><span
 									th:text="#{label.email}">E-mail</span></label> <input id="email" type="email"

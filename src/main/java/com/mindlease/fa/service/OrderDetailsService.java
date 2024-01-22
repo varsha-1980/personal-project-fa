@@ -1045,9 +1045,9 @@ public class OrderDetailsService {
 
 		Optional<User> user = userRepository.findById(userId);
 		if(user.isPresent()) {
-			String firstName = user.get().getFirstName();
-			String lastName = user.get().getLastName();
-			userName = (firstName.substring(0, 1)+lastName).toLowerCase();
+			/*String firstName = user.get().getFirstName();
+			String lastName = user.get().getLastName();*/
+			userName = personalRepository.findByPERS_MAIL(user.get().getEmail()).get().getPers_short();
 		}
 		StringBuilder sb = new StringBuilder("from OrderDetails od where od.id is not null ");
 
