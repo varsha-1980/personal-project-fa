@@ -257,7 +257,7 @@ public class OrderDetailsController {
 		log.info("------------id:::{}", orderDetailsDto.getId());
 		log.info("------------tab:::{}", orderDetailsDto.getTab());
 
-		edit(model, Optional.ofNullable(orderDetailsDto.getId()), Optional.ofNullable(orderDetailsDto.getTab()),createOrEdit);
+		edit(model, Optional.ofNullable(orderDetailsDto.getId()), Optional.ofNullable(orderDetailsDto.getTab()),createOrEdit,language);
 
 		return "order_details/order_create";
 	}
@@ -277,12 +277,12 @@ public class OrderDetailsController {
 		log.info("------------id:::{}", orderDetailsDto.getId());
 		log.info("------------tab:::{}", orderDetailsDto.getTab());
 
-		edit(model, Optional.ofNullable(orderDetailsDto.getId()), Optional.ofNullable(orderDetailsDto.getTab()),createOrEdit);
+		edit(model, Optional.ofNullable(orderDetailsDto.getId()), Optional.ofNullable(orderDetailsDto.getTab()),createOrEdit,language);
 
 		return "order_details/order_edit";
 	}
 
-	private void edit(Model model, Optional<Long> id, Optional<TabValues> tab,String createOrEdit) {
+	private void edit(Model model, Optional<Long> id, Optional<TabValues> tab,String createOrEdit,String language) {
 
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -350,6 +350,15 @@ public class OrderDetailsController {
 
 			model.addAttribute("userName", currentPrincipalName);
 			model.addAttribute("userDetails", userDetails);
+			entity.setDbs_status(getProcessingStatus(language,entity.getDbs_status()));
+			entity.setDbs_remain(getRehearseRemaining(language,entity.getDbs_remain()));
+			entity.setDbs_fa_archiv_ps(getArchives(language,entity.getDbs_fa_archiv_ps()));
+			entity.setDbs_fa_archiv_wf(getArchives(language,entity.getDbs_fa_archiv_wf()));
+			entity.setDbs_elee(getElectricError(language,entity.getDbs_elee()));
+			entity.setDbs_famo(getFailureMode(language,entity.getDbs_famo()));
+			entity.setDbs_material(getMaterialType(language,entity.getDbs_material()));
+			entity.setDbs_location(getLocation(language,entity.getDbs_location()));
+
 			model.addAttribute(FailureAnalysisConstants.ORDER_DETAILS, entity);
 			model.addAttribute(FailureAnalysisConstants.PRIORITY_LIST, service.findAllPriorities());
 			model.addAttribute(FailureAnalysisConstants.LOCATIONS_LIST, service.findAllLocations());
@@ -387,6 +396,15 @@ public class OrderDetailsController {
 
 			model.addAttribute("userName", currentPrincipalName);
 			model.addAttribute("userDetails", userDetails);
+			entity.setDbs_status(getProcessingStatus(language,entity.getDbs_status()));
+			entity.setDbs_remain(getRehearseRemaining(language,entity.getDbs_remain()));
+			entity.setDbs_fa_archiv_ps(getArchives(language,entity.getDbs_fa_archiv_ps()));
+			entity.setDbs_fa_archiv_wf(getArchives(language,entity.getDbs_fa_archiv_wf()));
+			entity.setDbs_elee(getElectricError(language,entity.getDbs_elee()));
+			entity.setDbs_famo(getFailureMode(language,entity.getDbs_famo()));
+			entity.setDbs_material(getMaterialType(language,entity.getDbs_material()));
+			entity.setDbs_location(getLocation(language,entity.getDbs_location()));
+
 			model.addAttribute(FailureAnalysisConstants.ORDER_DETAILS, entity);
 			if (currentTab.getValue().equalsIgnoreCase(FailureAnalysisConstants.ORDER)) {
 				model.addAttribute(FailureAnalysisConstants.PRIORITY_LIST, service.findAllPriorities());
@@ -461,7 +479,8 @@ public class OrderDetailsController {
 
 	@RequestMapping(path = "/update", method = RequestMethod.POST)
 	public String createOrUpdate(Model model, @ModelAttribute OrderDetails orderDetailsDto, BindingResult bindingResult,
-								 RedirectAttributes redirectAttributes, Principal principal) {
+								 RedirectAttributes redirectAttributes, Principal principal,HttpServletRequest httpServletRequest) {
+		String language = localeResolver.resolveLocale(httpServletRequest).getLanguage();
 		log.info("--------update----id:::{}", orderDetailsDto.getId());
 		log.info("--------update----tab:::{}", orderDetailsDto.getTab());
 		log.info("--------update----tab:::{}", orderDetailsDto.getCurrentTab());
@@ -512,6 +531,8 @@ public class OrderDetailsController {
 					Optional<User> userObject = userRepository.findByEmail(pers_mail);
 					if(userObject.isPresent()){
 						orderDetails.setUser(userObject.get());
+					}else {
+						orderDetails.setUser(null);
 					}
 				}
 			}
@@ -521,7 +542,7 @@ public class OrderDetailsController {
 			System.out.println(orderDetailsDto.getTab());
 			System.out.println(orderDetailsDto.getCurrentTab());
 			System.out.println(orderDetailsDto.getCreateOrEdit());
-			edit(model, Optional.of(orderDetails.getId()), Optional.of(orderDetailsDto.getTab()), orderDetailsDto.getCreateOrEdit());
+			edit(model, Optional.of(orderDetails.getId()), Optional.of(orderDetailsDto.getTab()), orderDetailsDto.getCreateOrEdit(),language);
 			if (orderDetailsDto.getCreateOrEdit().equals("create")) {
 				return "order_details/order_create";
 			}
@@ -535,7 +556,7 @@ public class OrderDetailsController {
 				if (currentTab == null) {
 					currentTab = TabValues.values()[0];
 				}
-				edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
+				edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit(),language);
 				if(orderDetailsDto.getCreateOrEdit().equals("create")) {
 					return "order_details/order_create";
 				}
@@ -548,7 +569,7 @@ public class OrderDetailsController {
 				user = userOps.get();
 			else {
 				redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH, "Please login and try");
-				edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
+				edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit(),language);
 				if(orderDetailsDto.getCreateOrEdit().equals("create")) {
 					return "order_details/order_create";
 				}
@@ -557,7 +578,7 @@ public class OrderDetailsController {
 			if (bindingResult.hasErrors()) {
 				log.info("------------/bindingResult.hasErrors():::{}", bindingResult.getAllErrors());
 				redirectAttributes.addFlashAttribute(FailureAnalysisConstants.FLASH, "Check Errors!");
-				edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit());
+				edit(model, Optional.of(orderDetailsDto.getId()), Optional.of(currentTab),orderDetailsDto.getCreateOrEdit(),language);
 				if(orderDetailsDto.getCreateOrEdit().equals("create")) {
 					return "order_details/order_create";
 				}
@@ -596,6 +617,8 @@ public class OrderDetailsController {
 						Optional<User> userObject = userRepository.findByEmail(pers_mail);
 						if(userObject.isPresent()){
 							orderDetails.setUser(userObject.get());
+						}else {
+							orderDetails.setUser(null);
 						}
 					}
 				}
@@ -628,7 +651,7 @@ public class OrderDetailsController {
 					model.addAttribute(FailureAnalysisConstants.FLASH, FailureAnalysisConstants.ORDER_UPDATE);
 				}
 
-				edit(model, Optional.of(entity.getId()), Optional.of(currentTab), orderDetailsDto.getCreateOrEdit());
+				edit(model, Optional.of(entity.getId()), Optional.of(currentTab), orderDetailsDto.getCreateOrEdit(),language);
 				if (orderDetailsDto.getCreateOrEdit().equals("create")) {
 					return "order_details/order_create";
 				}
@@ -638,8 +661,9 @@ public class OrderDetailsController {
 	}
 
 	@RequestMapping(path = "/orderdetails/autosave", method = RequestMethod.POST)
-	public void autoSaveForm(Model model, @ModelAttribute OrderDetails orderDetailsDto, Principal principal) {
+	public void autoSaveForm(Model model, @ModelAttribute OrderDetails orderDetailsDto, Principal principal,HttpServletRequest httpServletRequest) {
 
+		String language = localeResolver.resolveLocale(httpServletRequest).getLanguage();
 		log.info("------------------------------Auto save--------------------------");
 		log.info("--------autosave----id:::{}", orderDetailsDto.getId());
 		log.info("--------autosave----tab:::{}", orderDetailsDto.getTab());
@@ -675,7 +699,7 @@ public class OrderDetailsController {
 		String firstName=user.getFirstName();
 		String lastName=user.getLastName();
 
-		Optional< Personal> userPersonalDetail  =personalRepository.findByPERS_MAIL(user.getEmail());
+		Optional< Personal> userPersonalDetail  = personalRepository.findByPERS_MAIL(user.getEmail());
 
 		String clientName=orderDetails.getDbs_ag_name();
 		if(clientName==null||clientName.isEmpty() || clientName.trim().isEmpty()) {
@@ -687,12 +711,14 @@ public class OrderDetailsController {
 				Optional<User> userObject = userRepository.findByEmail(pers_mail);
 				if(userObject.isPresent()){
 					orderDetails.setUser(userObject.get());
+				}else {
+					orderDetails.setUser(null);
 				}
 			}
 		}
 		System.out.println(orderDetails.getCurrentTab());
 
-		edit(model, Optional.ofNullable(orderDetails.getId()), Optional.ofNullable(orderDetails.getCurrentTab()),orderDetailsDto.getCreateOrEdit());
+		edit(model, Optional.ofNullable(orderDetails.getId()), Optional.ofNullable(orderDetails.getCurrentTab()),orderDetailsDto.getCreateOrEdit(),language);
 		//Commented below line to add orderDetails
 //		orderDetails = service.create(orderDetails);
 
@@ -1123,6 +1149,244 @@ public class OrderDetailsController {
 		return  emailTemplate;
 	}
 
+	public String getProcessingStatus(String language,String processingStatus){
+
+		Map<String,Status> processingStatusName = service.findAllStatuses().stream().collect(Collectors.toMap(Status::getName, status -> status));
+		Map<String,Status> processingStatusNameDe = service.findAllStatuses().stream().collect(Collectors.toMap(Status::getNameDe, status -> status));
+
+		if(language.equals("en")){
+			if(processingStatus!=null && !processingStatus.isEmpty()) {
+				if (!processingStatusName.containsKey(processingStatus)) {
+					Status pStatusDe = processingStatusNameDe.get(processingStatus);
+					Status pStatusEn = processingStatusName.get(pStatusDe.getName());
+					return pStatusEn.getName();
+
+				} else {
+					return processingStatusName.get(processingStatus).getName();
+				}
+			}
+		}
+		else if(language.equals("de")){
+			if(processingStatus!=null && !processingStatus.isEmpty()) {
+				if (!processingStatusNameDe.containsKey(processingStatus)) {
+					Status pStatusEn = processingStatusName.get(processingStatus);
+					Status pStatusDe = processingStatusNameDe.get(pStatusEn.getNameDe());
+					return pStatusDe.getNameDe();
+
+				} else {
+					return processingStatusNameDe.get(processingStatus).getNameDe();
+				}
+			}
+		}
+		return null;
+
+
+	}
+
+
+	public String getRehearseRemaining(String language,String rehearse){
+
+
+		Map<String,SamplesRemain> samplesRemainMapName = service.findAllSampleRemains().stream().collect(Collectors.toMap(SamplesRemain::getName, sampleRemain -> sampleRemain));
+		Map<String,SamplesRemain> samplesRemainMapNameDe = service.findAllSampleRemains().stream().collect(Collectors.toMap(SamplesRemain::getNameDe, sampleRemain -> sampleRemain));
+
+		if(language.equals("en")){
+			if(rehearse!=null && !rehearse.isEmpty()) {
+				if (!samplesRemainMapName.containsKey(rehearse)) {
+					SamplesRemain samplesRemainDe = samplesRemainMapNameDe.get(rehearse);
+					SamplesRemain samplesRemainEn = samplesRemainMapName.get(samplesRemainDe.getName());
+					return samplesRemainEn.getName();
+
+				} else {
+					return samplesRemainMapName.get(rehearse).getName();
+				}
+			}
+		}
+		else if(language.equals("de")){
+			if(rehearse!=null && !rehearse.isEmpty()) {
+				if (!samplesRemainMapNameDe.containsKey(rehearse)) {
+					SamplesRemain samplesRemainEn = samplesRemainMapName.get(rehearse);
+					SamplesRemain samplesRemainDe = samplesRemainMapNameDe.get(samplesRemainEn.getNameDe());
+					return samplesRemainDe.getNameDe();
+
+				} else {
+					return samplesRemainMapNameDe.get(rehearse).getNameDe();
+				}
+			}
+		}
+		return null;
+
+	}
+
+	public String getArchives(String language,String archive){
+
+		Map<String,Archive> archiveMapName = service.findAllArchives().stream().collect(Collectors.toMap(Archive::getName, archives -> archives));
+		Map<String,Archive> archiveMapNameDe = service.findAllArchives().stream().collect(Collectors.toMap(Archive::getNameDe, archives -> archives));
+
+		if(language.equals("en")){
+			if(archive!=null && !archive.isEmpty()) {
+				if (!archiveMapName.containsKey(archive)) {
+					Archive archiveDe = archiveMapNameDe.get(archive);
+					Archive archiveEn = archiveMapName.get(archiveDe.getName());
+					return archiveEn.getName();
+
+				} else {
+					return archiveMapName.get(archive).getName();
+				}
+			}
+		}
+		else if(language.equals("de")){
+			if(archive!=null && !archive.isEmpty()) {
+				if (!archiveMapNameDe.containsKey(archive)) {
+					Archive archiveEn = archiveMapName.get(archive);
+					Archive archiveDe = archiveMapNameDe.get(archiveEn.getNameDe());
+					return archiveDe.getNameDe();
+
+				} else {
+					return archiveMapNameDe.get(archive).getNameDe();
+				}
+			}
+		}
+		return null;
+
+	}
+
+	public String getElectricError(String language,String electricError){
+
+		Map<String,ElectricError> electricErrorMapName  = 	service.findAllElectricErrors().stream().collect(Collectors.toMap(ElectricError::getName, electricErrors -> electricErrors));
+		Map<String,ElectricError> electricErrorMapNameDe = 	service.findAllElectricErrors().stream().collect(Collectors.toMap(ElectricError::getNameDe, electricErrors -> electricErrors));
+
+		if(language.equals("en")){
+			if(electricError!=null && !electricError.isEmpty()) {
+				if (!electricErrorMapName.containsKey(electricError)) {
+					ElectricError electricErrorDe = electricErrorMapNameDe.get(electricError);
+					ElectricError electricErrorEn = electricErrorMapName.get(electricErrorDe.getName());
+					return electricErrorEn.getName();
+
+				} else {
+					return electricErrorMapName.get(electricError).getName();
+				}
+			}
+		}
+		else if(language.equals("de")){
+			if(electricError!=null && !electricError.isEmpty()) {
+				if (!electricErrorMapNameDe.containsKey(electricError)) {
+					ElectricError electricErrorEn = electricErrorMapName.get(electricError);
+					ElectricError electricErrorDe = electricErrorMapNameDe.get(electricErrorEn.getNameDe());
+					return electricErrorDe.getNameDe();
+
+				} else {
+					return electricErrorMapNameDe.get(electricError).getNameDe();
+				}
+			}
+		}
+		return null;
+
+	}
+
+	public String getFailureMode(String language,String failureMode){
+
+		Map<String,FailureMode> failureModeMapName = 	service.findAllFailureModes().stream().collect(Collectors.toMap(FailureMode::getName, failureModes -> failureModes));
+		Map<String,FailureMode> failureModeMapNameDe = 	service.findAllFailureModes().stream().collect(Collectors.toMap(FailureMode::getNameDe, failureModes -> failureModes));
+
+		if(language.equals("en")){
+
+			if(failureMode!=null && !failureMode.isEmpty()) {
+				if (!failureModeMapName.containsKey(failureMode)) {
+					FailureMode failureModeDe = failureModeMapNameDe.get(failureMode);
+					FailureMode failureModeEn = failureModeMapName.get(failureModeDe.getName());
+					return failureModeEn.getName();
+
+				} else {
+					return failureModeMapName.get(failureMode).getName();
+				}
+			}
+		}
+		else if(language.equals("de")){
+			if(failureMode!=null && !failureMode.isEmpty()) {
+				if (!failureModeMapNameDe.containsKey(failureMode)) {
+					FailureMode failureModeEn = failureModeMapName.get(failureMode);
+					FailureMode failureModeDe = failureModeMapNameDe.get(failureModeEn.getNameDe());
+					return failureModeDe.getNameDe();
+
+				} else {
+					return failureModeMapNameDe.get(failureMode).getNameDe();
+				}
+			}
+		}
+		return null;
+
+	}
+
+
+
+	public String getMaterialType(String language,String failureMode){
+
+		Map<String,Material> materialMapName = 	service.findAllMaterials().stream().collect(Collectors.toMap(Material::getName, materials -> materials));
+		Map<String,Material> materialMapNameDe = service.findAllMaterials().stream().collect(Collectors.toMap(Material::getNameDe, materials -> materials));
+
+		if(language.equals("en")){
+
+			if(failureMode!=null && !failureMode.isEmpty()) {
+				if (!materialMapName.containsKey(failureMode)) {
+					Material materialDe = materialMapNameDe.get(failureMode);
+					Material materialEn = materialMapName.get(materialDe.getName());
+					return materialEn.getName();
+
+				} else {
+					return materialMapName.get(failureMode).getName();
+				}
+			}
+		}
+		else if(language.equals("de")){
+			if(failureMode!=null && !failureMode.isEmpty()) {
+				if (!materialMapNameDe.containsKey(failureMode)) {
+					Material materialEn = materialMapName.get(failureMode);
+					Material materialDe = materialMapNameDe.get(materialEn.getNameDe());
+					return materialDe.getNameDe();
+
+				} else {
+					return materialMapNameDe.get(failureMode).getNameDe();
+				}
+			}
+		}
+		return null;
+
+	}
+
+	public String getLocation(String language,String failureMode){
+
+		Map<String,Location> locationMapName = 	service.findAllLocations().stream().collect(Collectors.toMap(Location::getName, locations -> locations));
+		Map<String,Location> locationMapNameDe = service.findAllLocations().stream().collect(Collectors.toMap(Location::getNameDe, locations -> locations));
+
+		if(language.equals("en")){
+
+			if(failureMode!=null && !failureMode.isEmpty()) {
+				if (!locationMapName.containsKey(failureMode)) {
+					Location locationDe = locationMapNameDe.get(failureMode);
+					Location locationEn = locationMapName.get(locationDe.getName());
+					return locationEn.getName();
+
+				} else {
+					return locationMapName.get(failureMode).getName();
+				}
+			}
+		}
+		else if(language.equals("de")){
+			if(failureMode!=null && !failureMode.isEmpty()) {
+				if (!locationMapNameDe.containsKey(failureMode)) {
+					Location locationEn = locationMapName.get(failureMode);
+					Location locationDe = locationMapNameDe.get(locationEn.getNameDe());
+					return locationDe.getNameDe();
+
+				} else {
+					return locationMapNameDe.get(failureMode).getNameDe();
+				}
+			}
+		}
+		return null;
+
+	}
 
 
 

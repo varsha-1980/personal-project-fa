@@ -1108,6 +1108,8 @@ public class OrderDetailsService {
 			sb.append(" and (od.user.id = :userId or od.dbs_ag_name = :uname ) ");
 		}
 
+		System.out.println("-----------------------Querying-----------------------------------");
+		System.out.println(sb.toString());
 		// order by od.id desc
 
 		String[] activeProfiles = environment.getActiveProfiles(); // it will return String Array of all active profile.
