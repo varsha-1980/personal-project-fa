@@ -159,11 +159,13 @@ public class UserRegistrationController {
 		existing.setConfirmPassword(userDto.getConfirmPassword());
 //		log.info("------------/bindingResult:::{}", bindingResult.getAllErrors());
 		if (!errorList.isEmpty()) {
+			model.addAttribute("isSuccess", false);
 			model.addAttribute("isError",true);
 			model.addAttribute("errorMessages",errorList);
 			redirectAttributes.addFlashAttribute("flash_password", "Check Errors!");
 			return "admin/change_password";
 		} else {
+			model.addAttribute("isSuccess", true);
 			userService.saveChangePassword(existing);
 		}
 		redirectAttributes.addFlashAttribute("flash_password", "Password updated!");

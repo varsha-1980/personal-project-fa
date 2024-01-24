@@ -386,6 +386,7 @@ public class OrderDetailsService {
 
 	public List<SamplesRemain> findAllSampleRemains() {
 		List<SamplesRemain> list = samplesRemainRepository.findAll();
+		System.out.println(list);
 		samplesRemainMap.clear();
 		for (SamplesRemain l : list) {
 			if (l.getName() != null)
@@ -1146,23 +1147,25 @@ public class OrderDetailsService {
 			sb.append(" and od.dbs_prio LIKE :prio");
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sStatus", ""))) {
-			sb.append(" and od.dbs_status LIKE :status");
+
+				sb.append(" and (od.dbs_status = : statusEn or od.dbs_status = :statusDe ) ");
+
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sElectricalError", ""))) {
-			sb.append(" and od.dbs_elee LIKE :elee");
+			sb.append(" and (od.dbs_elee = : electricEn or od.dbs_elee = :electricDe ) ");
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sFailureMode", ""))) {
-			sb.append(" and od.dbs_famo LIKE :famo");
+			sb.append(" and (od.dbs_famo = : failureEn or od.dbs_famo = :failureDe ) ");
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sArchWaferBox", ""))) {
 
-			sb.append(" and od.dbs_fa_archiv_wf LIKE :archivWf");
+			sb.append(" and (od.dbs_fa_archiv_wf = : archiveWfEn or od.dbs_fa_archiv_wf = :archiveWfDe ) ");
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sArchPolyBox", ""))) {
-			sb.append(" and od.dbs_fa_archiv_ps LIKE :archivPs");
+			sb.append(" and (od.dbs_fa_archiv_ps = : polyWfEn or od.dbs_fa_archiv_ps = :polyWfDe ) ");
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sMaterial", ""))) {
-			sb.append(" and od.dbs_material LIKE :material");
+			sb.append(" and (od.dbs_material = : materialEn or od.dbs_material = :materialDe ) ");
 		}
 
 		/*if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search")) ) {
@@ -1223,24 +1226,61 @@ public class OrderDetailsService {
 			query.setParameter("prio", "%"+input.getExternalFilter().getOrDefault("sPriority", "")+"%" );
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sStatus", ""))) {
-			query.setParameter("status", "%"+input.getExternalFilter().getOrDefault("sStatus", "")+"%");
+			String  status = input.getExternalFilter().getOrDefault("sStatus", "");
+			Optional<String> optionalS = getStatues().stream().filter(st -> st.contains(status)).findFirst();
+			if(optionalS.isPresent()) {
+				String[]  str = optionalS.get().split(",");
+				query.setParameter("statusEn", str[0]);
+				query.setParameter("statusDe", str[1]);
+			}
+
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sElectricalError", ""))) {
-			query.setParameter("elee", "%"+input.getExternalFilter().getOrDefault("sElectricalError", "")+"%");
+			String  electric = input.getExternalFilter().getOrDefault("sElectricalError", "");
+			Optional<String> optionalS = getElectricals().stream().filter(st -> st.contains(electric)).findFirst();
+			if(optionalS.isPresent()) {
+				String[]  str = optionalS.get().split(",");
+				query.setParameter("electricEn", str[0]);
+				query.setParameter("electricDe", str[1]);
+			}
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sFailureMode", ""))) {
-			query.setParameter("famo", "%"+input.getExternalFilter().getOrDefault("sFailureMode", "")+"%");
+			String  failure = input.getExternalFilter().getOrDefault("sFailureMode", "");
+			Optional<String> optionalS = getFailures().stream().filter(st -> st.contains(failure)).findFirst();
+			if(optionalS.isPresent()) {
+				String[]  str = optionalS.get().split(",");
+				query.setParameter("failureEn", str[0]);
+				query.setParameter("failureDe", str[1]);
+			}
 		}
 
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sArchWaferBox", ""))) {
-			query.setParameter("archivWf", "%"+input.getExternalFilter().getOrDefault("sArchWaferBox", "")+"%");
+			String  archiveWf = input.getExternalFilter().getOrDefault("sArchWaferBox", "");
+			Optional<String> optionalS = getArchBox().stream().filter(st -> st.contains(archiveWf)).findFirst();
+			if(optionalS.isPresent()) {
+				String[]  str = optionalS.get().split(",");
+				query.setParameter("archiveWfEn", str[0]);
+				query.setParameter("archiveWfDe", str[1]);
+			}
 		}
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sArchPolyBox", ""))) {
-			query.setParameter("archivPs", "%"+input.getExternalFilter().getOrDefault("sArchPolyBox", "")+"%");
+			String  polyWf = input.getExternalFilter().getOrDefault("sArchPolyBox", "");
+			Optional<String> optionalS = getArchBox().stream().filter(st -> st.contains(polyWf)).findFirst();
+			if(optionalS.isPresent()) {
+				String[]  str = optionalS.get().split(",");
+				query.setParameter("polyWfEn", str[0]);
+				query.setParameter("polyWfDe", str[1]);
+			}
 		}
 
 		if (StringUtils.hasText(input.getExternalFilter().getOrDefault("sMaterial", ""))) {
-			query.setParameter("material", "%"+input.getExternalFilter().getOrDefault("sMaterial", "")+"%");
+			String  material = input.getExternalFilter().getOrDefault("sMaterial", "");
+			Optional<String> optionalS = getMaterials().stream().filter(st -> st.contains(material)).findFirst();
+			if(optionalS.isPresent()) {
+				String[]  str = optionalS.get().split(",");
+				query.setParameter("materialEn", str[0]);
+				query.setParameter("materialDe", str[1]);
+			}
 		}
 //		if(input.getExternalFilter().getOrDefault("isAdmin", "N").equals("N") && (!StringUtils.hasText(sourceLink) || sourceLink.equalsIgnoreCase("search"))) {
 //			query.setParameter("userId", Integer.valueOf(input.getExternalFilter().getOrDefault("userId", "0")));
@@ -1425,4 +1465,37 @@ public class OrderDetailsService {
 			return 0L; // Handle the error accordingly
 		}
 	}
+
+
+	public List<String> getStatues(){
+		return  findAllStatuses().stream()
+				.map(x->x.getName()+","+x.getNameDe())
+				.collect(Collectors.toList());
+	}
+	public List<String> getMaterials(){
+		return  findAllMaterials().stream()
+				.map(x->x.getName()+","+x.getNameDe())
+				.collect(Collectors.toList());
+	}
+	public List<String> getArchBox(){
+		return  findAllArchives().stream()
+				.map(x->x.getName()+","+x.getNameDe())
+				.collect(Collectors.toList());
+	}
+	public List<String> getPolyBox(){
+		return  findAllArchives().stream()
+				.map(x->x.getName()+","+x.getNameDe())
+				.collect(Collectors.toList());
+	}
+	public List<String> getElectricals(){
+		return  findAllElectricErrors().stream()
+				.map(x->x.getName()+","+x.getNameDe())
+				.collect(Collectors.toList());
+	}
+	public List<String> getFailures(){
+		return  findAllFailureModes().stream()
+				.map(x->x.getName()+","+x.getNameDe())
+				.collect(Collectors.toList());
+	}
+
 }

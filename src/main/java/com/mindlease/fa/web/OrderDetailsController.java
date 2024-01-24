@@ -983,6 +983,9 @@ public class OrderDetailsController {
 				}
 			}
 		}
+
+		orderDetails.get().setDbs_remain(getRehearseRemaining(language,orderDetails.get().getDbs_remain()));
+
 		model.addAttribute("orderDetails",orderDetails.get());
 		model.addAttribute("methods",list);
 
@@ -1193,7 +1196,11 @@ public class OrderDetailsController {
 		if(language.equals("en")){
 			if(rehearse!=null && !rehearse.isEmpty()) {
 				if (!samplesRemainMapName.containsKey(rehearse)) {
+					System.out.println(rehearse);
+					System.out.println(samplesRemainMapName);
+					System.out.println(samplesRemainMapNameDe);
 					SamplesRemain samplesRemainDe = samplesRemainMapNameDe.get(rehearse);
+					System.out.println(samplesRemainDe);
 					SamplesRemain samplesRemainEn = samplesRemainMapName.get(samplesRemainDe.getName());
 					return samplesRemainEn.getName();
 
@@ -1363,6 +1370,9 @@ public class OrderDetailsController {
 
 			if(failureMode!=null && !failureMode.isEmpty()) {
 				if (!locationMapName.containsKey(failureMode)) {
+					System.out.println(failureMode);
+					System.out.println(locationMapName);
+					System.out.println(locationMapNameDe);
 					Location locationDe = locationMapNameDe.get(failureMode);
 					Location locationEn = locationMapName.get(locationDe.getName());
 					return locationEn.getName();
