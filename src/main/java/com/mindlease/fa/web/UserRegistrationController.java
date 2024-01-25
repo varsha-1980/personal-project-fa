@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.mindlease.fa.config.LocaleConfig;
+import com.mindlease.fa.model.Personal;
+import com.mindlease.fa.repository.PersonalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,9 @@ public class UserRegistrationController {
 	@Autowired
 	private CustomUserDetailsService userService;
 
+	@Autowired
+	private PersonalRepository personalRepository;
+
 	@PostMapping
 	public String registerUserAccount(Model model, @ModelAttribute("user") @Valid User userDto, BindingResult result,
 			RedirectAttributes redirectAttributes) {
@@ -49,7 +54,14 @@ public class UserRegistrationController {
 		} else {
 			if (existing != null) {
 				result.rejectValue("email", null, "There is already an account registered with that email");
+			}else {
+				Optional<Personal> personal = personalRepository.findByPERS_MAIL(userDto.getEmail());
+				if(!personal.isPresent()){
+					result.rejectValue("email", null, "User does not exist in TBL_PERSONAL");
+
+				}
 			}
+
 			tosave = userDto;
 			String trimmedInput =  userDto.getPassword().trim();
 			boolean isPasswordEmpty = trimmedInput.isEmpty();
