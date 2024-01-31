@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import com.mindlease.fa.config.LocaleConfig;
 import com.mindlease.fa.model.Personal;
+import com.mindlease.fa.model.Role;
 import com.mindlease.fa.repository.PersonalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -102,9 +103,20 @@ public class UserRegistrationController {
 	}
 
 	@RequestMapping("/userManagement")
-	public String getAll(Model model) {
+	public String getAll(Principal principal, Model model) {
+		User entity = userService.findByEmail(principal.getName());
 		model.addAttribute("usersList", userService.getUsers());
-		return "admin/user_list";
+
+		if(entity.getRoles().size() > 0){
+			Role role = entity.getRoles().stream().findFirst().get();
+			if(role.getName().equals("ADMIN") || role.getName().equals("SUPER-ADMIN")){
+				return "admin/user_list";
+			}
+
+		}
+			return "redirect:/home";
+
+
 	}
 
 	@RequestMapping("/settings")
@@ -156,7 +168,10 @@ public class UserRegistrationController {
 			RedirectAttributes redirectAttributes) {
 		List<String> errorList = new ArrayList<>();
 
+
 		User existing = userService.findById(Optional.of(userDto.getId())).get();
+		System.out.println("-----------------------ROLE----------------------------");
+		System.out.println(existing.getRoles().stream().findFirst().get());
 		/*if (userDto.getPassword() != null && !userService.checkPasswod(userDto.getPassword(), existing)) {
 			//bindingResult.rejectValue("password", null, "Old Password doesn't correct");
 			errorList.add("Old Password doesn't correct");
@@ -180,8 +195,20 @@ public class UserRegistrationController {
 			model.addAttribute("isSuccess", true);
 			userService.saveChangePassword(existing);
 		}
-		redirectAttributes.addFlashAttribute("flash_password", "Password updated!");
-		return "redirect:/registration/userManagement";
+
+		if(existing.getRoles().size() > 0){
+			Role role = existing.getRoles().stream().findFirst().get();
+			if(role.getName().equals("ADMIN") || role.getName().equals("SUPER-ADMIN")){
+				redirectAttributes.addFlashAttribute("flash_password", "Password updated!");
+				return "redirect:/registration/userManagement";
+			}
+
+		}else{
+			redirectAttributes.addFlashAttribute("flash_password", "Password updated!");
+			return "redirect:/home";
+		}
+
+		return "redirect:/home";
 	}
 
 	@RequestMapping(path = {"/registration/userManagement/{ln}", "/orderdetails/change/language/{ln}"},method = RequestMethod.GET)
