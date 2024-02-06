@@ -1080,7 +1080,7 @@ public class OrderDetailsService {
 		}
 		else if(sourceLink.equalsIgnoreCase("Hotspot / IR / LC")){
 
-			sb.append(" and (od.dbs_status='Wartet auf Hotspot / IR / LC' or od.dbs_status='Waiting for Hotspot IR/LC' or od.dbs_status = '10' )");
+			sb.append(" and (od.dbs_status='Wartet auf Hotspot / IR / LC' or od.dbs_status='Waiting for Hotspot IR/LC' or od.dbs_status='Wartet auf Hotspot IR / LC' or od.dbs_status = '10' )");
 
 		}
 
