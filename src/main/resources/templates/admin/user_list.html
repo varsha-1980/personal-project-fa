@@ -6,7 +6,7 @@
 <title>User Management</title>
 <body>
 	<div layout:fragment="content">
-		<div class="card mt-2 p-3 h-100">
+		<div class="card mt-2 p-3 h-100" style="padding : 4rem!important">
 
 			<div class="card-body">
 				<div class="row mb-3 text-center">
@@ -39,14 +39,14 @@
 					style="width: 100%">
 					<thead>
 						<tr>
-							<th class="no-sort"><span th:text="#{label.action}">Action</span></th>
-							<th id="first_name"><span th:text="#{label.first_name}">First
+							<th class="no-sort" style="width : 0%"><span th:text="#{label.action}">Action</span></th>
+							<!--<th id="first_name"><span th:text="#{label.first_name}">First
 									Name</span></th>
 							<th id="last_name"><span th:text="#{label.last_name}">Last
-									Name</span></th>
-							<th><span th:text="#{label.email}">Email</span></th>
-							<th><span th:text="#{label.company}">Company</span></th>
-							<th><span th:text="#{label.role}">Role</span></th>
+									Name</span></th>-->
+							<th style="width : 2%"><span th:text="#{label.email}" >Email</span></th>
+							<th style="width : 5%"><span th:text="#{label.company}" >Company</span></th>
+							<th style="width : 4%"><span th:text="#{label.role}" >Role</span></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -88,8 +88,8 @@
 
 							</td>
 
-							<td><span th:text="${_user.firstName}"></span></td>
-							<td><span th:text="${_user.lastName}"></span></td>
+							<!--<td><span th:text="${_user.firstName}"></span></td>
+							<td><span th:text="${_user.lastName}"></span></td>-->
 							<td><span th:text="${_user.email}"></span></td>
 							<td><span th:text="${_user.company.name}"></span></td>
 							<td><span th:each="_role : ${_user.roles}"
